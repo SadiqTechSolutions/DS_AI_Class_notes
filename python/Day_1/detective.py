@@ -1,0 +1,7 @@
+print("Digital Detective Profile")
+print("="*30)
+print("Detective Name: Fyzan ahammad")
+print("Speciality: Data Science")
+print("Tools: Python & VS Code")
+print("Mission: Solve data mysteries!")
+print("="*30)

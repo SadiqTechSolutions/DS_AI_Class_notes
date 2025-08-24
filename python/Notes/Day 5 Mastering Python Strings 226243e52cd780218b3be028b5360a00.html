@@ -1,0 +1,874 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 5: Mastering Python Strings</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="226243e5-2cd7-8021-8b3b-e028b5360a00" class="page sans"><header><h1 class="page-title"><strong>Day 5: Mastering Python Strings</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr></tbody></table></header><div class="page-body"><p id="226243e5-2cd7-8072-8b36-ecb6a91d2906" class=""><em>From single characters to entire narratives, strings are how we tell stories in code. 📜</em></p><h2 id="226243e5-2cd7-803f-8a1f-e13b7a48fb11" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="226243e5-2cd7-807b-bf51-ce042e436d70" class="bulleted-list"><li style="list-style-type:disc">Understand how to create and manipulate strings.</li></ul><ul id="226243e5-2cd7-8062-97d2-f28f031e74aa" class="bulleted-list"><li style="list-style-type:disc">Use slicing to extract parts of a string.</li></ul><ul id="226243e5-2cd7-80c8-8c1c-f36133a056ac" class="bulleted-list"><li style="list-style-type:disc">Master common string methods to transform and validate text.</li></ul><ul id="226243e5-2cd7-8047-b10c-fe46ace04abc" class="bulleted-list"><li style="list-style-type:disc">Format strings professionally using concatenation, the <code>.format()</code> method, and f-strings.</li></ul><ul id="226243e5-2cd7-80d4-877d-edae62f18b6e" class="bulleted-list"><li style="list-style-type:disc">Learn how to use escape characters to handle special situations.</li></ul><h2 id="226243e5-2cd7-80c4-abeb-e62aea14cb6a" class=""><strong>💬 Part 1: String Basics</strong></h2><h3 id="226243e5-2cd7-8028-ad60-e3dfe850601f" class=""><strong>What is a String?</strong></h3><p id="226243e5-2cd7-8089-87fe-f35ebacda17d" class="">A <strong>string</strong> is a sequence of characters enclosed in quotes. You can use either single (<code>&#x27;</code>) or double (<code>&quot;</code>) quotes.</p><p id="226243e5-2cd7-806e-b32c-c820cd1eb5f7" class=""><strong>Analogy</strong>: Think of a string as a necklace, where each character (letter, number, symbol) is a bead.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8031-bf8c-f4b5501b667d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day5_basics.py
+greeting = &quot;Hello, World!&quot;
+user_name = &#x27;Python_Student_123&#x27;
+
+print(greeting)
+print(user_name)</code></pre><h3 id="226243e5-2cd7-80b9-8a0e-e2397a5ae82f" class=""><strong>Multi-line Strings</strong></h3><p id="226243e5-2cd7-804e-8c8f-f58d7fdc96a1" class="">For text that spans multiple lines, use triple quotes (<code>&quot;&quot;&quot;</code> or <code>&#x27;&#x27;&#x27;</code>).</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8016-bca7-df750424cb74" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day5_basics.py
+instructions = &quot;&quot;&quot;
+Welcome to Day 5.
+Today, we will be mastering strings.
+Let&#x27;s begin!
+&quot;&quot;&quot;
+print(instructions)</code></pre><h3 id="226243e5-2cd7-8023-8855-fbcaba52a097" class=""><strong>Quotes Inside Strings</strong></h3><p id="226243e5-2cd7-80ae-988f-e9bf955a8068" class="">To put a quote inside a string, you can use the opposite type of quote for the container, or use an <strong>escape character</strong>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-809a-ac7d-e35d6bb156bb" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day5_basics.py
+# Using opposite quotes
+sentence1 = &#x27;He said, &quot;Python is amazing!&quot;&#x27;
+print(sentence1)
+
+# Using an escape character (\)
+sentence2 = &quot;He said, \&quot;Python is amazing!\&quot;&quot;
+print(sentence2)</code></pre><h3 id="226243e5-2cd7-808b-beab-d10e6b55f848" class=""><strong>Escape Characters</strong></h3><p id="226243e5-2cd7-8065-b9ff-e716e351e42b" class="">These are special characters that let you insert characters you can&#x27;t type directly.</p><table id="226243e5-2cd7-800a-8749-d522845e9a1d" class="simple-table"><tbody><tr id="226243e5-2cd7-807f-8e1d-ce46d2d59b8c"><td id="&gt;zKp" class=""><strong>Character</strong></td><td id="QjkM" class=""><strong>Description</strong></td><td id="gl\l" class=""><strong>Example</strong></td></tr><tr id="226243e5-2cd7-8093-9b03-d6d43901e7a1"><td id="&gt;zKp" class=""><code>\&#x27;</code></td><td id="QjkM" class="">Single Quote</td><td id="gl\l" class=""><code>&#x27;It\&#x27;s me.&#x27;</code></td></tr><tr id="226243e5-2cd7-805a-9bbe-db20e75bb30a"><td id="&gt;zKp" class=""><code>\&quot;</code></td><td id="QjkM" class="">Double Quote</td><td id="gl\l" class=""><code>&quot;She said \&quot;Hi\&quot;.&quot;</code></td></tr><tr id="226243e5-2cd7-807c-9638-c26cca40c7b4"><td id="&gt;zKp" class=""><code>\\</code></td><td id="QjkM" class="">Backslash</td><td id="gl\l" class=""><code>&quot;C:\\Users\\...&quot;</code></td></tr><tr id="226243e5-2cd7-806a-8fb8-cfbf89b5c874"><td id="&gt;zKp" class=""><code>\n</code></td><td id="QjkM" class="">New Line</td><td id="gl\l" class=""><code>&quot;Line 1\nLine 2&quot;</code></td></tr><tr id="226243e5-2cd7-80d3-80b8-c904884a908d"><td id="&gt;zKp" class=""><code>\t</code></td><td id="QjkM" class="">Tab</td><td id="gl\l" class=""><code>&quot;Hello\tWorld&quot;</code></td></tr></tbody></table><h2 id="226243e5-2cd7-80ad-957a-d42b1d226a8c" class=""><strong>✂️ Part 2: String Operations - Slicing and Dicing</strong></h2><h3 id="226243e5-2cd7-806a-aeb6-fb4aaf5cf3d9" class=""><strong>String Length: </strong><code><strong>len()</strong></code></h3><p id="226243e5-2cd7-8073-8601-db220c437bc4" class="">The <code>len()</code> function tells you how many characters are in a string.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80f1-8ee2-dd0af29cbd08" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day5_operations.py
+topic = &quot;Data Science&quot;
+print(f&quot;The length of &#x27;{topic}&#x27; is {len(topic)} characters.&quot;) # Output: 12</code></pre><h3 id="226243e5-2cd7-8031-9444-d7428e3c7138" class=""><strong>Strings as Arrays: Indexing &amp; Slicing</strong></h3><p id="226243e5-2cd7-800b-a69a-e5a27a1fd67b" class="">Strings are ordered sequences, so you can access individual characters by their index (position), starting from 0.</p><p id="226243e5-2cd7-80bc-b185-cb82d2578186" class=""><strong>Slicing</strong> lets you extract a &quot;slice&quot; of the string.</p><p id="226243e5-2cd7-80ae-9478-c3629d23de4b" class=""><strong>Visual Guide to Slicing </strong><code><strong>python</strong></code><strong>:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80a5-abc1-ebb706ebb6fc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"> p  y  t  h  o  n
+ 0  1  2  3  4  5  (Positive Index)
+-6 -5 -4 -3 -2 -1  (Negative Index)
+```python
+# In day5_operations.py
+word = &quot;python&quot;
+
+# Indexing
+print(f&quot;First character: {word[0]}&quot;)  # &#x27;p&#x27;
+print(f&quot;Last character: {word[-1]}&quot;) # &#x27;n&#x27;
+
+# Slicing
+print(f&quot;Slice from index 2 to 5: {word[2:5]}&quot;) # &#x27;tho&#x27; (index 5 is not included)
+print(f&quot;Slice from start to index 3: {word[:3]}&quot;) # &#x27;pyt&#x27;
+print(f&quot;Slice from index 3 to end: {word[3:]}&quot;)   # &#x27;hon&#x27;</code></pre><h2 id="226243e5-2cd7-804f-b8cb-f48020492f32" class=""><strong>🧰 Part 3: The String Methods Toolbox</strong></h2><p id="226243e5-2cd7-80e3-b032-c3b8f3fc1269" class="">Python gives you a huge toolbox of methods to work with strings. A method is like a special function that belongs to an object (in this case, a string).</p><h3 id="226243e5-2cd7-80be-ac77-c1dc24719771" class=""><strong>Mind Map of Common String Methods</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8028-899e-f1cf0536fc9f" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">String Methods
+├── Case Conversion
+│   ├── .upper() -&gt; &quot;HELLO&quot;
+│   ├── .lower() -&gt; &quot;hello&quot;
+│   ├── .capitalize() -&gt; &quot;Hello&quot;
+│   └── .title() -&gt; &quot;Hello World&quot;
+│
+├── Whitespace &amp; Cleaning
+│   ├── .strip() -&gt; Removes from both ends
+│   ├── .lstrip() -&gt; Removes from left
+│   └── .rstrip() -&gt; Removes from right
+│
+├── Searching &amp; Validating
+│   ├── .find(&#x27;h&#x27;) -&gt; Returns index of &#x27;h&#x27;
+│   ├── .count(&#x27;l&#x27;) -&gt; Counts occurrences of &#x27;l&#x27;
+│   ├── .startswith(&quot;He&quot;) -&gt; True/False
+│   └── .endswith(&quot;lo&quot;) -&gt; True/False
+│
+└── Modification
+    ├── .replace(&quot;old&quot;, &quot;new&quot;)
+    └── .split() -&gt; Creates a list</code></pre><h3 id="226243e5-2cd7-808e-9fed-e1fa0acfd3f6" class=""><strong>Key String Methods Table</strong></h3><table id="226243e5-2cd7-80e0-bd6a-d7914b370a67" class="simple-table"><tbody><tr id="226243e5-2cd7-80c7-b8f7-ee4bd589047e"><td id="&lt;HjE" class=""><strong>Method</strong></td><td id="@owT" class=""><strong>Description</strong></td><td id="&lt;s`L" class=""><strong>Example</strong></td></tr><tr id="226243e5-2cd7-80c8-a4e1-dae1bed6df96"><td id="&lt;HjE" class=""><code>upper()</code></td><td id="@owT" class="">Converts the string to uppercase.</td><td id="&lt;s`L" class=""><code>&quot;Hello&quot;.upper()</code> -&gt; <code>&quot;HELLO&quot;</code></td></tr><tr id="226243e5-2cd7-8058-8b1b-db5eb4b07e34"><td id="&lt;HjE" class=""><code>lower()</code></td><td id="@owT" class="">Converts the string to lowercase.</td><td id="&lt;s`L" class=""><code>&quot;Hello&quot;.lower()</code> -&gt; <code>&quot;hello&quot;</code></td></tr><tr id="226243e5-2cd7-801a-a444-fa4f21538449"><td id="&lt;HjE" class=""><code>strip()</code></td><td id="@owT" class="">Removes whitespace from the start and end.</td><td id="&lt;s`L" class=""><code>&quot;  Hi  &quot;.strip()</code> -&gt; <code>&quot;Hi&quot;</code></td></tr><tr id="226243e5-2cd7-803d-969a-cd5f08f64411"><td id="&lt;HjE" class=""><code>replace(old, new)</code></td><td id="@owT" class="">Replaces all occurrences of <code>old</code> with <code>new</code>.</td><td id="&lt;s`L" class=""><code>&quot;Hi Bob&quot;.replace(&quot;Bob&quot;, &quot;Alice&quot;)</code> -&gt; <code>&quot;Hi Alice&quot;</code></td></tr><tr id="226243e5-2cd7-8023-8813-e5c0ea1b741a"><td id="&lt;HjE" class=""><code>split(separator)</code></td><td id="@owT" class="">Splits the string into a list of substrings.</td><td id="&lt;s`L" class=""><code>&quot;apple,banana&quot;.split(&#x27;,&#x27;)</code> -&gt; <code>[&#x27;apple&#x27;, &#x27;banana&#x27;]</code></td></tr><tr id="226243e5-2cd7-80de-9d8c-cdfd439511f5"><td id="&lt;HjE" class=""><code>find(substring)</code></td><td id="@owT" class="">Returns the index of the first occurrence.</td><td id="&lt;s`L" class=""><code>&quot;hello&quot;.find(&#x27;e&#x27;)</code> -&gt; <code>1</code></td></tr><tr id="226243e5-2cd7-8049-b7eb-d5044e6b1414"><td id="&lt;HjE" class=""><code>count(substring)</code></td><td id="@owT" class="">Counts how many times a substring appears.</td><td id="&lt;s`L" class=""><code>&quot;hello&quot;.count(&#x27;l&#x27;)</code> -&gt; <code>2</code></td></tr><tr id="226243e5-2cd7-80b6-ae57-d374974ade0c"><td id="&lt;HjE" class=""><code>capitalize()</code></td><td id="@owT" class="">Makes the first character uppercase.</td><td id="&lt;s`L" class=""><code>&quot;hello&quot;.capitalize()</code> -&gt; <code>&quot;Hello&quot;</code></td></tr><tr id="226243e5-2cd7-805f-94e3-c50fa9e16676"><td id="&lt;HjE" class=""><code>title()</code></td><td id="@owT" class="">Makes the first character of each word uppercase.</td><td id="&lt;s`L" class=""><code>&quot;hello world&quot;.title()</code> -&gt; <code>&quot;Hello World&quot;</code></td></tr><tr id="226243e5-2cd7-8073-a473-faced13e76f6"><td id="&lt;HjE" class=""><code>startswith(prefix)</code></td><td id="@owT" class="">Returns <code>True</code> if the string starts with <code>prefix</code>.</td><td id="&lt;s`L" class=""><code>&quot;hello&quot;.startswith(&#x27;he&#x27;)</code> -&gt; <code>True</code></td></tr><tr id="226243e5-2cd7-8061-8238-ca7c60119804"><td id="&lt;HjE" class=""><code>endswith(suffix)</code></td><td id="@owT" class="">Returns <code>True</code> if the string ends with <code>suffix</code>.</td><td id="&lt;s`L" class=""><code>&quot;hello&quot;.endswith(&#x27;lo&#x27;)</code> -&gt; <code>True</code></td></tr><tr id="226243e5-2cd7-80a3-b2b1-fc6dc9016774"><td id="&lt;HjE" class=""><code>isalpha()</code></td><td id="@owT" class="">Returns <code>True</code> if all characters are letters.</td><td id="&lt;s`L" class=""><code>&quot;abc&quot;.isalpha()</code> -&gt; <code>True</code></td></tr><tr id="226243e5-2cd7-803e-ab7d-e0aff1eaf8d6"><td id="&lt;HjE" class=""><code>isnumeric()</code></td><td id="@owT" class="">Returns <code>True</code> if all characters are numbers.</td><td id="&lt;s`L" class=""><code>&quot;123&quot;.isnumeric()</code> -&gt; <code>True</code></td></tr></tbody></table><h2 id="226243e5-2cd7-8006-9d13-efbce55943d4" class=""><strong>✍️ Part 4: Formatting Strings</strong></h2><h3 id="226243e5-2cd7-80e7-ab6d-c3b1f426daf9" class=""><strong>Method 1: Concatenation (</strong><code><strong>+</strong></code><strong>)</strong></h3><p id="226243e5-2cd7-8008-8434-d7ca53953c51" class="">The simplest way, but can be clumsy with non-string types.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80fc-aeef-e7ba6b5babe2" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day5_formatting.py
+first_name = &quot;Alex&quot;
+last_name = &quot;Smith&quot;
+age = 30
+
+# Clumsy concatenation
+full_description = &quot;User: &quot; + first_name + &quot; &quot; + last_name + &quot;. Age: &quot; + str(age)
+print(full_description)</code></pre><h3 id="226243e5-2cd7-80ac-8a5d-d8b8dce2b86f" class=""><strong>Method 2: </strong><code><strong>.format()</strong></code><strong> Method</strong></h3><p id="226243e5-2cd7-80cb-93da-cb4164076556" class="">More flexible, uses placeholders <code>{}</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8002-a34a-e1b91bcf01c1" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day5_formatting.py
+# .format() method
+statement = &quot;User: {}. Age: {}.&quot;
+print(statement.format(first_name, age))</code></pre><h3 id="226243e5-2cd7-8015-8999-f964c35a39e2" class=""><strong>Method 3: f-Strings (The Modern Way)</strong></h3><p id="226243e5-2cd7-8080-b9b3-dda82eb18681" class=""><strong>F-strings</strong> (formatted string literals) are the easiest and most powerful way. Start the string with an <code>f</code> and put variables directly inside curly braces <code>{}</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80a4-aeb9-f453bb653f72" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day5_formatting.py
+# f-string (recommended)
+f_string_statement = f&quot;User: {first_name} {last_name}. Age: {age}.&quot;
+print(f_string_statement)</code></pre><h2 id="226243e5-2cd7-80a2-b215-ecceee705cb2" class=""><strong>🚀 Fun Expedition: &quot;Username Formatter&quot;</strong></h2><p id="226243e5-2cd7-8095-8de6-d2147fc1bbf5" class=""><strong>Mission</strong>: Take a messy, user-entered full name and format it into a clean, standardized username in lowercase.</p><p id="226243e5-2cd7-8099-b25e-ec533a1d0854" class=""><strong>Your Task</strong>: Create <code>day5_username.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80cf-b0cb-e698dd8a4142" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Messy user input
+full_name = &quot;   AlExAnDeR tHe GrEaT   &quot;
+
+# 1. Remove leading/trailing whitespace
+clean_name = full_name.strip()
+
+# 2. Replace spaces with underscores
+username_with_underscore = clean_name.replace(&quot; &quot;, &quot;_&quot;)
+
+# 3. Convert the whole thing to lowercase
+final_username = username_with_underscore.lower()
+
+print(f&quot;Original Name: &#x27;{full_name}&#x27;&quot;)
+print(f&quot;Formatted Username: &#x27;{final_username}&#x27;&quot;)</code></pre><h2 id="226243e5-2cd7-808a-ac0c-e0479d9dabe2" class=""><strong>🛠️ Hands-on Practice</strong></h2><h3 id="226243e5-2cd7-806c-bcec-c224ccd9b12b" class=""><strong>Exercise 1: String Concatenation and Formatting</strong></h3><p id="226243e5-2cd7-8000-a9d7-dc891bd17ec2" class="">Create <code>day5_ex1.py</code>. Define two string variables, <code>first = &quot;Data&quot;</code> and <code>second = &quot;Science&quot;</code>. Create a third variable <code>full</code> by combining them to say &quot;Data Science&quot;. Print it using both <code>+</code> and an f-string.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8025-8859-e973b687d22d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day5_ex1.py
+first = &quot;Data&quot;
+second = &quot;Science&quot;
+
+# Using +
+full_plus = first + &quot; &quot; + second
+print(f&quot;Using +: {full_plus}&quot;)
+
+# Using f-string
+full_fstring = f&quot;{first} {second}&quot;
+print(f&quot;Using f-string: {full_fstring}&quot;)</code></pre><h3 id="226243e5-2cd7-80b6-b95c-c441e4673563" class=""><strong>Exercise 2: Slicing a URL</strong></h3><p id="226243e5-2cd7-8093-929a-e9766718114f" class="">Create <code>day5_ex2.py</code>. Given the url <code>url = &quot;https://www.sts-education.com&quot;</code>, slice it to get just the domain name &quot;sts-education&quot;.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-806c-8c78-e34f23a7580d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day5_ex2.py
+url = &quot;[https://www.sts-education.com](https://www.sts-education.com)&quot;
+
+# The domain starts after &quot;www.&quot; (index 12) and ends before &quot;.com&quot; (index -4)
+domain_name = url[12:-4]
+print(f&quot;The domain name is: {domain_name}&quot;)</code></pre><h3 id="226243e5-2cd7-8082-8e5a-d87afe39978f" class=""><strong>Exercise 3: Cleaning User Input</strong></h3><p id="226243e5-2cd7-801a-9446-dc50ebfa66a0" class="">Create <code>day5_ex3.py</code>. A user enters their favorite quote as <code>quote = &quot;  i LoVe pYtHoN   &quot;</code>. Clean it up so it&#x27;s properly capitalized (&quot;I love python&quot;) and has no extra spaces.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-802e-b260-d3af04f7463f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day5_ex3.py
+quote = &quot;  i LoVe pYtHoN   &quot;
+
+# Chain methods together!
+# 1. strip() removes whitespace
+# 2. capitalize() fixes the case
+cleaned_quote = quote.strip().capitalize()
+print(f&quot;Original: &#x27;{quote}&#x27;&quot;)
+print(f&quot;Cleaned: &#x27;{cleaned_quote}&#x27;&quot;)</code></pre><h3 id="226243e5-2cd7-8083-abc7-f4d4370e2d6e" class=""><strong>Exercise 4: Splitting a CSV String</strong></h3><p id="226243e5-2cd7-802b-8cfb-d835b53df32d" class="">Create <code>day5_ex4.py</code>. You have a string of data: <code>data = &quot;name,age,city&quot;</code>. Use the <code>split()</code> method to turn this into a list of strings.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-803a-8bd5-d2026bde94e0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day5_ex4.py
+data = &quot;name,age,city&quot;
+data_list = data.split(&#x27;,&#x27;)
+print(f&quot;The string &#x27;{data}&#x27; was split into the list: {data_list}&quot;)</code></pre><h3 id="226243e5-2cd7-80cb-af95-c8be018b856c" class=""><strong>Exercise 5: Finding and Replacing</strong></h3><p id="226243e5-2cd7-80fd-9383-c7af2c8dad43" class="">Create <code>day5_ex5.py</code>. In the sentence <code>sentence = &quot;I like to eat apples, apples are my favorite.&quot;</code>, count how many times &quot;apples&quot; appears. Then, replace the first &quot;apples&quot; with &quot;bananas&quot;.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80c0-8ea8-f14c29a2abac" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day5_ex5.py
+sentence = &quot;I like to eat apples, apples are my favorite.&quot;
+
+# Count occurrences
+apple_count = sentence.count(&quot;apples&quot;)
+print(f&quot;&#x27;apples&#x27; appears {apple_count} times.&quot;)
+
+# Replace the first occurrence
+new_sentence = sentence.replace(&quot;apples&quot;, &quot;bananas&quot;, 1)
+print(f&quot;New sentence: {new_sentence}&quot;)</code></pre><p id="226243e5-2cd7-8099-b60a-e2c5023b6ceb" class="">
+</p><h2 id="226243e5-2cd7-8053-ad07-e33e8b5eb27a" class=""><strong>🎯 Day 5: Review &amp; Solutions</strong></h2><h3 id="226243e5-2cd7-8053-b7e1-f2cec9ff40b2" class=""><strong>🧠 Quiz Time</strong></h3><p id="226243e5-2cd7-8004-8ee2-d22e35f7f56a" class="">Q1: Which of the following is the correct way to create a multi-line string?</p><p id="226243e5-2cd7-8097-910f-c7b60650947b" class="">a) s = &quot;line1 \n line2&quot;  b) s = &#x27;line1&#x27;, &#x27;line2&#x27;  c) s = &quot;&quot;&quot;line1\nline2&quot;&quot;&quot;  d) s = (&quot;line1&quot;, &quot;line2&quot;)</p><p id="226243e5-2cd7-80eb-a17c-c0f4f26df677" class="">Q2: What is the output of len(&quot;Python &quot;)?</p><p id="226243e5-2cd7-800c-9786-f61c7312d931" class="">a) 6  b) 7  c) 8  d) An error</p><p id="226243e5-2cd7-8017-a6f5-fd248e465a78" class="">Q3: If word = &quot;Programming&quot;, what does word[1:4] return?</p><p id="226243e5-2cd7-8017-9bbe-fc9a3988dc36" class="">a) &quot;rog&quot;  b) &quot;Pro&quot;  c) &quot;rogram&quot;  d) &quot;rogra&quot;</p><p id="226243e5-2cd7-8063-b002-c94a3000b9a4" class="">Q4: Which method would you use to convert &quot;  Hello World  &quot; to &quot;Hello World&quot;?</p><p id="226243e5-2cd7-800d-9a74-cdf07d13fabc" class="">a) .strip()  b) .replace(&quot; &quot;, &quot;&quot;)  c) .clean()  d) .trim()</p><p id="226243e5-2cd7-80b7-be1d-f4d014f53775" class="">Q5: What is the result of &quot;Python&quot;.startswith(&quot;py&quot;)?</p><p id="226243e5-2cd7-804b-b054-c678021c5979" class="">a) True  b) False  c) 1  d) An error</p><p id="226243e5-2cd7-8094-8d44-d351a837117a" class="">Q6: Which method converts &quot;welcome to the jungle&quot; to &quot;Welcome To The Jungle&quot;?</p><p id="226243e5-2cd7-8006-9fa5-c82016e42453" class="">a) .capitalize()  b) .upper()  c) .title()  d) .header()</p><p id="226243e5-2cd7-80a5-8ff0-c4125933dcaa" class="">Q7: What does &quot;apple,banana,cherry&quot;.split(&#x27;,&#x27;) produce?</p><p id="226243e5-2cd7-80f1-a4ae-fd1197c66b86" class="">a) (&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;)  b) [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]  c) &quot;apple banana cherry&quot;  d) An error</p><p id="226243e5-2cd7-80bf-b5ed-cb92c4869f6e" class="">Q8: How do you get the last character of a string s?</p><p id="226243e5-2cd7-803c-bcba-c80986410b13" class="">a) s[len(s)]  b) s[last]  c) s[-1]  d) s[0]</p><p id="226243e5-2cd7-805d-8ee1-c58cc0a1f08d" class="">Q9: What is the most modern and recommended way to format the string &quot;My name is Alex&quot; if name = &quot;Alex&quot;?</p><p id="226243e5-2cd7-8015-ba34-e26fd7b0e752" class="">a) &quot;My name is &quot; + name  b) &quot;My name is {}&quot;.format(name)  c) f&quot;My name is {name}&quot;  d) (&quot;My name is &quot;, name)</p><p id="226243e5-2cd7-8042-a6ae-f7f20c2e5c82" class="">Q10: What is the output of &quot;Test&quot;.replace(&quot;T&quot;, &quot;B&quot;)?</p><p id="226243e5-2cd7-80a2-add1-f5434928f201" class="">a) &quot;Best&quot;  b) &quot;best&quot;  c) &quot;TesB&quot;  d) &quot;BesB&quot;</p><p id="226243e5-2cd7-80c7-8e8a-d1df25c6acce" class="">
+</p><h3 id="226243e5-2cd7-803e-8a8c-e5cb00a25621" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="226243e5-2cd7-80b5-888c-d9f8bd9f6cef" class=""><strong>Project: &quot;Log File Formatter&quot;</strong></h3><p id="226243e5-2cd7-8071-a529-d1b7406c676a" class=""><strong>Goal</strong>: You&#x27;ve received a log entry as a single, messy string. Your task is to parse this string, clean it up, and display it in a readable, formatted way. This will test your skills in slicing, string methods, and formatting.</p><p id="226243e5-2cd7-80a3-8945-d4483aeb461c" class=""><strong>Create the following file in your </strong><code><strong>Day_5/exercises/</strong></code><strong> folder</strong>:</p><p id="226243e5-2cd7-8024-aad0-c3409d047c88" class=""><code><strong>log_formatter.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80c6-9fda-ca9a1d18d244" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># The raw log entry string
+log_entry = &quot;INFO:2025-07-04T09:54:01Z;User &#x27;alex_p&#x27; logged in successfully from IP 192.168.1.101.   &quot;
+
+# Instructions:
+# 1. First, clean up the log entry by removing the trailing whitespace.
+#
+# 2. Extract the log level (e.g., &quot;INFO&quot;) from the start of the string.
+#    Hint: Find the index of &#x27;:&#x27;
+#
+# 3. Extract the timestamp (e.g., &quot;2025-07-04T09:54:01Z&quot;).
+#    Hint: It&#x27;s between the first &#x27;:&#x27; and the first &#x27;;&#x27;.
+#
+# 4. Extract the username (e.g., &quot;alex_p&quot;).
+#    Hint: It&#x27;s between single quotes. You&#x27;ll need to find the indexes of both quotes.
+#
+# 5. Extract the IP address.
+#    Hint: It comes after &quot;IP &quot;.
+#
+# 6. The message part of the log is &quot;User logged in successfully&quot;. Create this by
+#    combining parts of the original string or by replacing known text.
+#
+# 7. Now, format and print the extracted information in a clean, readable report.
+#    Use f-strings for the final output. The output should look like this:
+#
+#    --- Log Analysis Report ---
+#    Timestamp: 2025-07-04
+#    Log Level: INFO
+#    Username:  ALEX_P
+#    IP Address:192.168.1.101
+#    Message:   User logged in successfully
+#    ---------------------------
+#
+#    Notice the transformations:
+#    - The timestamp should only include the date part (YYYY-MM-DD).
+#    - The username should be in all uppercase.
+
+</code></pre><p id="226243e5-2cd7-8017-b02f-eb7d1035ade3" class="">
+</p><p id="226243e5-2cd7-80df-9c70-ecccaac7b705" class="">
+</p><p id="226243e5-2cd7-80a4-a5c2-cfb940861ee1" class="">
+</p><h3 id="226243e5-2cd7-8057-aeef-f8de6fe97d82" class=""><strong>✅ Solutions</strong></h3><h3 id="226243e5-2cd7-807e-baf1-e1975905b3da" class=""><strong>Quiz Answers</strong></h3><p id="226243e5-2cd7-80e6-8490-c5d2cad3faad" class=""><strong>Q1</strong>: c) <code>s = &quot;&quot;&quot;line1\nline2&quot;&quot;&quot;</code> (Triple quotes are for multi-line strings).</p><p id="226243e5-2cd7-8028-b9d3-cba35d859153" class=""><strong>Q2</strong>: b) 7 (The space counts as a character).</p><p id="226243e5-2cd7-80aa-94ee-d0af74c07790" class=""><strong>Q3</strong>: a) <code>&quot;rog&quot;</code> (Starts at index 1, ends before index 4).</p><p id="226243e5-2cd7-808b-acdb-f8f997c7ea74" class=""><strong>Q4</strong>: a) <code>.strip()</code> (Removes whitespace from both ends).</p><p id="226243e5-2cd7-8092-a7e8-ce1a19ba3e4c" class=""><strong>Q5</strong>: b) <code>False</code> (String methods are case-sensitive).</p><p id="226243e5-2cd7-80fb-880a-cb2352fdc9ee" class=""><strong>Q6</strong>: c) <code>.title()</code> (Capitalizes the first letter of each word).</p><p id="226243e5-2cd7-805f-93d5-f6feebc69428" class=""><strong>Q7</strong>: b) <code>[&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]</code> (The <code>split</code> method returns a list).</p><p id="226243e5-2cd7-80cf-a983-ff4e51ef7542" class=""><strong>Q8</strong>: c) <code>s[-1]</code> (Negative indexing starts from the end).</p><p id="226243e5-2cd7-8017-b155-d13674294683" class=""><strong>Q9</strong>: c) <code>f&quot;My name is {name}&quot;</code> (f-strings are the modern standard).</p><p id="226243e5-2cd7-80ee-9ab1-e817ae066fd3" class=""><strong>Q10</strong>: a) <code>&quot;Best&quot;</code> (<code>replace</code> is case-sensitive and replaces all occurrences by default).</p><h3 id="226243e5-2cd7-8037-b450-ce7da5e2d056" class=""><strong>Assignment Solution (</strong><code><strong>log_formatter.py</strong></code><strong>)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8008-855c-cb4e276f8c8e" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Day_5_sol.py
+# Solution for the Day 5 &quot;Log File Formatter&quot; assignment.
+
+# The raw log entry string
+log_entry = &quot;INFO:2025-07-04T09:54:01Z;User &#x27;alex_p&#x27; logged in successfully from IP 192.168.1.101.   &quot;
+
+# 1. Clean up trailing whitespace.
+cleaned_log = log_entry.strip()
+
+# 2. Extract the log level.
+colon_index = cleaned_log.find(&#x27;:&#x27;)
+log_level = cleaned_log[:colon_index]
+
+# 3. Extract the timestamp.
+semicolon_index = cleaned_log.find(&#x27;;&#x27;)
+timestamp = cleaned_log[colon_index + 1 : semicolon_index]
+
+# 4. Extract the username.
+start_quote_index = cleaned_log.find(&quot;&#x27;&quot;)
+end_quote_index = cleaned_log.find(&quot;&#x27;&quot;, start_quote_index + 1)
+username = cleaned_log[start_quote_index + 1 : end_quote_index]
+
+# 5. Extract the IP address.
+ip_start_index = cleaned_log.find(&quot;IP &quot;) + 3 # Add 3 to get past &quot;IP &quot;
+ip_address = cleaned_log[ip_start_index:-1] # Slice until the last character (the period)
+
+# 6. Extract the message.
+message_start_index = end_quote_index + 2 # After the closing quote and space
+message_end_index = cleaned_log.find(&quot; from IP&quot;)
+message = cleaned_log[message_start_index:message_end_index]
+
+# 7. Format and print the report with transformations.
+print(&quot;--- Log Analysis Report ---&quot;)
+print(f&quot;Timestamp: {timestamp[:10]}&quot;)      # Slice the timestamp to get just the date
+print(f&quot;Log Level: {log_level}&quot;)
+print(f&quot;Username:  {username.upper()}&quot;)    # Convert username to uppercase
+print(f&quot;IP Address:{ip_address}&quot;)
+print(f&quot;Message:   {message.capitalize()}&quot;) # Capitalize the message
+print(&quot;---------------------------&quot;)</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

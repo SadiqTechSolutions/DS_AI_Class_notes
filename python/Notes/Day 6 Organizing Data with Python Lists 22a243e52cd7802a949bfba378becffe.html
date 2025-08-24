@@ -1,0 +1,855 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 6: Organizing Data with Python Lists</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="22a243e5-2cd7-802a-949b-fba378becffe" class="page sans"><header><h1 class="page-title"><strong>Day 6: Organizing Data with Python Lists</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr></tbody></table></header><div class="page-body"><p id="22a243e5-2cd7-8082-9d19-d488e489ad8a" class=""><em>From shopping lists to high scores, lists are Python&#x27;s fundamental way to group items together. 📋</em></p><h2 id="22a243e5-2cd7-8056-b2db-c3711cbece41" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="22a243e5-2cd7-8003-9bdf-fcf929f3e542" class="bulleted-list"><li style="list-style-type:disc">Understand what Python lists are and their key properties (ordered, mutable).</li></ul><ul id="22a243e5-2cd7-80cb-92f7-f0f78cb11f9e" class="bulleted-list"><li style="list-style-type:disc">Access and manipulate list items using indexing and slicing.</li></ul><ul id="22a243e5-2cd7-806d-9165-ce0dc1600ea8" class="bulleted-list"><li style="list-style-type:disc">Master essential list methods for adding, removing, and changing items.</li></ul><ul id="22a243e5-2cd7-802d-93f0-e69b9076732a" class="bulleted-list"><li style="list-style-type:disc">Learn how to sort, reverse, and copy lists.</li></ul><ul id="22a243e5-2cd7-801e-90da-f0b2b5348d57" class="bulleted-list"><li style="list-style-type:disc">Get a first look at list comprehensions, a powerful Python feature.</li></ul><h2 id="22a243e5-2cd7-8096-8ba2-e1acc7ef6fa3" class=""><strong>📦 Part 1: What is a List?</strong></h2><p id="22a243e5-2cd7-802f-b1aa-efc7011f598c" class="">A <strong>list</strong> is an ordered and changeable collection of items. They allow you to store multiple items in a single variable.</p><p id="22a243e5-2cd7-80ea-a8f2-fbbb7a82fbfc" class=""><strong>Analogy</strong>: Think of a list as a train. Each car is an item, and they stay in the order you put them in. You can add new cars, remove old ones, or change what&#x27;s inside a car at any time.</p><h3 id="22a243e5-2cd7-802b-8ae7-d4bcb9d52e1e" class=""><strong>Creating a List</strong></h3><p id="22a243e5-2cd7-8068-9510-c94b43710bdc" class="">Lists are created using square brackets <code>[]</code>, with items separated by commas.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-8027-991f-cdf62a32fb86" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day6_basics.py
+
+# A list of numbers
+high_scores = [100, 95, 95, 88, 70]
+print(high_scores)
+
+# A list of strings
+class_subjects = [&quot;Data Science&quot;, &quot;Python&quot;, &quot;AI&quot;]
+print(class_subjects)
+
+# A list with mixed data types
+student_info = [&quot;Alex&quot;, 25, True, 1.75]
+print(student_info)</code></pre><h2 id="22a243e5-2cd7-80db-81d5-ff260f2363b3" class=""><strong>🔎 Part 2: Accessing List Items</strong></h2><h3 id="22a243e5-2cd7-8073-b727-eeaf1918e334" class=""><strong>Indexing</strong></h3><p id="22a243e5-2cd7-80a0-8ca4-efc8fc23e080" class="">You can access any item in a list by its index (position), which starts at 0.</p><p id="22a243e5-2cd7-8047-afd9-fe3fc16a4405" class=""><strong>Visual Guide to Indexing </strong><code><strong>subjects</strong></code><strong>:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80e8-8c89-f5babed06557" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"> [&quot;Data Science&quot;, &quot;Python&quot;, &quot;AI&quot;]
+       0             1        2      (Positive Index)
+      -3            -2       -1      (Negative Index)
+```python
+# Create a file named day6_accessing.py
+subjects = [&quot;Data Science&quot;, &quot;Python&quot;, &quot;AI&quot;]
+
+# Positive Indexing (from the start)
+print(f&quot;The first subject is: {subjects[0]}&quot;)
+
+# Negative Indexing (from the end)
+print(f&quot;The last subject is: {subjects[-1]}&quot;)</code></pre><h3 id="22a243e5-2cd7-807d-acff-ce1a3ac84363" class=""><strong>Slicing</strong></h3><p id="22a243e5-2cd7-8058-8b62-d453ac84a269" class="">Slicing lets you get a sub-list (a portion of the original list).</p><p id="22a243e5-2cd7-80eb-a9ca-fdfbf5d43a1c" class="">Syntax: list[start:end:step]</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-8026-9d5a-e47baaefec57" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day6_accessing.py
+tasks = [&#x27;Task 1&#x27;, &#x27;Task 2&#x27;, &#x27;Task 3&#x27;, &#x27;Task 4&#x27;, &#x27;Task 5&#x27;]
+
+# Get items from index 1 up to (but not including) index 4
+print(f&quot;Middle tasks: {tasks[1:4]}&quot;) # Output: [&#x27;Task 2&#x27;, &#x27;Task 3&#x27;, &#x27;Task 4&#x27;]
+
+# Get items from the start up to index 3
+print(f&quot;First three tasks: {tasks[:3]}&quot;)
+
+# Get every second item from the list
+print(f&quot;Alternate tasks: {tasks[::2]}&quot;) # Output: [&#x27;Task 1&#x27;, &#x27;Task 3&#x27;, &#x27;Task 5&#x27;]</code></pre><h2 id="22a243e5-2cd7-8049-bb60-fd8b17630f96" class=""><strong>🔧 Part 3: Modifying Lists</strong></h2><p id="22a243e5-2cd7-80c9-8b29-ea09a325d4fd" class="">Because lists are <strong>mutable</strong>, we can change them after they are created.</p><h3 id="22a243e5-2cd7-807d-9b30-f26a36f5f4ed" class=""><strong>Adding Items to a List</strong></h3><table id="22a243e5-2cd7-8025-a765-f409bbf0b19c" class="simple-table"><tbody><tr id="22a243e5-2cd7-80ad-9d40-f68f68f39332"><td id="alkw" class=""><strong>Method</strong></td><td id="?ffl" class=""><strong>Description</strong></td></tr><tr id="22a243e5-2cd7-80c1-96ee-cb7d47986e20"><td id="alkw" class=""><code>append(item)</code></td><td id="?ffl" class="">Adds a single item to the <strong>end</strong> of the list.</td></tr><tr id="22a243e5-2cd7-807d-8ce6-e688d0b3b37d"><td id="alkw" class=""><code>insert(index, item)</code></td><td id="?ffl" class="">Inserts an item at a <strong>specific position</strong>.</td></tr><tr id="22a243e5-2cd7-80a8-ac8c-c4674b54d9fa"><td id="alkw" class=""><code>extend(iterable)</code></td><td id="?ffl" class="">Adds all items from another list (or tuple/set) to the end.</td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-801f-823c-c671811c3637" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day6_modifying.py
+playlist = [&quot;Song A&quot;, &quot;Song B&quot;, &quot;Song C&quot;]
+print(f&quot;Original Playlist: {playlist}&quot;)
+
+# .append()
+playlist.append(&quot;Song D&quot;)
+print(f&quot;After append: {playlist}&quot;)
+
+# .insert()
+playlist.insert(1, &quot;New Favorite Song&quot;)
+print(f&quot;After insert: {playlist}&quot;)
+
+# .extend()
+more_songs = [&quot;Song E&quot;, &quot;Song F&quot;]
+playlist.extend(more_songs)
+print(f&quot;After extend: {playlist}&quot;)</code></pre><h3 id="22a243e5-2cd7-809b-a842-e725807bfad1" class=""><strong>Removing Items from a List</strong></h3><table id="22a243e5-2cd7-8050-875e-d01a8851b99f" class="simple-table"><tbody><tr id="22a243e5-2cd7-8014-8e3d-c5ace3b56208"><td id="etT]" class=""><strong>Method / Keyword</strong></td><td id="]EO}" class=""><strong>Description</strong></td></tr><tr id="22a243e5-2cd7-80ec-89a2-fa582ed4f423"><td id="etT]" class=""><code>remove(item)</code></td><td id="]EO}" class="">Removes the <strong>first matching item</strong> by its value.</td></tr><tr id="22a243e5-2cd7-80cf-8b7c-f49b25b42498"><td id="etT]" class=""><code>pop(index)</code></td><td id="]EO}" class="">Removes an item by its <strong>index</strong> and returns it. If no index, removes the last item.</td></tr><tr id="22a243e5-2cd7-8003-a745-ce83dd2f2798"><td id="etT]" class=""><code>del list[index]</code></td><td id="]EO}" class="">A keyword that removes an item by its <strong>index</strong>.</td></tr><tr id="22a243e5-2cd7-8085-bf1e-c12ad22ba216"><td id="etT]" class=""><code>clear()</code></td><td id="]EO}" class="">Removes <strong>all</strong> items from the list, making it empty.</td></tr></tbody></table><h3 id="22a243e5-2cd7-8057-af7d-c7d056b3a991" class=""><strong>Changing an Item</strong></h3><p id="22a243e5-2cd7-804a-8dfd-c26d05fbff0d" class="">You can change an item by accessing its index and assigning a new value.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80c5-ba94-ea7ca722de10" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day6_modifying.py
+shopping_list = [&quot;apples&quot;, &quot;oranges&quot;, &quot;bread&quot;]
+print(f&quot;\nOriginal shopping list: {shopping_list}&quot;)
+
+# Change an item
+shopping_list[1] = &quot;bananas&quot;
+print(f&quot;After changing: {shopping_list}&quot;)</code></pre><h2 id="22a243e5-2cd7-802f-ab2f-efa6312ea0e0" class=""><strong>✨ Part 4: More Powerful List Methods</strong></h2><h3 id="22a243e5-2cd7-800d-bf8e-ea41a5fcbd78" class=""><strong>Sorting and Reversing</strong></h3><table id="22a243e5-2cd7-8022-b46b-dab8624c4ac2" class="simple-table"><tbody><tr id="22a243e5-2cd7-80eb-9562-f86dbb87079c"><td id="Ly]U" class=""><strong>Method</strong></td><td id="]IJ[" class=""><strong>Description</strong></td></tr><tr id="22a243e5-2cd7-8004-a673-d14f4bdc8a18"><td id="Ly]U" class=""><code>sort()</code></td><td id="]IJ[" class="">Sorts the original list in place (ascending by default).</td></tr><tr id="22a243e5-2cd7-80a2-9906-c4a3e1079811"><td id="Ly]U" class=""><code>sort(reverse=True)</code></td><td id="]IJ[" class="">Sorts the original list in descending order.</td></tr><tr id="22a243e5-2cd7-80a4-a253-ce8ed471fe61"><td id="Ly]U" class=""><code>reverse()</code></td><td id="]IJ[" class="">Reverses the order of elements in the original list.</td></tr></tbody></table><p id="22a243e5-2cd7-80ff-b1de-e2df1dd3614a" class=""><strong>Important</strong>: <code>sort()</code> modifies the list directly. It does not return a new list.</p><h3 id="22a243e5-2cd7-801e-bd11-ca0a7757e8e3" class=""><strong>Other Useful Methods</strong></h3><table id="22a243e5-2cd7-806f-9393-e9e28918d10c" class="simple-table"><tbody><tr id="22a243e5-2cd7-80fa-bdd2-fe7e11aae739"><td id="]YPt" class=""><strong>Method</strong></td><td id="LrKe" class=""><strong>Description</strong></td></tr><tr id="22a243e5-2cd7-806f-b5f5-d06fa1c1d2bb"><td id="]YPt" class=""><code>len(list)</code></td><td id="LrKe" class="">(A function, not a method) Returns the number of items in the list.</td></tr><tr id="22a243e5-2cd7-80cb-8b06-fefee1a17a28"><td id="]YPt" class=""><code>count(item)</code></td><td id="LrKe" class="">Returns how many times an item appears in the list.</td></tr><tr id="22a243e5-2cd7-808f-9a1a-fdf3695a8553"><td id="]YPt" class=""><code>index(item)</code></td><td id="LrKe" class="">Returns the index of the first occurrence of an item.</td></tr><tr id="22a243e5-2cd7-80c9-8086-faa16b6f1773"><td id="]YPt" class=""><code>copy()</code></td><td id="LrKe" class="">Returns a shallow copy of the list.</td></tr></tbody></table><h2 id="22a243e5-2cd7-806d-9835-fa13e5beb75b" class=""><strong>⚡ Part 5: List Comprehension (A Pro Shortcut)</strong></h2><p id="22a243e5-2cd7-80e8-83e9-ead0c99a12ed" class="">List comprehension is an elegant way to create lists based on existing lists. It&#x27;s a compact version of a for-loop.</p><p id="22a243e5-2cd7-801c-a96a-e2cdb80c1561" class=""><strong>Syntax</strong>: <code>newList = [expression for item in oldList if condition]</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-804b-85d0-c628f48af832" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day6_comprehension.py
+
+# Traditional way to get numbers squared
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = []
+for num in numbers:
+    squared_numbers.append(num * num)
+print(f&quot;Traditional way: {squared_numbers}&quot;)
+
+# Using List Comprehension
+comp_squared = [num * num for num in numbers]
+print(f&quot;Comprehension way: {comp_squared}&quot;)
+
+# With a condition: only get even numbers
+even_numbers = [num for num in numbers if num % 2 == 0]
+print(f&quot;Even numbers only: {even_numbers}&quot;)</code></pre><h2 id="22a243e5-2cd7-8027-9a59-eb3cc81c08d1" class=""><strong>🚀 Fun Expedition: &quot;Team Roster Manager&quot;</strong></h2><p id="22a243e5-2cd7-80a2-9e16-e3dde1bf1ff8" class=""><strong>Mission</strong>: Manage a list of players for a sports team. Add new players, trade one out, and sort the final roster.</p><p id="22a243e5-2cd7-8072-99d3-c4eee2f13cee" class=""><strong>Your Task</strong>: Create <code>day6_roster.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80b2-b24a-ee3e47b1fb37" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Initial team roster
+roster = [&quot;Alex&quot;, &quot;Ben&quot;, &quot;Chloe&quot;]
+print(f&quot;Initial Roster: {roster}&quot;)
+
+# A new player joins
+roster.append(&quot;David&quot;)
+print(f&quot;After new player: {roster}&quot;)
+
+# Trade out a player: Ben (at index 1) is replaced by Eva
+roster[1] = &quot;Eva&quot;
+print(f&quot;After trade: {roster}&quot;)
+
+# Sort the final roster alphabetically
+roster.sort()
+print(f&quot;Final Sorted Roster: {roster}&quot;)
+
+# How many players are on the team?
+print(f&quot;There are {len(roster)} players on the team.&quot;)</code></pre><h2 id="22a243e5-2cd7-80f4-abb3-c58f5ef3d1ec" class=""><strong>🎯 Day 6: Review &amp; Solutions</strong></h2><h3 id="22a243e5-2cd7-8018-98e6-e963632d490d" class=""><strong>🛠️ Hands-on Practice</strong></h3><h3 id="22a243e5-2cd7-80fe-aed0-e214b6453071" class=""><strong>Exercise 1: Create and Access</strong></h3><p id="22a243e5-2cd7-800f-ab99-caa4b25b0e3f" class="">Create <code>day6_ex1.py</code>. Make a list of your 5 favorite fruits. Print the entire list. Then, print the first and the last fruit from the list.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-8047-a3eb-e18f754ae52d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day6_ex1.py
+favorite_fruits = [&quot;Apple&quot;, &quot;Banana&quot;, &quot;Mango&quot;, &quot;Cherry&quot;, &quot;Pineapple&quot;]
+print(f&quot;My favorite fruits: {favorite_fruits}&quot;)
+print(f&quot;The first fruit is: {favorite_fruits[0]}&quot;)
+print(f&quot;The last fruit is: {favorite_fruits[-1]}&quot;)</code></pre><h3 id="22a243e5-2cd7-805d-9ceb-e2d9c4861275" class=""><strong>Exercise 2: Modify a To-Do List</strong></h3><p id="22a243e5-2cd7-80d0-b827-ddeef917644a" class="">Create <code>day6_ex2.py</code>. Start with <code>todo = [&quot;Call mom&quot;, &quot;Do laundry&quot;]</code>. Use <code>append()</code> to add &quot;Go grocery shopping&quot;. Then use <code>insert()</code> to add &quot;Pay bills&quot; at the beginning of the list. Print the final list.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80ab-a54c-c24ef8d19816" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day6_ex2.py
+todo = [&quot;Call mom&quot;, &quot;Do laundry&quot;]
+print(f&quot;Initial to-do: {todo}&quot;)
+
+todo.append(&quot;Go grocery shopping&quot;)
+print(f&quot;After append: {todo}&quot;)
+
+todo.insert(0, &quot;Pay bills&quot;)
+print(f&quot;Final to-do: {todo}&quot;)</code></pre><h3 id="22a243e5-2cd7-801e-8817-f6889b595018" class=""><strong>Exercise 3: Removing Items</strong></h3><p id="22a243e5-2cd7-800d-a8cb-e9edfda5862b" class="">Create <code>day6_ex3.py</code>. Start with <code>guests = [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;David&quot;]</code>. Bob can&#x27;t make it, so <code>remove()</code> him. Then, <code>pop()</code> the last person from the list. Print the final guest list.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-8073-a833-c6a311ffac0d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day6_ex3.py
+guests = [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;David&quot;]
+print(f&quot;Original guests: {guests}&quot;)
+
+guests.remove(&quot;Bob&quot;)
+print(f&quot;After removing Bob: {guests}&quot;)
+
+guests.pop() # Removes the last item, &quot;David&quot;
+print(f&quot;Final guests: {guests}&quot;)</code></pre><h3 id="22a243e5-2cd7-80f1-8bfe-dcecf0df8b5f" class=""><strong>Exercise 4: Sorting Numbers</strong></h3><p id="22a243e5-2cd7-809b-96ad-f0862ec0b6e7" class="">Create <code>day6_ex4.py</code>. Given the list <code>scores = [88, 92, 77, 95, 85]</code>, sort it in ascending order and print it. Then, sort it in descending order and print it.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-8071-b3e7-d3c8f3b1be9a" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day6_ex4.py
+scores = [88, 92, 77, 95, 85]
+print(f&quot;Original scores: {scores}&quot;)
+
+# Sort ascending
+scores.sort()
+print(f&quot;Sorted ascending: {scores}&quot;)
+
+# Sort descending
+scores.sort(reverse=True)
+print(f&quot;Sorted descending: {scores}&quot;)</code></pre><h3 id="22a243e5-2cd7-804d-9cf0-eab39b66e3f9" class=""><strong>Exercise 5: List Comprehension Challenge</strong></h3><p id="22a243e5-2cd7-802d-bc29-e768f6ec4c1c" class="">Create <code>day6_ex5.py</code>. Given <code>words = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;date&quot;]</code>, use a list comprehension to create a new list containing only the words that have more than 5 letters.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80cf-9c87-dba5302331e4" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day6_ex5.py
+words = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;date&quot;]
+long_words = [word for word in words if len(word) &gt; 5]
+print(f&quot;Words with more than 5 letters: {long_words}&quot;)</code></pre><h3 id="22a243e5-2cd7-80ed-94fd-ec09ecd8a2f6" class=""><strong>🧠 Quiz Time</strong></h3><p id="22a243e5-2cd7-80fd-99c7-d681d83ac596" class="">Q1: Which of the following correctly creates a list?</p><p id="22a243e5-2cd7-80e8-834f-fa4c6e97ad5f" class="">a) (1, 2, 3)  b) {1, 2, 3}  c) [1, 2, 3]  d) &quot;1, 2, 3&quot;</p><p id="22a243e5-2cd7-80e0-9303-f8c8703eb5b9" class="">Q2: If my_list = [10, 20, 30, 40], what is my_list[-2]?</p><p id="22a243e5-2cd7-809a-85f3-f9243f3f8acc" class="">a) 20  b) 30  c) 40  d) An error</p><p id="22a243e5-2cd7-8018-930a-ed0de3c842fc" class="">Q3: Which method adds an item to the very end of a list?</p><p id="22a243e5-2cd7-8011-9d5c-da32dac8bc1f" class="">a) .insert()  b) .extend()  c) .add()  d) .append()</p><p id="22a243e5-2cd7-8008-b8ed-c45471da1f3e" class="">Q4: What does the .pop() method do if no index is specified?</p><p id="22a243e5-2cd7-8005-b624-dbc23c17bbcf" class="">a) Removes the first item  b) Removes the last item  c) Empties the list  d) Raises an error</p><p id="22a243e5-2cd7-8039-84a3-eca618edea2e" class="">Q5: After my_list.sort(), what can you say about my_list?</p><p id="22a243e5-2cd7-8044-bfc0-eeee5c9f47b7" class="">a) It is unchanged  b) It returns a new sorted list  c) It is now sorted in place  d) It is sorted alphabetically only</p><p id="22a243e5-2cd7-8081-8965-e73a03fe8413" class="">Q6: How do you add all items from list2 to the end of list1?</p><p id="22a243e5-2cd7-809d-a5a5-ce5d1fec67fc" class="">a) list1.append(list2)  b) list1.add(list2)  c) list1.extend(list2)  d) list1.join(list2)</p><p id="22a243e5-2cd7-80a2-8937-e29ffc81af07" class="">Q7: What is the output of [num * 2 for num in [1, 2, 3]]?</p><p id="22a243e5-2cd7-80a8-b373-db151cbb3e39" class="">a) [1, 2, 3]  b) [2, 4, 6]  c) [1, 4, 9]  d) An error</p><p id="22a243e5-2cd7-8045-a4e1-e93f791a7514" class="">Q8: Which keyword removes an item from a list at a specific index?</p><p id="22a243e5-2cd7-8035-9f94-fa8e11f6df58" class="">a) remove  b) del  c) pop  d) clear</p><p id="22a243e5-2cd7-8074-81e1-f6e08b9aad79" class="">Q9: What does my_list.remove(&#x27;x&#x27;) do if &#x27;x&#x27; appears multiple times?</p><p id="22a243e5-2cd7-8077-a7e7-e0772634675a" class="">a) Removes all &#x27;x&#x27;s  b) Removes the first &#x27;x&#x27;  c) Removes the last &#x27;x&#x27;  d) Raises an error</p><p id="22a243e5-2cd7-8019-92fe-f52784c6391c" class=""><strong>Q10</strong>: True or False: Lists can contain items of different data types.</p><h3 id="22a243e5-2cd7-8024-bc8a-c1c88f5902fb" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="22a243e5-2cd7-80ac-9df2-dcad03eb375d" class=""><strong>Project: &quot;Task Manager&quot;</strong></h3><p id="22a243e5-2cd7-8019-9eef-c2efa852b574" class=""><strong>Goal</strong>: Create a simple command-line task manager. You will start with a list of tasks and perform a series of operations like adding, removing, and sorting, demonstrating your mastery of list manipulations.</p><p id="22a243e5-2cd7-80ae-bda2-d6a33ffb2235" class=""><strong>Create the following file in your </strong><code><strong>Day_6/exercises/</strong></code><strong> folder</strong>:</p><p id="22a243e5-2cd7-8054-b1f7-c2d39b821e6a" class=""><code><strong>task_manager.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80fb-b1a1-ecf9181fadc6" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Instructions:
+#
+# 1. Start with an initial list of tasks.
+#    tasks = [&quot;Pay bills&quot;, &quot;Read a book&quot;, &quot;Clean the house&quot;]
+#
+# 2. Print the initial list of tasks for the user to see.
+#
+# 3. A new high-priority task comes up. Add &quot;Submit the report&quot; to the *beginning* of the list.
+#
+# 4. Another task needs to be added to the end. Add &quot;Go for a run&quot; to the end of the list.
+#
+# 5. You&#x27;ve completed a task. Remove &quot;Clean the house&quot; from the list.
+#
+# 6. Print the list after all the additions and removals to show the current tasks.
+#
+# 7. Sort the final list of tasks alphabetically and print it.
+#
+# 8. Finally, print the total number of tasks remaining.
+#
+# Your final output should clearly show the list at each stage.
+
+</code></pre><h3 id="22a243e5-2cd7-80ec-bffd-e6a45b30c8dd" class=""><strong>✅ Solutions</strong></h3><h3 id="22a243e5-2cd7-8018-8d7b-fec47935f327" class=""><strong>Quiz Answers</strong></h3><p id="22a243e5-2cd7-8047-8cc1-feb25eb04177" class=""><strong>Q1</strong>: c) <code>[1, 2, 3]</code> (Lists use square brackets).</p><p id="22a243e5-2cd7-8061-a500-cf00dc0ccd50" class=""><strong>Q2</strong>: b) 30 (Negative indexing counts from the end).</p><p id="22a243e5-2cd7-8037-a108-e2dfea19666c" class=""><strong>Q3</strong>: d) <code>.append()</code></p><p id="22a243e5-2cd7-8064-b92c-f58fb822239a" class=""><strong>Q4</strong>: b) Removes the last item.</p><p id="22a243e5-2cd7-8044-b0ec-c16efabd2120" class=""><strong>Q5</strong>: c) It is now sorted in place (The original list is modified).</p><p id="22a243e5-2cd7-8035-9aaa-cbcece3cd37d" class=""><strong>Q6</strong>: c) <code>list1.extend(list2)</code> (<code>append</code> would add <code>list2</code> as a single item).</p><p id="22a243e5-2cd7-8001-a216-cbb8527a95f7" class=""><strong>Q7</strong>: b) <code>[2, 4, 6]</code> (The list comprehension doubles each item).</p><p id="22a243e5-2cd7-8056-b0ac-e93f5a8bf8e9" class=""><strong>Q8</strong>: b) <code>del</code> (e.g., <code>del my_list[0]</code>).</p><p id="22a243e5-2cd7-8062-ac8b-de8479ce9b5b" class=""><strong>Q9</strong>: b) Removes the first &#x27;x&#x27;.</p><p id="22a243e5-2cd7-8047-aacb-e7ce48f4f279" class=""><strong>Q10</strong>: True (Lists are heterogeneous, meaning they can hold mixed data types).</p><h3 id="22a243e5-2cd7-8092-a22d-c6b5c94cb9a0" class=""><strong>Assignment Solution (</strong><code><strong>task_manager.py</strong></code><strong>)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22a243e5-2cd7-80e2-bc23-ed0af8b9f1cc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Day_6_sol.py
+# Solution for the Day 6 &quot;Task Manager&quot; assignment.
+
+# 1. Initial list of tasks.
+tasks = [&quot;Pay bills&quot;, &quot;Read a book&quot;, &quot;Clean the house&quot;]
+
+# 2. Print the initial list.
+print(&quot;--- Task Manager ---&quot;)
+print(f&quot;Initial tasks: {tasks}&quot;)
+print(&quot;-&quot; * 20)
+
+# 3. Add a high-priority task to the beginning.
+tasks.insert(0, &quot;Submit the report&quot;)
+print(f&quot;After adding high-priority task: {tasks}&quot;)
+
+# 4. Add a task to the end.
+tasks.append(&quot;Go for a run&quot;)
+print(f&quot;After adding task to the end: {tasks}&quot;)
+print(&quot;-&quot; * 20)
+
+# 5. Remove a completed task.
+tasks.remove(&quot;Clean the house&quot;)
+
+# 6. Print the current list of tasks.
+print(f&quot;Current tasks after completion: {tasks}&quot;)
+print(&quot;-&quot; * 20)
+
+# 7. Sort the final list alphabetically.
+tasks.sort()
+print(f&quot;Final sorted task list: {tasks}&quot;)
+
+# 8. Print the total number of remaining tasks.
+task_count = len(tasks)
+print(f&quot;\nYou have {task_count} tasks remaining.&quot;)
+print(&quot;--------------------&quot;)</code></pre><p id="22c243e5-2cd7-8023-81b0-e25f781ad291" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

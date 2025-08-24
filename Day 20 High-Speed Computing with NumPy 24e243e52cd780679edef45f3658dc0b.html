@@ -1,0 +1,897 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 20: High-Speed Computing with NumPy</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24e243e5-2cd7-8067-9ede-f45f3658dc0b" class="page sans"><header><h1 class="page-title"><strong>Day 20: High-Speed Computing with NumPy</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><div data-testid="/icons/burst_gray.svg" style="width:14px;height:14px;flex-shrink:0;transform:scale(1.2);mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;-webkit-mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;background-color:rgba(71, 70, 68, 0.6);fill:rgba(71, 70, 68, 0.6)"></div></span>Status</th><td><span class="status-value"><div class="status-dot"></div>Not started</span></td></tr></tbody></table></header><div class="page-body"><p id="24e243e5-2cd7-806d-892d-ea614c4de5fc" class=""><em>Unlocking the power of vectorized operations for lightning-fast data manipulation. This is the bedrock of scientific computing in Python! ⚡</em></p><h2 id="24e243e5-2cd7-80cf-be17-d776ac20f73e" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="24e243e5-2cd7-809d-9aa8-cfb641c47550" class="bulleted-list"><li style="list-style-type:disc">Understand what NumPy is and why it&#x27;s the fundamental package for scientific computing.</li></ul><ul id="24e243e5-2cd7-805c-8454-c6f1edf09d24" class="bulleted-list"><li style="list-style-type:disc">Create and manipulate the core NumPy data structure: the N-dimensional array (<code>ndarray</code>).</li></ul><ul id="24e243e5-2cd7-80eb-8254-c6d73d9d9c05" class="bulleted-list"><li style="list-style-type:disc">Generate arrays using various built-in functions like <code>arange</code>, <code>zeros</code>, and <code>ones</code>.</li></ul><ul id="24e243e5-2cd7-800d-8c84-c68dafa57bc4" class="bulleted-list"><li style="list-style-type:disc">Perform powerful, high-speed vectorized operations (Universal Functions).</li></ul><ul id="24e243e5-2cd7-8078-ae10-ed8a87681567" class="bulleted-list"><li style="list-style-type:disc">Master array indexing and slicing, including position-based and boolean indexing.</li></ul><ul id="24e243e5-2cd7-80fe-8ffe-df4af2cde92f" class="bulleted-list"><li style="list-style-type:disc">Use NumPy for basic statistical calculations and random number generation.</li></ul><h2 id="24e243e5-2cd7-80cd-ad19-c4386e8b1bfe" class=""><strong>📦 Part 1: What is NumPy?</strong></h2><p id="24e243e5-2cd7-80d2-adfd-d901a80bb847" class=""><strong>NumPy (Numerical Python)</strong> is the most popular Python library for numerical and mathematical operations. Its main feature is the powerful N-dimensional array object, which allows for efficient, vectorized computations.</p><p id="24e243e5-2cd7-8048-a792-c259c8ab982d" class=""><strong>Analogy</strong>: Think of a standard Python list as a <strong>single-lane country road</strong>. You can move items one by one, but it&#x27;s slow. A NumPy array is like a <strong>multi-lane superhighway</strong>. It&#x27;s designed to perform operations on entire arrays of data all at once, in a highly optimized way, making it incredibly fast for mathematical and data-intensive tasks.</p><h3 id="24e243e5-2cd7-8097-8a68-c9e620acfcf5" class=""><strong>Importing NumPy</strong></h3><p id="24e243e5-2cd7-8026-98e2-c106e90adfc3" class="">By universal convention, NumPy is always imported with the alias <code>np</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80e5-87bd-dd3ca04fb1d6" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import numpy as np</code></pre><h2 id="24e243e5-2cd7-802b-8bcd-ceed5989e0b0" class=""><strong>🔢 Part 2: The NumPy Array (</strong><code><strong>ndarray</strong></code><strong>)</strong></h2><p id="24e243e5-2cd7-80d7-991b-eb4ffd20b7a8" class="">The <code>ndarray</code> is the fundamental data structure in NumPy. <mark class="highlight-default"><mark class="highlight-blue_background">Unlike a Python list, all elements in a NumPy array must be of the same data type.</mark></mark></p><h3 id="24e243e5-2cd7-8046-954a-c344148d9166" class=""><strong>Creating Arrays</strong></h3><p id="24e243e5-2cd7-80d2-835b-da261d8327e4" class="">You can create an array by passing a list to the <code>np.array()</code> function.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8019-a4d9-fd809936f030" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_arrays.py
+import numpy as np
+
+# Create a 1D array (a vector) from a list
+vector_a = np.array([1, 2, 3, 4])
+print(&quot;1D Vector a:&quot;)
+print(vector_a)
+
+# Create a 2D array (a matrix) from a list of lists
+matrix_b = np.array([[1, 2], [3, 4]])
+print(&quot;\n2D Matrix b:&quot;)
+print(matrix_b)</code></pre><h3 id="24e243e5-2cd7-808a-b3d9-ff859a50805b" class=""><strong>Array Shape and Reshaping</strong></h3><p id="24e243e5-2cd7-8085-b163-e6574263dd4a" class="">The <code>.shape</code> attribute tells you the dimensions of an array. You can change the shape with the <code>.reshape()</code> method.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80d7-9026-e97d36a70f45" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day3_arrays.py
+
+# Check the shape of our arrays
+print(f&quot;\nShape of vector_a: {vector_a.shape}&quot;) # Output: (4,) -&gt; A 1D array of length 4
+print(f&quot;Shape of matrix_b: {matrix_b.shape}&quot;) # Output: (2, 2) -&gt; A 2x2 matrix
+
+# Reshape the vector into a 2x2 matrix
+reshaped_a = vector_a.reshape((2, 2))
+print(&quot;\nReshaped vector_a:&quot;)
+print(reshaped_a)</code></pre><h3 id="24e243e5-2cd7-801d-be85-fd54223f84a5" class=""><strong>Other Ways to Create Arrays</strong></h3><table id="24e243e5-2cd7-80cf-a1be-fa02bc7ecf4a" class="simple-table"><tbody><tr id="24e243e5-2cd7-80cf-8c2d-d99e30f0a509"><td id="Q@\c" class=""><strong>Function</strong></td><td id="d[tm" class=""><strong>Description</strong></td></tr><tr id="24e243e5-2cd7-8077-97e4-d3e24a2ca15c"><td id="Q@\c" class=""><code>np.arange(start, stop, step)</code></td><td id="d[tm" class="">Creates an array with a range of numbers, similar to Python&#x27;s <code>range()</code>.</td></tr><tr id="24e243e5-2cd7-8003-ae4f-f4cfafe2692f"><td id="Q@\c" class=""><code>np.zeros(shape)</code></td><td id="d[tm" class="">Creates an array of the given shape, filled with zeros.</td></tr><tr id="24e243e5-2cd7-80b7-99f3-d3061e4fd2c7"><td id="Q@\c" class=""><code>np.ones(shape)</code></td><td id="d[tm" class="">Creates an array of the given shape, filled with ones.</td></tr><tr id="24e243e5-2cd7-8087-ae20-c74931594d65"><td id="Q@\c" class=""><code>np.linspace(start, stop, num)</code></td><td id="d[tm" class="">Creates an array with a specified number of evenly spaced values between start and stop.</td></tr></tbody></table><h2 id="24e243e5-2cd7-80af-bd7d-cb916d2cd157" class=""><strong>⚡ Part 3: Vectorized Operations (Universal Functions)</strong></h2><p id="24e243e5-2cd7-80bd-b108-e2d2f8b94d93" class="">This is the core power of NumPy. Instead of writing slow <code>for</code> loops, you can apply operations to entire arrays at once. These are called <strong>Universal Functions</strong> or <strong>ufuncs</strong>.</p><h3 id="24e243e5-2cd7-8038-9929-e17d4b0e428e" class=""><strong>Mathematical Operations</strong></h3><p id="24e243e5-2cd7-8077-9907-d6b25afc4589" class="">Standard math operators work element-wise.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8014-8445-fc8baf3a1e31" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_vectorization.py
+import numpy as np
+
+# Create a 2x3 matrix
+matrix = np.arange(6).reshape((2, 3)) # Creates [[0, 1, 2], [3, 4, 5]]
+print(&quot;Original Matrix:&quot;)
+print(matrix)
+
+# Perform vectorized operations
+print(&quot;\nMatrix + 100:&quot;)
+print(matrix + 100)
+
+print(&quot;\nMatrix * 2:&quot;)
+print(matrix * 2)</code></pre><h3 id="24e243e5-2cd7-8053-9b4a-e13174515821" class=""><strong>Logical Operations</strong></h3><p id="24e243e5-2cd7-8051-94b0-f50094a839f9" class="">Comparison operators also work element-wise and return a boolean array.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80b4-ac5f-fd3e3ea90915" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day3_vectorization.py
+print(&quot;\nElements greater than 2:&quot;)
+print(matrix &gt; 2)</code></pre><p id="24e243e5-2cd7-8022-8a78-ff7f2151fa88" class="">For vectorized <code>and</code>, <code>or</code>, and <code>not</code>, you must use the operators <code>&amp;</code>, <code>|</code>, and <code>~</code> respectively.</p><h2 id="24e243e5-2cd7-80c6-b014-d295e31de2c2" class=""><strong>🎯 Part 4: Array Indexing and Slicing</strong></h2><p id="24e243e5-2cd7-8032-b80d-e5a332ca2465" class="">Accessing data in NumPy arrays is similar to lists but more powerful.</p><h3 id="24e243e5-2cd7-8029-ba9c-d45fbb13a457" class=""><strong>Position-Based Indexing</strong></h3><p id="24e243e5-2cd7-804c-b4f1-fe78fafc2ca8" class="">You use square brackets <code>[]</code>. For 2D arrays, the syntax is <code>[row, column]</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8046-b904-ec7ac943df00" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_indexing.py
+import numpy as np
+
+matrix = np.arange(12).reshape((3, 4))
+# [[ 0,  1,  2,  3],
+#  [ 4,  5,  6,  7],
+#  [ 8,  9, 10, 11]]
+print(&quot;Original Matrix:&quot;)
+print(matrix)
+
+# Get a single element (row 1, column 2)
+element = matrix[1, 2]
+print(f&quot;\nElement at [1, 2]: {element}&quot;) # Output: 6
+
+# Get an entire row (row 0)
+row = matrix[0, :] # The &#x27;:&#x27; means &quot;all columns&quot;
+print(f&quot;First row: {row}&quot;)
+
+# Get an entire column (column 3)
+column = matrix[:, 3] # The &#x27;:&#x27; means &quot;all rows&quot;
+print(f&quot;Fourth column: {column}&quot;)</code></pre><h3 id="24e243e5-2cd7-80e6-9568-d5520c007bd0" class=""><strong>Boolean Indexing</strong></h3><p id="24e243e5-2cd7-80fa-ab3f-dc7544271c38" class="">This is an extremely powerful technique where you use a boolean array to select elements from another array.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8046-88de-c1cb0711c0f7" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day3_indexing.py
+
+# Create a boolean mask
+mask = matrix &gt; 5
+print(&quot;\nBoolean Mask (elements &gt; 5):&quot;)
+print(mask)
+
+# Use the mask to select only the elements that are True
+print(&quot;\nElements greater than 5:&quot;)
+print(matrix[mask]) # Output: [ 6  7  8  9 10 11]
+
+# This is often written in a single line:
+print(&quot;\nElements less than 3 (one-liner):&quot;)
+print(matrix[matrix &lt; 3])</code></pre><h2 id="24e243e5-2cd7-8021-8c42-c17ff19106f4" class=""><strong>🎲 Part 5: Random Numbers &amp; Statistics</strong></h2><p id="24e243e5-2cd7-8090-8180-ef24c4723d92" class="">NumPy has a robust <code>random</code> module for generating random data.</p><table id="24e243e5-2cd7-809e-bdb1-c42f3a616086" class="simple-table"><tbody><tr id="24e243e5-2cd7-8091-b32d-eee576eeb19a"><td id="{LCk" class=""><strong>Function</strong></td><td id="EcW:" class=""><strong>Description</strong></td></tr><tr id="24e243e5-2cd7-80b5-8c7b-df8b7b03c21d"><td id="{LCk" class=""><code>np.random.rand(d0, d1, ...)</code></td><td id="EcW:" class="">Creates an array of the given shape with random samples from a uniform distribution over <code>[0, 1)</code>.</td></tr><tr id="24e243e5-2cd7-8056-a6b2-c9177ab6bcdf"><td id="{LCk" class=""><code>np.random.randn(d0, d1, ...)</code></td><td id="EcW:" class="">Creates an array of the given shape with random samples from a standard normal distribution.</td></tr><tr id="24e243e5-2cd7-80a7-a4cf-fdc0bef1ec04"><td id="{LCk" class=""><code>np.random.randint(low, high, size)</code></td><td id="EcW:" class="">Creates an array of the given size with random integers from <code>low</code> (inclusive) to <code>high</code> (exclusive).</td></tr></tbody></table><h3 id="24e243e5-2cd7-8008-954a-d7428b69e6bb" class=""><strong>Basic Statistics</strong></h3><p id="24e243e5-2cd7-80bd-9b95-c79678e7dd7e" class="">NumPy has methods for quick statistical analysis. The <code>axis</code> parameter is key:</p><ul id="24e243e5-2cd7-80f3-9675-e9c23f148cbe" class="bulleted-list"><li style="list-style-type:disc"><code>axis=0</code>: Perform operation along the <strong>columns</strong>.</li></ul><ul id="24e243e5-2cd7-8014-ab77-f11816ab95d8" class="bulleted-list"><li style="list-style-type:disc"><code>axis=1</code>: Perform operation along the <strong>rows</strong>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8031-bfa8-fba5841139f5" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_stats.py
+import numpy as np
+
+data = np.arange(12).reshape((3, 4))
+
+print(&quot;Data:&quot;)
+print(data)
+
+print(f&quot;\nOverall Sum: {data.sum()}&quot;)
+print(f&quot;Sum of each column (axis=0): {data.sum(axis=0)}&quot;)
+print(f&quot;Mean of each row (axis=1): {data.mean(axis=1)}&quot;)</code></pre><h2 id="24e243e5-2cd7-8095-a0cb-c011548a8355" class=""><strong>🚀 Fun Expedition: &quot;Image Masking&quot;</strong></h2><p id="24e243e5-2cd7-8087-a237-de3998ba53ef" class=""><strong>Mission</strong>: Simulate a simple image masking operation. We&#x27;ll create a small matrix of numbers (representing pixel brightness), and use boolean indexing to &quot;brighten&quot; only the pixels above a certain threshold.</p><p id="24e243e5-2cd7-80de-8058-dda0f8b1afc4" class=""><strong>Your Task</strong>: Create <code>day3_masking.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8018-8aa5-dcb9549f97cd" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import numpy as np
+
+# Create a 5x5 &quot;image&quot; of random integers from 0 to 255
+image = np.random.randint(0, 256, size=(5, 5))
+print(&quot;Original Image (pixel values):&quot;)
+print(image)
+
+# Create a boolean mask for all pixels with brightness &gt; 150
+bright_pixels_mask = image &gt; 150
+print(&quot;\nMask (True where pixels are bright):&quot;)
+print(bright_pixels_mask)
+
+# Use the mask to add 50 brightness points to only the bright pixels
+# This is a powerful one-liner!
+image[bright_pixels_mask] += 50
+
+print(&quot;\nBrightened Image (values &gt; 150 increased by 50):&quot;)
+print(image)</code></pre><h2 id="24e243e5-2cd7-80e2-85aa-c5075a60983f" class=""><strong>🎯 Day 3: Review &amp; Solutions</strong></h2><h3 id="24e243e5-2cd7-80e9-8bb4-ea48ad6fcb01" class=""><strong>🛠️ Hands-on Practice</strong></h3><h3 id="24e243e5-2cd7-80b4-aafc-c4f9ac8460aa" class=""><strong>Exercise 1: Array Creation</strong></h3><p id="24e243e5-2cd7-8003-bba1-f30d103e235f" class="">Create <code>day3_ex1.py</code>. Use <code>np.arange()</code> to create a 1D array of numbers from 10 to 25 (inclusive). Then, reshape it into a 4x4 matrix.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8009-bef4-ce5891c522ae" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex1.py
+import numpy as np
+
+# arange is exclusive of the stop value, so we use 26
+arr = np.arange(10, 26).reshape((4, 4))
+print(arr)</code></pre><h3 id="24e243e5-2cd7-80c6-9409-e75c9bd5e13e" class=""><strong>Exercise 2: Vectorized Math</strong></h3><p id="24e243e5-2cd7-806d-a8b1-d71db997e1a0" class="">Create <code>day3_ex2.py</code>. Create a 3x3 matrix of all ones. First, multiply the entire matrix by 5. Second, add a 1D array <code>[0, 1, 2]</code> to it. (Hint: NumPy will broadcast the 1D array across the rows).</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-807a-9136-dc224849fa3d" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex2.py
+import numpy as np
+
+matrix = np.ones((3, 3))
+matrix *= 5
+
+row_to_add = np.array([0, 1, 2])
+result = matrix + row_to_add
+
+print(result)</code></pre><h3 id="24e243e5-2cd7-8082-b9f3-f10995d8b554" class=""><strong>Exercise 3: Slicing</strong></h3><p id="24e243e5-2cd7-8007-9fd8-d0fff188812c" class="">Create <code>day3_ex3.py</code>. Given the matrix from Exercise 1, slice and print the inner 2x2 matrix (the one containing 15, 16, 19, 20).</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80f3-81e8-e1a69b77ac0c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex3.py
+import numpy as np
+
+arr = np.arange(10, 26).reshape((4, 4))
+# [[10 11 12 13]
+#  [14 15 16 17]
+#  [18 19 20 21]
+#  [22 23 24 25]]
+
+# Slice rows 1 and 2, and columns 1 and 2
+inner_matrix = arr[1:3, 1:3]
+print(inner_matrix)</code></pre><h3 id="24e243e5-2cd7-80f6-a209-e4474d00c60a" class=""><strong>Exercise 4: Boolean Indexing</strong></h3><p id="24e243e5-2cd7-8083-a850-e786207c7f2c" class="">Create <code>day3_ex4.py</code>. Using the same matrix, create a boolean mask to find all numbers that are divisible by 3. Then, use this mask to set all of those numbers to <code>-1</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-803f-8559-d682134a1553" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex4.py
+import numpy as np
+
+arr = np.arange(10, 26).reshape((4, 4))
+print(&quot;Original array:&quot;)
+print(arr)
+
+# Create the boolean mask
+divisible_by_3_mask = arr % 3 == 0
+
+# Apply the mask to change values
+arr[divisible_by_3_mask] = -1
+print(&quot;\nArray after modification:&quot;)
+print(arr)</code></pre><h3 id="24e243e5-2cd7-801a-8f70-dec0a3a48590" class=""><strong>Exercise 5: Statistical Operations</strong></h3><p id="24e243e5-2cd7-8069-82e4-fb40611ce251" class="">Create <code>day3_ex5.py</code>. Create a 4x5 matrix of random integers between 1 and 100. Calculate and print the mean of the entire matrix, the standard deviation of each column, and the sum of each row.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8023-8cde-ee4f03a66d75" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex5.py
+import numpy as np
+
+data = np.random.randint(1, 101, size=(4, 5))
+print(&quot;Data:&quot;)
+print(data)
+
+print(f&quot;\nOverall Mean: {data.mean():.2f}&quot;)
+print(f&quot;Std Dev of each column (axis=0): {data.std(axis=0)}&quot;)
+print(f&quot;Sum of each row (axis=1): {data.sum(axis=1)}&quot;)</code></pre><h3 id="24e243e5-2cd7-8017-8afd-fe38b9c85d77" class=""><strong>🧠 Quiz Time</strong></h3><p id="24e243e5-2cd7-8077-bc42-dd89a0d41342" class="">Q1: What is the primary data structure in NumPy?</p><p id="24e243e5-2cd7-8048-a0ed-d84a7f0716f5" class="">a) List  b) Dictionary  c) ndarray (N-dimensional array)  d) Series</p><p id="24e243e5-2cd7-801f-96d4-d0d3476c9482" class="">Q2: By convention, what alias is used when importing NumPy?</p><p id="24e243e5-2cd7-80ad-aebf-dc5433c596cf" class="">a) nm  b) py  c) num  d) np</p><p id="24e243e5-2cd7-8056-849f-ed88f6a10648" class="">Q3: If arr = np.array([[1, 2], [3, 4]]), what is arr.shape?</p><p id="24e243e5-2cd7-8056-b4ad-c528db1b9fc7" class="">a) (2,)  b) (4,)  c) (2, 2)  d) 4</p><p id="24e243e5-2cd7-802f-a38c-d845fffd8fa5" class="">Q4: What is the key advantage of using vectorized operations in NumPy over Python loops?</p><p id="24e243e5-2cd7-8046-824d-d1a3f2174308" class="">a) They are easier to read  b) They are significantly faster  c) They use less memory  d) All of the above</p><p id="24e243e5-2cd7-80ca-b7b5-d67851e7d99c" class="">Q5: If matrix = np.arange(9).reshape((3, 3)), how do you select the element 4?</p><p id="24e243e5-2cd7-80c7-91a6-dba7244535dc" class="">a) matrix[4]  b) matrix[1, 1]  c) matrix[2, 2]  d) matrix[5]</p><p id="24e243e5-2cd7-80d0-94fc-fbd9c298f1f8" class="">Q6: What does np.zeros((2, 3)) create?</p><p id="24e243e5-2cd7-80ca-a7a7-f8942efad89c" class="">a) A 1D array of 5 zeros  b) A 2x3 matrix of zeros  c) A 2x3 matrix of ones  d) An error</p><p id="24e243e5-2cd7-809a-a815-e0da995c2235" class="">Q7: To select all elements in a matrix m that are greater than 10, what is the correct syntax?</p><p id="24e243e5-2cd7-80b4-a869-ca1bd19c7e33" class="">a) m[m &gt; 10]  b) m.select(m &gt; 10)  c) m &gt; 10  d) m.filter(lambda x: x &gt; 10)</p><p id="24e243e5-2cd7-806c-b94d-c6751a2c0c64" class="">Q8: In the function data.sum(axis=0), what does axis=0 refer to?</p><p id="24e243e5-2cd7-8056-80fe-e4842068bab2" class="">a) Performing the sum along the rows  b) Performing the sum along the columns  c) Calculating the total sum  d) No effect</p><p id="24e243e5-2cd7-8070-bbcc-c355c4ab6e66" class="">Q9: What is the result of np.arange(3, 8)?</p><p id="24e243e5-2cd7-80bd-ad2c-d9d20b728d9d" class="">a) [3, 4, 5, 6, 7, 8]  b) [3, 4, 5, 6, 7]  c) [4, 5, 6, 7]  d) [3, 8]</p><p id="24e243e5-2cd7-809e-bf83-dc0258e54d19" class=""><strong>Q10</strong>: True or False: All elements in a single NumPy array must have the same data type.</p><h3 id="24e243e5-2cd7-8036-94f9-c8217db166f2" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="24e243e5-2cd7-8068-8c4e-e67e2b069e85" class=""><strong>Project: &quot;Student Grade Analysis&quot;</strong></h3><p id="24e243e5-2cd7-8086-8231-e7d1652ed0f5" class=""><strong>Goal</strong>: You are given a dataset of student grades for multiple assignments. Your task is to use NumPy to perform a series of calculations to analyze the data, such as finding average scores and identifying the highest score for each student.</p><p id="24e243e5-2cd7-8048-8d6f-fc274dc55b23" class=""><strong>Create the following file in your </strong><code><strong>Day_3/exercises/</strong></code><strong> folder</strong>:</p><p id="24e243e5-2cd7-80a3-a7d8-e13b63c54073" class=""><code><strong>grade_analyzer.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8041-a139-ed3e4bb33c94" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import numpy as np
+
+# Instructions:
+#
+# 1. Start with the following data, representing grades for 4 students on 5 assignments.
+#    Create it as a 2D NumPy array.
+#    grades_data = np.array([
+#        [88, 82, 85, 89, 91],  # Student 1
+#        [76, 80, 78, 82, 79],  # Student 2
+#        [92, 90, 94, 88, 95],  # Student 3
+#        [85, 88, 90, 91, 84]   # Student 4
+#    ])
+#
+# 2. Calculate the average grade for each student (the mean of each row).
+#    Store this in a variable called `student_averages`.
+#
+# 3. Calculate the average grade for each assignment (the mean of each column).
+#    Store this in a variable called `assignment_averages`.
+#
+# 4. Find the highest score achieved by each student (the max of each row).
+#    Store this in a variable called `student_max_scores`.
+#
+# 5. A curve is applied! Add 3 points to every grade in the entire dataset.
+#    Store the result in a new array called `curved_grades`.
+#
+# 6. Use boolean indexing to find all the original grades that were above 90.
+#    Store this in a variable called `high_scores`.
+#
+# 7. Print all your results with clear, descriptive labels.</code></pre><h3 id="24e243e5-2cd7-80da-a67f-d92750b805d8" class=""><strong>✅ Solutions</strong></h3><h3 id="24e243e5-2cd7-8004-aaad-c1497c1a92d9" class=""><strong>Quiz Answers</strong></h3><p id="24e243e5-2cd7-8088-9b68-fbe8e37949c7" class=""><strong>Q1</strong>: c) <code>ndarray</code> (N-dimensional array).</p><p id="24e243e5-2cd7-80bc-8f06-f9d46b5f560d" class=""><strong>Q2</strong>: d) <code>np</code>.</p><p id="24e243e5-2cd7-8067-a76c-ce93291436ab" class=""><strong>Q3</strong>: c) <code>(2, 2)</code>.</p><p id="24e243e5-2cd7-802d-8aee-c1186e1980be" class=""><strong>Q4</strong>: d) All of the above (They are faster, often easier to read, and can be more memory-efficient).</p><p id="24e243e5-2cd7-8071-b9f7-cda9e284bf2a" class=""><strong>Q5</strong>: b) <code>matrix[1, 1]</code>.</p><p id="24e243e5-2cd7-80c0-a230-f693daf0ca6a" class=""><strong>Q6</strong>: b) A 2x3 matrix of zeros.</p><p id="24e243e5-2cd7-80e1-924f-f5b48a39813e" class=""><strong>Q7</strong>: a) <code>m[m &gt; 10]</code>.</p><p id="24e243e5-2cd7-8044-8510-d1c8acc70000" class=""><strong>Q8</strong>: b) Performing the sum along the columns.</p><p id="24e243e5-2cd7-8046-a241-df58ef953b8f" class=""><strong>Q9</strong>: b) <code>[3, 4, 5, 6, 7]</code>.</p><p id="24e243e5-2cd7-8038-94ae-c4f880d319dc" class=""><strong>Q10</strong>: True. This homogeneity is a key reason for NumPy&#x27;s speed.</p><h3 id="24e243e5-2cd7-80e1-a434-d361a4eb520b" class=""><strong>Assignment Solution (</strong><code><strong>grade_analyzer.py</strong></code><strong>)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-804a-86a1-d9d8914b33aa" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Day_3_sol.py
+# Solution for the Day 3 &quot;Student Grade Analysis&quot; assignment.
+
+import numpy as np
+
+# 1. Create the initial grades array.
+grades_data = np.array([
+    [88, 82, 85, 89, 91],  # Student 1
+    [76, 80, 78, 82, 79],  # Student 2
+    [92, 90, 94, 88, 95],  # Student 3
+    [85, 88, 90, 91, 84]   # Student 4
+])
+
+# 2. Calculate the average for each student (mean of each row, axis=1).
+student_averages = grades_data.mean(axis=1)
+
+# 3. Calculate the average for each assignment (mean of each column, axis=0).
+assignment_averages = grades_data.mean(axis=0)
+
+# 4. Find the highest score for each student (max of each row, axis=1).
+student_max_scores = grades_data.max(axis=1)
+
+# 5. Apply a curve to all grades.
+curved_grades = grades_data + 3
+
+# 6. Find all original grades above 90 using boolean indexing.
+high_scores = grades_data[grades_data &gt; 90]
+
+# 7. Print all results with clear labels.
+print(&quot;--- Grade Analysis Report ---&quot;)
+print(&quot;\nOriginal Grades:&quot;)
+print(grades_data)
+
+print(&quot;\nStudent Averages:&quot;)
+print(student_averages)
+
+print(&quot;\nAssignment Averages:&quot;)
+print(assignment_averages)
+
+print(&quot;\nStudent Max Scores:&quot;)
+print(student_max_scores)
+
+print(&quot;\nGrades After Curve:&quot;)
+print(curved_grades)
+
+print(&quot;\nAll Scores Originally Above 90:&quot;)
+print(high_scores)
+print(&quot;-----------------------------&quot;)</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

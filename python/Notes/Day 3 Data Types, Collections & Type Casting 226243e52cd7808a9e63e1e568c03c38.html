@@ -1,0 +1,900 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 3: Data Types, Collections &amp; Type Casting</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="226243e5-2cd7-808a-9e63-e1e568c03c38" class="page sans"><header><h1 class="page-title"><strong>Day 3: Data Types, Collections &amp; Type Casting</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr></tbody></table></header><div class="page-body"><p id="226243e5-2cd7-8034-824f-dec178f7606c" class=""><em>Organizing information is the key to data mastery! 🗃️</em></p><h2 id="226243e5-2cd7-8035-a5fd-eec52b4a3861" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="226243e5-2cd7-80a3-8494-e5bf321abd23" class="bulleted-list"><li style="list-style-type:disc">Understand Python&#x27;s core built-in data types</li></ul><ul id="226243e5-2cd7-8094-844f-cc2558349304" class="bulleted-list"><li style="list-style-type:disc">Differentiate between Text, Numeric, and Boolean types</li></ul><ul id="226243e5-2cd7-8095-a177-e7f8b436dad4" class="bulleted-list"><li style="list-style-type:disc">Learn about collection types: <code>list</code>, <code>tuple</code>, <code>dict</code>, and <code>set</code></li></ul><ul id="226243e5-2cd7-80b1-89df-f67971eceeca" class="bulleted-list"><li style="list-style-type:disc">Understand the difference between mutable and immutable data types</li></ul><ul id="226243e5-2cd7-809f-8b23-cdd92e69cdf1" class="bulleted-list"><li style="list-style-type:disc">Master type casting to convert variables from one type to another</li></ul><h2 id="226243e5-2cd7-806f-9fc4-f3ea280ad508" class=""><strong>🔢 Part 1: Core Data Types</strong></h2><h3 id="226243e5-2cd7-8095-adf2-dbddc12796b8" class=""><strong>What is a Data Type?</strong></h3><p id="226243e5-2cd7-8022-8452-cb7f12a70236" class="">A <strong>Data Type</strong> is like a label on a box that tells Python what kind of information is inside a variable. This helps Python understand what operations are allowed.</p><p id="226243e5-2cd7-8075-95ac-faa1c4b7d829" class=""><strong>Analogy</strong>: You can&#x27;t add a word to a number, just like you can&#x27;t pour juice into a toaster. Data types prevent these kinds of errors!</p><h3 id="226243e5-2cd7-802d-867e-c62543fcf059" class=""><strong>The </strong><code><strong>type()</strong></code><strong> function</strong></h3><p id="226243e5-2cd7-80d1-892c-eb309284e0ef" class="">To find out the data type of any variable, we use the built-in <code>type()</code> function.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8076-beae-f6e4b91f8b0e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_types.py
+my_name = &quot;Alex&quot;
+print(type(my_name))
+# Expected Output: &lt;class &#x27;str&#x27;&gt;</code></pre><h3 id="226243e5-2cd7-80a5-a3d2-fd7d2819c763" class=""><strong>Text Type: </strong><code><strong>str</strong></code></h3><ul id="226243e5-2cd7-801a-9460-e6f65f78962a" class="bulleted-list"><li style="list-style-type:disc"><strong>Stands for</strong>: String</li></ul><ul id="226243e5-2cd7-808f-aba3-d742205dbf4d" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Stores text data, like names or sentences.</li></ul><ul id="226243e5-2cd7-80b1-98af-eb207ed303ec" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: Use single (<code>&#x27;</code>) or double (<code>&quot;</code>) quotes.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80f0-97b5-dc9d4f50acca" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># String examples
+first_name = &quot;Sherlock&quot;
+last_name = &#x27;Holmes&#x27;
+quote = &quot;The world is full of obvious things which nobody by any chance ever observes.&quot;</code></pre><h3 id="226243e5-2cd7-803a-ae6c-f3f9e564031b" class=""><strong>Numeric Types: </strong><code><strong>int</strong></code><strong>, </strong><code><strong>float</strong></code><strong>, </strong><code><strong>complex</strong></code></h3><ul id="226243e5-2cd7-8083-bd3f-f49460b97305" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int</strong></code><strong> (Integer)</strong>: Whole numbers, positive or negative. <code>(e.g., 10, -5, 0)</code></li></ul><ul id="226243e5-2cd7-80e8-880c-e20409fc7af0" class="bulleted-list"><li style="list-style-type:disc"><code><strong>float</strong></code><strong> (Floating-Point Number)</strong>: Numbers with decimals. <code>(e.g., 9.81, -3.14, 0.0)</code></li></ul><ul id="226243e5-2cd7-8066-8dc1-f6b4651daa4b" class="bulleted-list"><li style="list-style-type:disc"><code><strong>complex</strong></code>: Numbers with a real and imaginary part (e.g., <code>3 + 4j</code>). We won&#x27;t use these often, but it&#x27;s good to know they exist!</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8014-a1b9-e8d989f6975f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Numeric examples in day3_types.py
+age = 35                  # int
+height_meters = 1.82      # float
+planet_population = 8000000000 # int
+
+print(type(age))          # Output: &lt;class &#x27;int&#x27;&gt;
+print(type(height_meters))# Output: &lt;class &#x27;float&#x27;&gt;</code></pre><h3 id="226243e5-2cd7-80d6-a5f1-d1cbdec7aade" class=""><strong>Boolean Type: </strong><code><strong>bool</strong></code></h3><ul id="226243e5-2cd7-8072-ad1c-d6269d547cfa" class="bulleted-list"><li style="list-style-type:disc"><strong>Stands for</strong>: Boolean</li></ul><ul id="226243e5-2cd7-80a3-a0f6-eea419da1180" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Stores one of two values: <code>True</code> or <code>False</code>.</li></ul><ul id="226243e5-2cd7-8090-9681-eeac5ecf45da" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Case</strong>: Essential for making decisions in code.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80a1-9b56-e3a087ee0a86" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Boolean examples in day3_types.py
+is_learning = True
+is_tired = False
+
+print(type(is_learning)) # Output: &lt;class &#x27;bool&#x27;&gt;</code></pre><p id="226243e5-2cd7-80cf-b605-f7de12b475b3" class=""><strong>💡 Fun Fact</strong>: Boolean logic is named after George Boole, an English mathematician who laid the foundations for the information age in the 1800s!</p><h2 id="226243e5-2cd7-8085-97dd-f0e621dc61ab" class=""><strong>🗃️ Part 2: Collection Data Types</strong></h2><p id="226243e5-2cd7-80cb-8a27-ffb717735de9" class="">Collections are used to store multiple items in a single variable.</p><h3 id="226243e5-2cd7-8002-9114-d97ca12105b0" class=""><strong>List: </strong><code><strong>list</strong></code></h3><ul id="226243e5-2cd7-8094-8b09-f4f3f7ae4011" class="bulleted-list"><li style="list-style-type:disc"><strong>Analogy</strong>: A shopping list. It&#x27;s ordered, and you can add or remove items.</li></ul><ul id="226243e5-2cd7-8010-a2d0-d52643e7106b" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>: Ordered, <strong>Mutable</strong> (changeable).</li></ul><ul id="226243e5-2cd7-80f7-83ff-eccebce4d5e7" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: Square brackets <code>[]</code>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80f5-9ab1-f22f2464c705" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_collections.py
+# A list of subjects
+subjects = [&quot;Data Science&quot;, &quot;Python&quot;, &quot;AI&quot;, &quot;Machine Learning&quot;]
+print(subjects)
+
+# Lists are mutable, so we can change them
+subjects.append(&quot;Statistics&quot;) # Add an item to the end
+print(subjects)
+
+# Access items by their index (position starts at 0)
+print(f&quot;First subject is: {subjects[0]}&quot;)</code></pre><h3 id="226243e5-2cd7-8097-893a-e2af5bb5d787" class=""><strong>Tuple: </strong><code><strong>tuple</strong></code></h3><ul id="226243e5-2cd7-8078-baf2-c1b609d12b34" class="bulleted-list"><li style="list-style-type:disc"><strong>Analogy</strong>: A framed photograph. The contents are fixed and cannot be changed.</li></ul><ul id="226243e5-2cd7-8092-95d5-ff9840e2ea28" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>: Ordered, <strong>Immutable</strong> (unchangeable).</li></ul><ul id="226243e5-2cd7-80d8-90d5-d5dbd2c3a991" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: Parentheses <code>()</code>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8079-bbb4-c171f0acb0f8" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># A tuple of coordinates in day3_collections.py
+home_location = (14.48, 77.59) # Latitude, Longitude
+print(home_location)
+
+# Tuples are immutable, this next line would cause an ERROR!
+# home_location[0] = 15.0
+# TypeError: &#x27;tuple&#x27; object does not support item assignment</code></pre><h3 id="226243e5-2cd7-80d9-97ba-c6ca832a6c67" class=""><strong>Dictionary: </strong><code><strong>dict</strong></code></h3><ul id="226243e5-2cd7-80a9-88a4-cc64060c9dbc" class="bulleted-list"><li style="list-style-type:disc"><strong>Analogy</strong>: A real-world dictionary. You look up a word (the <strong>key</strong>) to find its definition (the <strong>value</strong>).</li></ul><ul id="226243e5-2cd7-801d-a7d0-f670bd9ef930" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>: Unordered (in older Python versions), Mutable, stores <code>key:value</code> pairs.</li></ul><ul id="226243e5-2cd7-80a3-9045-de2ad0fbba5e" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: Curly braces <code>{}</code>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-801b-8ec4-c0243f270dd5" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># A dictionary for a student profile in day3_collections.py
+student_profile = {
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;age&quot;: 22,
+    &quot;is_enrolled&quot;: True,
+    &quot;courses&quot;: [&quot;Python&quot;, &quot;Data Analysis&quot;]
+}
+print(student_profile)
+
+# Access a value by its key
+print(f&quot;Student&#x27;s name is: {student_profile[&#x27;name&#x27;]}&quot;)</code></pre><h3 id="226243e5-2cd7-808b-8a95-f1925d885071" class=""><strong>Set: </strong><code><strong>set</strong></code></h3><ul id="226243e5-2cd7-8002-b3c5-dffa2474decf" class="bulleted-list"><li style="list-style-type:disc"><strong>Analogy</strong>: A bag of unique marbles. There are no duplicates, and the order doesn&#x27;t matter.</li></ul><ul id="226243e5-2cd7-8043-8186-cb33fc10c8bc" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>: Unordered, Mutable, no duplicate elements.</li></ul><ul id="226243e5-2cd7-8067-85b4-c46f8829c716" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: Curly braces <code>{}</code> (but not for an empty set, that&#x27;s a dict!).</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80ff-b39a-dcfbb21b6399" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># A set of unique badge numbers in day3_collections.py
+badge_numbers = {101, 102, 103, 102, 104}
+print(badge_numbers) # Output will be {101, 102, 103, 104}</code></pre><h2 id="226243e5-2cd7-8080-9652-e7c38669adf7" class=""><strong>🔄 Part 3: Type Conversion &amp; Casting</strong></h2><p id="226243e5-2cd7-8028-be11-eb69cc0f73d5" class="">Sometimes you need to convert a variable from one data type to another.</p><p id="226243e5-2cd7-80d9-b4df-cce290ab0ce9" class=""><strong>Type Casting</strong> = Explicitly telling Python to convert a value.</p><ul id="226243e5-2cd7-80fa-9353-c7729d3026fb" class="bulleted-list"><li style="list-style-type:disc"><code>int()</code>: Converts a value to an integer.</li></ul><ul id="226243e5-2cd7-8084-8b77-f6a1c9448d95" class="bulleted-list"><li style="list-style-type:disc"><code>float()</code>: Converts a value to a float.</li></ul><ul id="226243e5-2cd7-8057-94aa-f43fa6d240ca" class="bulleted-list"><li style="list-style-type:disc"><code>str()</code>: Converts a value to a string.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80dc-92f2-e83d72b2d171" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day3_casting.py
+
+# A number stored as a string
+age_string = &quot;30&quot;
+print(type(age_string)) # Output: &lt;class &#x27;str&#x27;&gt;
+
+# Cast the string to an integer to do math
+age_number = int(age_string)
+print(type(age_number)) # Output: &lt;class &#x27;int&#x27;&gt;
+
+# Now we can perform calculations
+next_year_age = age_number + 1
+print(f&quot;Next year, you will be {next_year_age}&quot;)
+
+# Cast an integer to a string to combine it with text
+student_id = 123
+id_prefix = &quot;STS-&quot;
+full_id = id_prefix + str(student_id)
+print(full_id) # Output: STS-123</code></pre><h2 id="226243e5-2cd7-8057-8c41-fe6e66e1f291" class=""><strong>🚀 Fun Expedition: &quot;Data Detective&#x27;s Dossier&quot;</strong></h2><p id="226243e5-2cd7-8052-9a7e-dcb72d5b37f3" class=""><strong>Mission</strong>: Create a digital dossier for a case suspect using a dictionary to store all their information.</p><p id="226243e5-2cd7-80bf-9d0a-e12aeba60f09" class=""><strong>Your Task</strong>: Create <code>day3_dossier.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-806e-ac43-eabfd9ed3c4d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+Case File: The Silicon Serpent
+Dossier for the primary suspect.
+&quot;&quot;&quot;
+
+# Use a dictionary to store all suspect information
+# Use at least 4 different data types for the values
+suspect_dossier = {
+    &quot;codename&quot;: &quot;Viper&quot;,
+    &quot;age&quot;: 42,
+    &quot;height_cm&quot;: 185.5,
+    &quot;is_dangerous&quot;: True,
+    &quot;known_aliases&quot;: [&quot;Cobra&quot;, &quot;Python&quot;, &quot;Anaconda&quot;],
+    &quot;last_seen_location&quot;: (&quot;New York&quot;, &quot;London&quot;, &quot;Tokyo&quot;) # A tuple of cities
+}
+
+# Print the entire dossier
+print(&quot;=== SUSPECT DOSSIER ===&quot;)
+print(suspect_dossier)
+print(&quot;=&quot; * 25)
+
+# Print specific details using key access
+print(f&quot;Codename: {suspect_dossier[&#x27;codename&#x27;]}&quot;)
+print(f&quot;Is Considered Dangerous: {suspect_dossier[&#x27;is_dangerous&#x27;]}&quot;)
+
+# Check the data type of the aliases list
+print(f&quot;Aliases are stored as: {type(suspect_dossier[&#x27;known_aliases&#x27;])}&quot;)</code></pre><h2 id="226243e5-2cd7-8056-a87b-fe118ae5aef7" class=""><strong>🛠️ Hands-on Practice</strong></h2><h3 id="226243e5-2cd7-8038-86dd-fe4c19f25634" class=""><strong>Exercise 1: Basic Data Types</strong></h3><p id="226243e5-2cd7-802e-8e5f-e34a11ed2bf2" class="">Create <code>day3_ex1.py</code>. Declare variables for your name (<code>str</code>), age (<code>int</code>), height in meters (<code>float</code>), and whether you are a student (<code>bool</code>). Print each variable and its type.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8077-b0f9-fb3c84f1ca50" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex1.py
+name = &quot;Alex&quot;
+age = 25
+height_in_meters = 1.78
+is_a_student = True
+
+print(f&quot;Name: {name}, Type: {type(name)}&quot;)
+print(f&quot;Age: {age}, Type: {type(age)}&quot;)
+print(f&quot;Height: {height_in_meters}, Type: {type(height_in_meters)}&quot;)
+print(f&quot;Is Student: {is_a_student}, Type: {type(is_a_student)}&quot;)</code></pre><h3 id="226243e5-2cd7-8017-8e02-e4e8e7b59c91" class=""><strong>Exercise 2: List Practice</strong></h3><p id="226243e5-2cd7-8071-990d-f44bb00080d0" class="">Create <code>day3_ex2.py</code>. Make a list of your 3 favorite movies. Print the list. Then, add a fourth movie to the list and print it again. Finally, print only the first movie in the list.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80a7-9c5d-da06d1c9f6d9" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex2.py
+favorite_movies = [&quot;The Matrix&quot;, &quot;Inception&quot;, &quot;Interstellar&quot;]
+print(&quot;Initial list:&quot;, favorite_movies)
+
+# Add a fourth movie
+favorite_movies.append(&quot;The Dark Knight&quot;)
+print(&quot;Updated list:&quot;, favorite_movies)
+
+# Print only the first movie (at index 0)
+print(&quot;My absolute favorite movie is:&quot;, favorite_movies[0])</code></pre><h3 id="226243e5-2cd7-8068-b6fa-c6d81a966a0b" class=""><strong>Exercise 3: Tuple Immuta-bility</strong></h3><p id="226243e5-2cd7-80cf-98e4-e14f9ea87526" class="">Create <code>day3_ex3.py</code>. Create a tuple with the months of the year: <code>(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;)</code>. Print the tuple. Now, try to change the first element to <code>&quot;January&quot;</code>. Observe the error and comment out the line that causes it.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8006-b07b-dacf7e2e95c0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex3.py
+months = (&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;)
+print(&quot;Original tuple:&quot;, months)
+
+# The following line will cause a TypeError because tuples are immutable.
+# You cannot change an item in a tuple after it has been created.
+# months[0] = &quot;January&quot;
+
+print(&quot;Could not change the tuple!&quot;)</code></pre><h3 id="226243e5-2cd7-80e6-a3e3-c8a2318d83e8" class=""><strong>Exercise 4: Dictionary Creation</strong></h3><p id="226243e5-2cd7-80b6-8382-f86f6b0e0044" class="">Create <code>day3_ex4.py</code>. Create a dictionary to store information about your favorite book: include keys for &quot;title&quot;, &quot;author&quot;, and &quot;year_published&quot;. Print the entire dictionary. Then, print only the author&#x27;s name.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8017-9e8d-c14b7d8c8625" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex4.py
+favorite_book = {
+    &quot;title&quot;: &quot;Dune&quot;,
+    &quot;author&quot;: &quot;Frank Herbert&quot;,
+    &quot;year_published&quot;: 1965
+}
+
+print(&quot;Full book info:&quot;, favorite_book)
+
+# Access the value associated with the &quot;author&quot; key
+print(&quot;The author is:&quot;, favorite_book[&quot;author&quot;])</code></pre><h3 id="226243e5-2cd7-80cb-8e9c-eb3a8c330884" class=""><strong>Exercise 5: Type Casting Challenge</strong></h3><p id="226243e5-2cd7-80ff-b539-e5d16805bf9f" class="">Create <code>day3_ex5.py</code>. Create a variable <code>year = 2024</code> (an integer). Create another variable <code>greeting = &quot;The year is &quot;</code>. Combine these two variables to print &quot;The year is 2024&quot;. You will need to use type casting!</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8021-85c2-d65044282889" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day3_ex5.py
+year = 2024
+greeting = &quot;The year is &quot;
+
+# You cannot add a string and an integer directly.
+# You must first cast the integer &#x27;year&#x27; to a string using str().
+full_message = greeting + str(year)
+
+print(full_message)</code></pre><h2 id="226243e5-2cd7-80c8-8dc9-dfffc70eb651" class=""><strong>🧠 Quiz Time</strong></h2><h3 id="226243e5-2cd7-80ec-9c96-e4b409462c15" class=""><strong>Core Types &amp; Casting (5 Questions):</strong></h3><p id="226243e5-2cd7-80fe-9f7a-df633c46ec63" class="">
+</p><p id="226243e5-2cd7-80dd-acc9-d588068c92b3" class="">Q1: What data type would you use to store a person&#x27;s exact bank balance, like $150.75?</p><p id="226243e5-2cd7-80cd-946a-d6415b54749e" class="">a) int  b) str  c) float  d) bool</p><p id="226243e5-2cd7-80ad-b2c1-f5676c290ee3" class="">
+</p><p id="226243e5-2cd7-8073-ba5a-c6d438e6b2d6" class="">Q2: Which function is used to find the data type of a variable?</p><p id="226243e5-2cd7-8026-a66f-f60ccded5fec" class="">a) find_type() b) datatype() c) type() d) gettype()</p><p id="226243e5-2cd7-8082-a038-d26c085dc906" class="">
+</p><p id="226243e5-2cd7-8011-905c-de1d24feed91" class=""><strong>Q3</strong>: True/False: The value <code>False</code> is of type <code>bool</code>.</p><p id="226243e5-2cd7-80fd-895c-d284bb3dfe6f" class="">
+</p><p id="226243e5-2cd7-8072-9fb3-f7c9d19ad089" class="">Q4: What is the result of int(&quot;99.5&quot;)?</p><p id="226243e5-2cd7-80a4-9300-f983cc049956" class="">a) 99  b) 100  c) 99.5  d) An error</p><p id="226243e5-2cd7-80ab-ba5d-ebb94ef116b7" class="">
+</p><p id="226243e5-2cd7-800c-af18-cb1822e0df98" class="">Q5: What data type does print(type(&quot;123&quot;)) output?</p><p id="226243e5-2cd7-8089-8e2b-d68f90949580" class="">a) &lt;class &#x27;int&#x27;&gt;  b) &lt;class &#x27;str&#x27;&gt;  c) &lt;class &#x27;number&#x27;&gt;  d) &lt;class &#x27;text&#x27;&gt;</p><h3 id="226243e5-2cd7-8087-9fc4-d9c625ec1934" class=""><strong>Collections &amp; Mutability (5 Questions):</strong></h3><p id="226243e5-2cd7-806a-b2a4-fa2e0fdb8658" class="">Q6: Which of the following creates a tuple?</p><p id="226243e5-2cd7-80ca-a04d-df07a65f26c2" class="">a) [1, 2, 3]  b) (1, 2, 3)  c) {1, 2, 3}  d) {&quot;a&quot;: 1}</p><p id="226243e5-2cd7-80d6-aa9a-df3b0840210b" class="">
+</p><p id="226243e5-2cd7-8059-b429-ec9a3d2a8431" class="">Q7: Which data type is immutable?</p><p id="226243e5-2cd7-80ef-b6dd-dde8c0ca5306" class="">a) list  b) dict  c) set  d) tuple</p><p id="226243e5-2cd7-80ac-9d6d-d055bd66e684" class="">
+</p><p id="226243e5-2cd7-8096-9056-cae116a9feee" class="">Q8: Which data type stores data in key:value pairs?</p><p id="226243e5-2cd7-8030-9f30-c604561453c2" class="">a) list  b) tuple  c) dict  d) set</p><p id="226243e5-2cd7-80d5-8c91-f7b2e1321fe2" class="">
+</p><p id="226243e5-2cd7-80e9-8ab8-dc98a63925d4" class=""><strong>Q9</strong>: True/False: A <code>list</code> can contain items of different data types.</p><p id="226243e5-2cd7-8012-9eb3-ec106b986f8d" class="">
+</p><p id="226243e5-2cd7-8040-a6ce-f4a1ae13f2e8" class="">Q10: What makes a set different from a list?</p><p id="226243e5-2cd7-806b-96dc-ca0870efddf7" class="">a) Sets are ordered  b) Sets allow duplicate values  c) Sets are immutable  d) Sets do not allow duplicate values</p><p id="226243e5-2cd7-8060-a4ea-f0f6b581bb28" class="">
+</p><p id="226243e5-2cd7-80df-ae44-e5a9bbeed1be" class=""><em>📝 Answers will be provided at the start of Day 4 class!</em></p><h2 id="226243e5-2cd7-8065-94af-e9f0ebd3875e" class=""><strong>📚 Assignment for Next Class</strong></h2><h3 id="226243e5-2cd7-80c2-b79c-fc57e822de03" class=""><strong>Project: &quot;Personal Data Manager&quot;</strong></h3><p id="226243e5-2cd7-8030-9fe3-cf61ed37797c" class=""><strong>Goal</strong>: Create a single Python script that models a user&#x27;s profile. This assignment will test your understanding of all of today&#x27;s topics: dictionaries, lists, tuples, various data types, and type casting.</p><p id="226243e5-2cd7-8063-84e9-f1dc0221d487" class=""><strong>Create the following file in your </strong><code><strong>Day_3/exercises/</strong></code><strong> folder</strong>:</p><p id="226243e5-2cd7-8007-a93b-db46dc414d9f" class=""><code><strong>personal_data_manager.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80b0-9184-e18899cd2e71" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Instructions:
+# 1. Create a dictionary to store a user&#x27;s profile.
+# 2. The dictionary should have the following keys and value types:
+#    - &quot;name&quot;: A string (e.g., &quot;Alex Smith&quot;)
+#    - &quot;age&quot;: An integer (e.g., 29)
+#    - &quot;height_meters&quot;: A float (e.g., 1.75)
+#    - &quot;is_active_student&quot;: A boolean (e.g., True)
+#    - &quot;courses_enrolled&quot;: A list of strings (e.g., [&quot;Python&quot;, &quot;Data Science&quot;])
+#    - &quot;contact_info&quot;: A tuple containing an email and phone number (e.g., (&quot;alex.s@email.com&quot;, &quot;123-456-7890&quot;))
+#    - &quot;years_in_school&quot;: A string that is a number (e.g., &quot;3&quot;)
+#
+# 3. After creating the dictionary, print the following:
+#    a. The entire profile dictionary.
+#    b. The user&#x27;s name and the first course they are enrolled in.
+#    c. The user&#x27;s email address from the contact info tuple.
+#    d. A statement about how many years the user will have been in school next year.
+#       To do this, you must:
+#       - Access the &quot;years_in_school&quot; value.
+#       - Cast it to an integer.
+#       - Add 1 to it.
+#       - Print the result in a full sentence.
+#
+# 4. Add a new key &quot;hobbies&quot; to the dictionary with a list of at least two hobbies.
+#    Then, print the updated dictionary.
+
+</code></pre><p id="226243e5-2cd7-803e-b222-eb8f93830b37" class=""><strong>📝 Note</strong>: A complete solution file (<code>Day_3_sol.py</code>) is also provided in the main <code>Day_3</code> folder for you to compare your work. Try to solve it on your own first!</p><h2 id="226243e5-2cd7-800e-847c-ebf4eafd90bf" class=""><strong>🎥 Recommended Videos for Visual Learning</strong></h2><p id="226243e5-2cd7-806f-a36e-d9d9ab8b7b9c" class=""><strong>Python Data Types</strong>:</p><ul id="226243e5-2cd7-80c2-b714-e8c0fd01ada9" class="bulleted-list"><li style="list-style-type:disc">&quot;Python Data Types&quot; - Telusko</li></ul><ul id="226243e5-2cd7-805e-9e26-e0f6f1ccf108" class="bulleted-list"><li style="list-style-type:disc">&quot;Python for Beginners - Full Course&quot; (Data Types section) - FreeCodeCamp</li></ul><p id="226243e5-2cd7-80f9-a355-d017bf054491" class=""><strong>Mutable vs Immutable</strong>:</p><ul id="226243e5-2cd7-803b-af35-c9e1680af5f6" class="bulleted-list"><li style="list-style-type:disc">&quot;Mutable and Immutable Data Types in Python&quot; - Corey Schafer</li></ul><h2 id="226243e5-2cd7-805a-a0fa-dd4b2a44aef0" class=""><strong>💡 Interesting Facts</strong></h2><ul id="226243e5-2cd7-80d5-a54e-edaa286fc0d5" class="bulleted-list"><li style="list-style-type:disc">The <code>float</code> data type in Python is incredibly precise, allowing for scientific calculations.</li></ul><ul id="226243e5-2cd7-80c4-b530-ca400d956e4f" class="bulleted-list"><li style="list-style-type:disc">Dictionaries are highly optimized for retrieving data, making them very fast for lookups.</li></ul><ul id="226243e5-2cd7-801c-aec8-ecd51f79a59d" class="bulleted-list"><li style="list-style-type:disc">The concept of &quot;mutability&quot; is one of the most important and powerful features of Python&#x27;s data model.</li></ul><ul id="226243e5-2cd7-804f-acf4-fdde1782818e" class="bulleted-list"><li style="list-style-type:disc">Before Python 3.7, dictionaries were officially unordered. Now, they maintain the insertion order of items.</li></ul><ul id="226243e5-2cd7-805e-9f02-f3e639a384f9" class="bulleted-list"><li style="list-style-type:disc">A <code>list</code> can hold any other data type as an item, including another <code>list</code>! This is called a nested list.</li></ul><p id="226243e5-2cd7-8091-8780-c393073520a1" class=""><em>🎊 Fantastic work on Day 3! You now have the fundamental building blocks for storing and organizing any kind of data in Python!</em></p><p id="226243e5-2cd7-80e6-af7d-d0308890357a" class=""><strong>Next Class Preview</strong>: User Input, String Manipulation, and Basic Operators! ⌨️</p><p id="226243e5-2cd7-8063-89c0-dd40a386764e" class="">
+</p><p id="226243e5-2cd7-8027-b5e3-eb7757bb40da" class="">
+</p><p id="226243e5-2cd7-80ec-b26e-ce4e7bd52369" class="">
+</p><p id="226243e5-2cd7-80a4-b71c-f76d13c7e938" class="">
+</p><p id="226243e5-2cd7-80c3-a074-d97733b76103" class="">
+</p><p id="226243e5-2cd7-8012-9616-e9b13e0493aa" class="">
+</p><p id="226243e5-2cd7-807c-813d-ffc1c72baa0e" class="">
+</p><h2 id="226243e5-2cd7-80af-bef2-dba75b6c1dac" class=""><strong>📝 Day 3 Quiz Answers &amp; Assignment Solutions</strong></h2><h3 id="226243e5-2cd7-80b5-bb23-fe46e09ddbeb" class=""><strong>Quiz Answers:</strong></h3><p id="226243e5-2cd7-8072-aec0-d7baa78aa08c" class=""><strong>Q1</strong>: c) <code>float</code> (It can handle decimal values precisely).</p><p id="226243e5-2cd7-80a0-9c82-dbe5b22f826f" class=""><strong>Q2</strong>: c) <code>type()</code></p><p id="226243e5-2cd7-80a0-9000-ca1b2a492803" class=""><strong>Q3</strong>: True (The two boolean values are <code>True</code> and <code>False</code>).</p><p id="226243e5-2cd7-80c2-9296-fd38dbdd2bd1" class=""><strong>Q4</strong>: d) An error (The <code>int()</code> function cannot directly convert a string that looks like a float).</p><p id="226243e5-2cd7-80fb-b962-cc73b0ddf267" class=""><strong>Q5</strong>: b) <code>&lt;class &#x27;str&#x27;&gt;</code> (The value is enclosed in quotes, making it a string).</p><p id="226243e5-2cd7-8060-bb63-eca95e00a32a" class=""><strong>Q6</strong>: b) <code>(1, 2, 3)</code> (Parentheses are used to define tuples).</p><p id="226243e5-2cd7-808e-a7b0-ed4eef9c7c25" class=""><strong>Q7</strong>: d) <code>tuple</code> (Once a tuple is created, its elements cannot be changed).</p><p id="226243e5-2cd7-800a-ad67-c602bf54db8e" class=""><strong>Q8</strong>: c) <code>dict</code></p><p id="226243e5-2cd7-8004-a1d4-e5220be9f8be" class=""><strong>Q9</strong>: True (A list is a versatile container that can hold a mix of any data types).</p><p id="226243e5-2cd7-800f-9546-f45407346a63" class=""><strong>Q10</strong>: d) Sets do not allow duplicate values.</p><h3 id="226243e5-2cd7-8093-ade7-ecf31ccc3d8f" class=""><strong>Assignment Solution:</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8089-bde0-d8a076c21dec" class="code"><code class="language-Python"># Solution for the Day 3 &quot;Personal Data Manager&quot; assignment.
+
+# 1. &amp; 2. Create the user profile dictionary with specified keys and data types.
+user_profile = {
+    &quot;name&quot;: &quot;Alex Smith&quot;,
+    &quot;age&quot;: 29,
+    &quot;height_meters&quot;: 1.75,
+    &quot;is_active_student&quot;: True,
+    &quot;courses_enrolled&quot;: [&quot;Python&quot;, &quot;Data Science&quot;, &quot;Statistics&quot;],
+    &quot;contact_info&quot;: (&quot;alex.s@email.com&quot;, &quot;123-456-7890&quot;),
+    &quot;years_in_school&quot;: &quot;3&quot;
+}
+
+# 3a. Print the entire profile dictionary.
+print(&quot;--- Full User Profile ---&quot;)
+print(user_profile)
+print(&quot;-&quot; * 25)
+
+# 3b. Print the user&#x27;s name and the first course they are enrolled in.
+# Accessing a value from a dictionary using its key.
+# Accessing the first item from a list using its index [0].
+print(f&quot;User Name: {user_profile[&#x27;name&#x27;]}&quot;)
+print(f&quot;First Course: {user_profile[&#x27;courses_enrolled&#x27;][0]}&quot;)
+print(&quot;-&quot; * 25)
+
+# 3c. Print the user&#x27;s email address from the contact info tuple.
+# Accessing the first item from a tuple using its index [0].
+print(f&quot;Email Address: {user_profile[&#x27;contact_info&#x27;][0]}&quot;)
+print(&quot;-&quot; * 25)
+
+# 3d. Calculate and print the years in school for next year.
+# Access the value associated with the &quot;years_in_school&quot; key.
+years_str = user_profile[&quot;years_in_school&quot;]
+# Cast the string value to an integer to perform math.
+years_int = int(years_str)
+# Calculate next year&#x27;s value.
+next_year_school = years_int + 1
+# Print the result in a formatted string.
+print(f&quot;Next year, {user_profile[&#x27;name&#x27;]} will have been in school for {next_year_school} years.&quot;)
+print(&quot;-&quot; * 25)
+
+# 4. Add a new key &quot;hobbies&quot; and print the updated dictionary.
+# Dictionaries are mutable, so we can add new key-value pairs.
+user_profile[&quot;hobbies&quot;] = [&quot;Reading&quot;, &quot;Hiking&quot;, &quot;Coding&quot;]
+print(&quot;--- Updated User Profile with Hobbies ---&quot;)
+print(user_profile)
+print(&quot;-&quot; * 25)</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

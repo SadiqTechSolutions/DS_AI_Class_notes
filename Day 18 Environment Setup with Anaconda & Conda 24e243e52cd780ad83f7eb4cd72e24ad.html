@@ -1,0 +1,733 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 18: Environment Setup with Anaconda &amp; Conda</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24e243e5-2cd7-80ad-83f7-eb4cd72e24ad" class="page sans"><header><h1 class="page-title"><strong>Day 18: Environment Setup with Anaconda &amp; Conda</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><div data-testid="/icons/burst_gray.svg" style="width:14px;height:14px;flex-shrink:0;transform:scale(1.2);mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;-webkit-mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;background-color:rgba(71, 70, 68, 0.6);fill:rgba(71, 70, 68, 0.6)"></div></span>Status</th><td><span class="status-value"><div class="status-dot"></div>Not started</span></td></tr></tbody></table></header><div class="page-body"><p id="24e243e5-2cd7-80be-a4c2-c1b4a6ba75ef" class=""><em>Building a robust and isolated workshop for our data science projects. This is the foundational step for all future work! 🏗️</em></p><h2 id="24e243e5-2cd7-8054-8543-d97d01756658" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="24e243e5-2cd7-80f9-a18f-d70cd4f47208" class="bulleted-list"><li style="list-style-type:disc">Understand what Anaconda is and why it&#x27;s essential for data science.</li></ul><ul id="24e243e5-2cd7-8023-980c-fdbda1854f72" class="bulleted-list"><li style="list-style-type:disc">Learn the difference between a package manager and an environment manager.</li></ul><ul id="24e243e5-2cd7-80e0-83c9-eddac0806534" class="bulleted-list"><li style="list-style-type:disc">Install Anaconda on your operating system.</li></ul><ul id="24e243e5-2cd7-80ff-85f5-d347f35dacb7" class="bulleted-list"><li style="list-style-type:disc">Master the fundamental Conda commands for managing environments and packages via the terminal.</li></ul><ul id="24e243e5-2cd7-80b8-99d1-dcfc42a1ecc6" class="bulleted-list"><li style="list-style-type:disc">Create and activate your first isolated project environment.</li></ul><h2 id="24e243e5-2cd7-807b-8fa6-f2f6963d450f" class=""><strong>📦 Part 1: What is Anaconda?</strong></h2><p id="24e243e5-2cd7-809b-b2c6-c5cf58341e09" class=""><strong>Anaconda</strong> is a free and open-source distribution of Python and R. It is specifically designed for scientific computing, data science, and machine learning.</p><p id="24e243e5-2cd7-808a-8e0d-f75abba03782" class=""><strong>Analogy</strong>: Think of Anaconda as a <strong>fully-equipped professional workshop for a data scientist</strong>. Instead of you having to find and install all your tools (like Python, specific libraries, etc.) one by one, Anaconda provides you with a high-quality workshop that already has everything you need, perfectly organized and ready to go.</p><h3 id="24e243e5-2cd7-80e6-a677-dbdbbb472987" class=""><strong>Why do we need it?</strong></h3><ol type="1" id="24e243e5-2cd7-808f-98af-ea4e57758417" class="numbered-list" start="1"><li><strong>Package Management (</strong><code><strong>conda</strong></code><strong>)</strong>: Anaconda comes with its own package manager called <code>conda</code>. It simplifies installing, updating, and removing the hundreds of libraries (like NumPy, Pandas, Matplotlib) that you will need.</li></ol><ol type="1" id="24e243e5-2cd7-804d-a7ab-dd9385b93ce1" class="numbered-list" start="2"><li><strong>Environment Management (</strong><code><strong>conda</strong></code><strong>)</strong>: This is its most powerful feature. It allows you to create isolated &quot;workspaces&quot; or <strong>environments</strong>. You can have one environment for a web scraping project with specific library versions, and a completely separate environment for a machine learning project with different versions, all on the same computer without any conflicts.</li></ol><h2 id="24e243e5-2cd7-80ef-b6e7-c2ac82297f29" class=""><strong>💻 Part 2: Installation</strong></h2><p id="24e243e5-2cd7-80a9-ad96-f189186b9dcc" class="">Installing Anaconda is straightforward. It will install Python, Conda, and over 150 scientific packages automatically.</p><ol type="1" id="24e243e5-2cd7-8086-a795-ea00d373d1f6" class="numbered-list" start="1"><li><strong>Go to the official website</strong>: <a href="https://www.anaconda.com/products/distribution">anaconda.com/products/distribution</a></li></ol><ol type="1" id="24e243e5-2cd7-8038-8c3c-d672d99f5666" class="numbered-list" start="2"><li><strong>Download the installer</strong>: Choose the correct installer for your operating system (Windows, macOS, or Linux). Download the latest Python 3.x version.</li></ol><ol type="1" id="24e243e5-2cd7-8089-af2c-f2f317ee4999" class="numbered-list" start="3"><li><strong>Run the installer</strong>:<ul id="24e243e5-2cd7-8081-831a-d14c87b4b867" class="bulleted-list"><li style="list-style-type:disc">Launch the downloaded file.</li></ul><ul id="24e243e5-2cd7-80da-af8d-da756ed6ff25" class="bulleted-list"><li style="list-style-type:disc">Click &quot;Next&quot; and agree to the license terms.</li></ul><ul id="24e243e5-2cd7-8028-919b-db5cc587d837" class="bulleted-list"><li style="list-style-type:disc">It is recommended to select <strong>&quot;Just Me&quot;</strong> unless you need to share it with other users on the same machine.</li></ul><ul id="24e243e5-2cd7-808f-b725-e47cfa26bb1e" class="bulleted-list"><li style="list-style-type:disc"><strong>For Windows users</strong>: During installation, you will see an option for &quot;Add Anaconda to my PATH environment variable&quot;. While the installer discourages this, for ease of use in the terminal, it can be helpful. If you are a beginner, it is okay to check this box.</li></ul></li></ol><ol type="1" id="24e243e5-2cd7-80c4-9d18-c9c112847e16" class="numbered-list" start="4"><li><strong>Verify Installation</strong>: Once the installation is complete, open your terminal (on Mac/Linux) or the <strong>Anaconda Prompt</strong> (from the Start Menu on Windows) and type the following command:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80ed-99c4-f5dfa8805a87" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">conda --version</code></pre><p id="24e243e5-2cd7-803e-bf3e-c8d03eef9b85" class="">If it prints a version number (e.g., <code>conda 23.7.4</code>), the installation was successful!</p></li></ol><h2 id="24e243e5-2cd7-8012-b8c9-c1838d6b8efe" class=""><strong>🛠️ Part 3: Managing Environments with Conda</strong></h2><p id="24e243e5-2cd7-8001-ba95-f40246bb3de6" class="">This is the core skill for today. All these commands are run from your terminal or Anaconda Prompt.</p><h3 id="24e243e5-2cd7-8033-9f62-e561e1bd1a1b" class=""><strong>What is an Environment?</strong></h3><p id="24e243e5-2cd7-8016-af26-fe1a266ac015" class="">An environment is a self-contained directory that contains a specific collection of Conda packages that you have installed. Switching between environments is called <strong>activating</strong> them.</p><p id="24e243e5-2cd7-8023-ba8a-f9e8ae7906dd" class=""><strong>Analogy</strong>: Think of environments as separate <strong>project boxes</strong>. One box might have your tools for building a model car (Python 3.8, TensorFlow). Another box has your tools for painting (Python 3.9, Pillow). You can only work with the tools in the box you have open (<strong>activated</strong>). This prevents your tools from getting mixed up.</p><h3 id="24e243e5-2cd7-8078-a369-fdbd38efafa2" class=""><strong>Core Environment Commands</strong></h3><table id="24e243e5-2cd7-804a-8152-f2cf4a5d7af8" class="simple-table"><tbody><tr id="24e243e5-2cd7-806c-b5e6-c380a5d1f5e9"><td id="zsf_" class="" style="width:346.9912567138672px"><strong>Command</strong></td><td id="{E}O" class="" style="width:177.33566284179688px"><strong>Description</strong></td></tr><tr id="24e243e5-2cd7-8054-b157-fffef218113e"><td id="zsf_" class="" style="width:346.9912567138672px"><code>conda env list</code></td><td id="{E}O" class="" style="width:177.33566284179688px">Lists all of your available environments.</td></tr><tr id="24e243e5-2cd7-800d-a25a-d0632ae2e1e5"><td id="zsf_" class="" style="width:346.9912567138672px"><code>conda create --name env_name python=version</code></td><td id="{E}O" class="" style="width:177.33566284179688px">Creates a new environment with a specific name and Python version.</td></tr><tr id="24e243e5-2cd7-80a0-b6b2-fa9be4ff290c"><td id="zsf_" class="" style="width:346.9912567138672px"><code>conda activate &lt;env_name&gt;</code></td><td id="{E}O" class="" style="width:177.33566284179688px">Activates or &quot;switches into&quot; a specific environment.</td></tr><tr id="24e243e5-2cd7-80bb-87a1-e1bca097c45c"><td id="zsf_" class="" style="width:346.9912567138672px"><code>conda deactivate</code></td><td id="{E}O" class="" style="width:177.33566284179688px">Deactivates the current environment and returns you to the base environment.</td></tr><tr id="24e243e5-2cd7-806e-aff2-fcee031a72cc"><td id="zsf_" class="" style="width:346.9912567138672px"><code>conda remove --name &lt;env_name&gt; --all</code></td><td id="{E}O" class="" style="width:177.33566284179688px">Completely deletes an environment and all its packages.</td></tr></tbody></table><h2 id="24e243e5-2cd7-809b-8f20-e75d03e5792c" class=""><strong>🧩 Part 4: Managing Packages with Conda</strong></h2><p id="24e243e5-2cd7-80df-ad56-c0a940e0cedf" class="">Once your environment is activated, you can install packages into it.</p><h3 id="24e243e5-2cd7-80cd-ad15-fd7be6a00709" class=""><strong>Core Package Commands</strong></h3><table id="24e243e5-2cd7-80b8-a0ad-d4fbbf90256e" class="simple-table"><tbody><tr id="24e243e5-2cd7-8012-834b-ebf31b16e3e0"><td id="EyBc" class=""><strong>Command</strong></td><td id="GkH_" class=""><strong>Description</strong></td></tr><tr id="24e243e5-2cd7-8070-9003-f9864c11b062"><td id="EyBc" class=""><code>conda list</code></td><td id="GkH_" class="">Lists all packages installed in the currently active environment.</td></tr><tr id="24e243e5-2cd7-801c-9e1a-fbd5217b6fae"><td id="EyBc" class=""><code>conda install &lt;package_name&gt;</code></td><td id="GkH_" class="">Installs a new package into the active environment.</td></tr><tr id="24e243e5-2cd7-8096-bb05-dfefa1b18e22"><td id="EyBc" class=""><code>conda install &lt;package_name&gt;=&lt;version&gt;</code></td><td id="GkH_" class="">Installs a specific version of a package.</td></tr><tr id="24e243e5-2cd7-8028-ac49-dd7b6a510201"><td id="EyBc" class=""><code>conda update &lt;package_name&gt;</code></td><td id="GkH_" class="">Updates a specific package to the latest version.</td></tr><tr id="24e243e5-2cd7-8081-a96c-ee3aa1e1ef2e"><td id="EyBc" class=""><code>conda remove &lt;package_name&gt;</code></td><td id="GkH_" class="">Uninstalls a package from the active environment.</td></tr><tr id="24e243e5-2cd7-80d0-8fa4-c1239a891d5c"><td id="EyBc" class=""><code>conda search &lt;package_name&gt;</code></td><td id="GkH_" class="">Searches for available packages in the Anaconda repository.</td></tr></tbody></table><h2 id="24e243e5-2cd7-8064-94df-c482cc28e5d1" class=""><strong>🚀 Fun Expedition: &quot;Project Launch Sequence&quot;</strong></h2><p id="24e243e5-2cd7-8019-993b-dc22d4b328dd" class=""><strong>Mission</strong>: Simulate the complete setup for a new data analysis project by creating a dedicated environment and installing the necessary packages.</p><p id="24e243e5-2cd7-80fd-95dc-f1ab05403a3f" class=""><strong>Your Task</strong>: Execute the following commands in your terminal.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-803e-9cc9-e3013ddd9e36" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># 1. Create a new environment for our project named &#x27;data-analysis&#x27; with Python 3.9
+conda create --name data-analysis python=3.9
+
+# (You will be prompted to proceed, type &#x27;y&#x27; and press Enter)
+
+# 2. Activate your new environment
+conda activate data-analysis
+
+# (Notice your terminal prompt changes to show &#x27;(data-analysis)&#x27;)
+
+# 3. Install two essential data science packages: numpy and pandas
+conda install numpy pandas
+
+# (Again, type &#x27;y&#x27; and press Enter when prompted)
+
+# 4. Check that the packages are installed
+conda list
+
+# 5. Deactivate the environment to return to base
+conda deactivate</code></pre><h2 id="24e243e5-2cd7-805d-b1f7-f73ebb50191e" class=""><strong>🎯 Day 1: Review &amp; Solutions</strong></h2><h3 id="24e243e5-2cd7-80bc-b76a-ede4ff69b6b3" class=""><strong>🛠️ Hands-on Practice</strong></h3><h3 id="24e243e5-2cd7-803c-be34-c2b9d37182a1" class=""><strong>Exercise 1: Check Your Setup</strong></h3><p id="24e243e5-2cd7-802b-b5cb-e6c0a88488cd" class="">Open your terminal (or Anaconda Prompt) and run the commands to check your installed Conda version and to list all your current environments.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80d7-946e-ee9fb37026f3" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Check conda version
+conda --version
+
+# List all environments
+conda env list</code></pre><h3 id="24e243e5-2cd7-8098-9cc1-f58dcd01ec9e" class=""><strong>Exercise 2: Create a Web Scraping Environment</strong></h3><p id="24e243e5-2cd7-8020-89bc-c03028ca4874" class="">Create a new Conda environment named <code>web-scraping</code> that uses Python 3.10.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8051-835e-f3773fb53740" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">conda create --name web-scraping python=3.10</code></pre><h3 id="24e243e5-2cd7-8066-ba65-d727a50d876f" class=""><strong>Exercise 3: Activate and Install</strong></h3><p id="24e243e5-2cd7-8077-b4ab-dbe0f9497e15" class="">Activate your new <code>web-scraping</code> environment. Once inside, install the packages <code>beautifulsoup4</code> and <code>requests</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8019-bcd7-ccab0d33eab3" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Activate the environment
+conda activate web-scraping
+
+# Install packages
+conda install beautifulsoup4 requests</code></pre><h3 id="24e243e5-2cd7-805e-83c5-dc882caca13b" class=""><strong>Exercise 4: Verify the Installation</strong></h3><p id="24e243e5-2cd7-8073-a95f-fe6aa5ff4750" class="">While still in the <code>web-scraping</code> environment, list all the installed packages to verify that <code>beautifulsoup4</code> and <code>requests</code> are present.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8032-869c-cda680551a3a" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">conda list</code></pre><h3 id="24e243e5-2cd7-8003-81c1-f70e48b096b9" class=""><strong>Exercise 5: Clean Up</strong></h3><p id="24e243e5-2cd7-80b1-bb5f-e6b6f9de6f48" class="">Deactivate the <code>web-scraping</code> environment. Then, completely remove the <code>web-scraping</code> environment.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-803b-89f0-e62cd4ebeaa2" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Deactivate
+conda deactivate
+
+# Remove the environment
+conda remove --name web-scraping --all</code></pre><h3 id="24e243e5-2cd7-8025-8ac7-e5729e1ccd69" class=""><strong>🧠 Quiz Time</strong></h3><p id="24e243e5-2cd7-805b-897a-f2e34723fca9" class="">Q1: What is Anaconda primarily used for?</p><p id="24e243e5-2cd7-80d9-8daa-ff3e4bd0e0cf" class="">a) As a text editor for Python  b) As a distribution for Python and R with a focus on scientific computing  c) As a version control system like Git  d) As a web framework</p><p id="24e243e5-2cd7-8012-bc9f-d9a6d5542cd0" class="">Q2: What is the main advantage of using Conda environments?</p><p id="24e243e5-2cd7-80fb-bc7b-d030ec8217a3" class="">a) They make your code run faster  b) They allow you to isolate project dependencies and avoid conflicts  c) They automatically write code for you  d) They are a replacement for Python</p><p id="24e243e5-2cd7-8038-a3af-e0a2c84a19b8" class="">Q3: Which command is used to create a new Conda environment?</p><p id="24e243e5-2cd7-8054-a9b2-d9c33d9dce48" class="">a) conda new --name myenv  b) conda env create myenv  c) conda create --name myenv  d) conda make --env myenv</p><p id="24e243e5-2cd7-803c-989e-e1290203a6c5" class="">Q4: You have just created an environment named ml-project. What is the next command you must run to start using it?</p><p id="24e243e5-2cd7-804c-ad0d-d93bc2d3b81b" class="">a) conda start ml-project  b) conda run ml-project  c) conda activate ml-project  d) conda switch ml-project</p><p id="24e243e5-2cd7-8052-ae34-c61b22847c2a" class="">Q5: Which command shows all the packages installed in your currently active environment?</p><p id="24e243e5-2cd7-800a-8623-dc286247f15d" class="">a) conda show packages  b) conda list  c) conda packages --all  d) conda search --installed</p><p id="24e243e5-2cd7-8033-8199-fd638f52ee25" class="">Q6: What does the command conda deactivate do?</p><p id="24e243e5-2cd7-8079-825d-c8f43f047b19" class="">a) Deletes the current environment  b) Turns off your computer  c) Exits the terminal  d) Returns you to the base Conda environment</p><p id="24e243e5-2cd7-805a-b68c-f903154634f2" class="">Q7: How do you install a specific version of a package, for example, pandas version 1.5?</p><p id="24e243e5-2cd7-80fb-b86a-db53940bb4ce" class="">a) conda install pandas --version 1.5  b) conda install pandas=1.5  c) conda get pandas:1.5  d) conda install pandas(1.5)</p><p id="24e243e5-2cd7-8007-8687-f75a10d0aeab" class="">Q8: What is the name of the package and environment manager that comes with Anaconda?</p><p id="24e243e5-2cd7-80b5-be36-c138d92981d7" class="">a) pip  b) npm  c) conda  d) manager</p><p id="24e243e5-2cd7-8040-9587-c0b8eaa0202e" class="">Q9: The command conda remove --name myenv --all will...</p><p id="24e243e5-2cd7-801c-8a58-f9aad62f0b98" class="">a) Uninstall all packages from myenv but keep the environment  b) Deactivate myenv  c) Delete the environment myenv and all packages within it  d) Ask for confirmation before removing packages</p><p id="24e243e5-2cd7-80a8-a01b-d7816ea0b7ea" class=""><strong>Q10</strong>: True or False: You should install all your packages directly into the <code>base</code> Conda environment.</p><h3 id="24e243e5-2cd7-8038-8b0a-fd3e3778b9a1" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="24e243e5-2cd7-8067-9bb4-c2004bcb3da8" class=""><strong>Project: &quot;Machine Learning Project Setup&quot;</strong></h3><p id="24e243e5-2cd7-80d5-abff-f6e908a59549" class=""><strong>Goal</strong>: You are starting a new machine learning project. Your task is to use Conda to create a clean, dedicated environment and install the foundational libraries you&#x27;ll need.</p><p id="24e243e5-2cd7-80b6-9ef3-c2ac2ae39021" class=""><strong>Instructions:</strong></p><ol type="1" id="24e243e5-2cd7-803c-9d4f-df65d2949125" class="numbered-list" start="1"><li>Create a new Conda environment named <code>ml-basics</code>. It should use Python version 3.9.</li></ol><ol type="1" id="24e243e5-2cd7-80f9-badf-fcd12a1c7414" class="numbered-list" start="2"><li>Activate the <code>ml-basics</code> environment.</li></ol><ol type="1" id="24e243e5-2cd7-8083-a76b-c51c458ace39" class="numbered-list" start="3"><li>Inside this new environment, install the following key machine learning and data science libraries:<ul id="24e243e5-2cd7-808c-b6d5-d7dc51ac50dd" class="bulleted-list"><li style="list-style-type:disc"><code>scikit-learn</code></li></ul><ul id="24e243e5-2cd7-80ce-a8d3-d836a013db4a" class="bulleted-list"><li style="list-style-type:disc"><code>pandas</code></li></ul><ul id="24e243e5-2cd7-80a9-9b97-da11c0dc80cb" class="bulleted-list"><li style="list-style-type:disc"><code>matplotlib</code></li></ul></li></ol><ol type="1" id="24e243e5-2cd7-809a-8bdd-c1d9dee348ae" class="numbered-list" start="4"><li>After the installation is complete, verify that all three packages (and their dependencies) have been installed correctly by listing the packages in the environment.</li></ol><ol type="1" id="24e243e5-2cd7-8070-8787-f6e339b0604e" class="numbered-list" start="5"><li>Deactivate the <code>ml-basics</code> environment to return to the base prompt.</li></ol><ol type="1" id="24e243e5-2cd7-8015-b47d-fc3f7470b9ea" class="numbered-list" start="6"><li>List all your environments one last time to see <code>ml-basics</code> in the list.</li></ol><h3 id="24e243e5-2cd7-800e-a1a2-cc0863299593" class=""><strong>✅ Solutions</strong></h3><h3 id="24e243e5-2cd7-80ba-b041-ecf0096793b9" class=""><strong>Quiz Answers</strong></h3><p id="24e243e5-2cd7-80c7-aeef-e91dfad596a1" class=""><strong>Q1</strong>: b) As a distribution for Python and R with a focus on scientific computing.</p><p id="24e243e5-2cd7-80bf-9ccb-f19e374546e0" class=""><strong>Q2</strong>: b) They allow you to isolate project dependencies and avoid conflicts.</p><p id="24e243e5-2cd7-804d-91ae-e32a29dc4bff" class=""><strong>Q3</strong>: c) <code>conda create --name myenv</code>.</p><p id="24e243e5-2cd7-80b9-89b2-cc29cb8b54a1" class=""><strong>Q4</strong>: c) <code>conda activate ml-project</code>.</p><p id="24e243e5-2cd7-808b-904e-d414e07cc9e7" class=""><strong>Q5</strong>: b) <code>conda list</code>.</p><p id="24e243e5-2cd7-80de-9529-fef3787980e0" class=""><strong>Q6</strong>: d) Returns you to the base Conda environment.</p><p id="24e243e5-2cd7-8079-98e0-c3535f3df8f7" class=""><strong>Q7</strong>: b) <code>conda install pandas=1.5</code>.</p><p id="24e243e5-2cd7-800a-b15f-fb950fd1e6a3" class=""><strong>Q8</strong>: c) <code>conda</code>.</p><p id="24e243e5-2cd7-802a-9b8d-e4efb489c76f" class=""><strong>Q9</strong>: c) Delete the environment <code>myenv</code> and all packages within it.</p><p id="24e243e5-2cd7-8004-92c1-c98aaed91b1c" class=""><strong>Q10</strong>: False. It is a best practice to create separate environments for each project to avoid dependency conflicts.</p><h3 id="24e243e5-2cd7-8074-b17b-da4e05cefb60" class=""><strong>Assignment Solution (&quot;Machine Learning Project Setup&quot; walkthrough)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8053-9adf-c57cd841e95e" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># 1. Create the environment
+conda create --name ml-basics python=3.9
+
+# (Press &#x27;y&#x27; when prompted)
+
+# 2. Activate the environment
+conda activate ml-basics
+
+# 3. Install the packages
+conda install scikit-learn pandas matplotlib
+
+# (Press &#x27;y&#x27; when prompted)
+
+# 4. Verify the installation
+conda list
+
+# (You should see scikit-learn, pandas, and matplotlib in the output list)
+
+# 5. Deactivate the environment
+conda deactivate
+
+# 6. List all environments to confirm creation
+conda env list</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

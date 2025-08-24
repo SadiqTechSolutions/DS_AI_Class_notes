@@ -1,0 +1,976 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 2: Python Syntax, Comments &amp; Variables</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="224243e5-2cd7-8024-bf25-f44e262baabf" class="page sans"><header><h1 class="page-title">Day 2: Python Syntax, Comments &amp; Variables</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr></tbody></table></header><div class="page-body"><p id="224243e5-2cd7-80e2-9466-e2d1c0625b20" class=""><em>Building the foundation of Python programming! 🐍</em></p><hr id="224243e5-2cd7-8062-a89f-dda4db0da6d0"/><h2 id="224243e5-2cd7-80a7-9490-c8bdbd748897" class="">📝 Day 1 Quiz Answers &amp; Assignment Solutions</h2><h3 id="224243e5-2cd7-809f-a775-e972b75c3770" class="">Quiz Answers:</h3><p id="224243e5-2cd7-8083-a75e-dbd77538bd52" class=""><strong>Q1</strong>: a) Add Python to PATH</p><p id="224243e5-2cd7-807e-bdcf-e7004379ed59" class=""><strong>Q2</strong>: False (Named after Monty Python comedy show)</p><p id="224243e5-2cd7-80c8-a536-c47fe026d68d" class=""><strong>Q3</strong>: c) pwd</p><p id="224243e5-2cd7-8047-8a57-e48de7a20f83" class=""><strong>Q4</strong>: b) .py</p><p id="224243e5-2cd7-80d4-bd4a-e2b30b0b5041" class=""><strong>Q5</strong>: b) python --version</p><p id="224243e5-2cd7-80e5-8fd4-f5489afea01e" class=""><strong>Q6</strong>: True</p><p id="224243e5-2cd7-80ee-ac2a-fda398bef989" class=""><strong>Q7</strong>: c) mkdir</p><p id="224243e5-2cd7-8072-bf20-de1bba827a62" class=""><strong>Q8</strong>: b) Go back one folder</p><p id="224243e5-2cd7-8026-ac45-e3e8d8a5ca83" class=""><strong>Q9</strong>: a) Python by Microsoft</p><p id="224243e5-2cd7-807a-b069-eff661b20d11" class=""><strong>Q10</strong>: True</p><h3 id="224243e5-2cd7-8052-9d9c-ebf203a145ec" class="">Assignment Solutions:</h3><p id="224243e5-2cd7-8079-83af-f0d3056d9455" class=""><strong>Sample </strong><code><strong>setup_info.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-800f-8a65-fecafe4f3532" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">print(&quot;=== My Python Development Setup ===&quot;)
+print(&quot;Operating System: Windows 11&quot;)
+print(&quot;Python Version: 3.12.0&quot;)
+print(&quot;VS Code Version: 1.85.0&quot;)
+print(&quot;Date Setup Completed: January 15, 2024&quot;)
+print(&quot;Folder Structure: STS_Classes/Python/Day_1&quot;)
+</code></pre><hr id="224243e5-2cd7-808d-b866-f8c105b48fdd"/><h2 id="224243e5-2cd7-801e-b422-fcf3a0b5de5a" class="">🎯 Today&#x27;s Learning Goals</h2><ul id="224243e5-2cd7-8074-85ed-cd61376f4047" class="bulleted-list"><li style="list-style-type:disc">Understand Python syntax and structure</li></ul><ul id="224243e5-2cd7-8068-b50d-dd43acf7ab5e" class="bulleted-list"><li style="list-style-type:disc">Master single-line and multi-line comments</li></ul><ul id="224243e5-2cd7-809f-ae00-f59d26591d66" class="bulleted-list"><li style="list-style-type:disc">Learn variable creation and naming conventions</li></ul><ul id="224243e5-2cd7-80b1-95c4-cfb30a8b91c7" class="bulleted-list"><li style="list-style-type:disc">Understand variable scope (local vs global)</li></ul><ul id="224243e5-2cd7-8029-a5f8-e3efa1ee18d2" class="bulleted-list"><li style="list-style-type:disc">Practice proper code organization</li></ul><hr id="224243e5-2cd7-80c1-8239-ea4132cf6e86"/><h2 id="224243e5-2cd7-80a2-8ba1-d563d9153910" class="">🔤 Part 1: Python Syntax</h2><h3 id="224243e5-2cd7-80a7-a3dd-e359bf77952f" class="">What is Syntax?</h3><p id="224243e5-2cd7-80dc-aa90-dcbc2dae1a3f" class=""><strong>Syntax</strong> = Rules for writing code that computer can understand<br/><br/><strong>Analogy</strong>: Like grammar rules in English - you need proper structure to make sense!</p><h3 id="224243e5-2cd7-802b-aa3c-e22fe8c3797d" class="">Key Python Syntax Rules:</h3><ol type="1" id="224243e5-2cd7-80cc-a953-c34082fde07b" class="numbered-list" start="1"><li><strong>Indentation</strong> = Spaces that show code structure</li></ol><ol type="1" id="224243e5-2cd7-8012-b57e-f652d1c2c06f" class="numbered-list" start="2"><li><strong>Comments</strong> = Notes that explain code</li></ol><ol type="1" id="224243e5-2cd7-80f8-95e6-d2c8160556e7" class="numbered-list" start="3"><li><strong>Case Sensitivity</strong> = <code>Name</code> ≠ <code>name</code></li></ol><h3 id="224243e5-2cd7-80d9-8fcb-dc028108d587" class="">Indentation Example:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80aa-9d30-e61ca5521edb" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Correct indentation
+for i in range(3):
+    print(i)  # 4 spaces indented
+
+# Wrong indentation (will cause error)
+for i in range(3):
+print(i)  # No indentation - ERROR!
+</code></pre><p id="224243e5-2cd7-8011-802f-fbd7298aed4c" class=""><strong>💡 Fun Fact</strong>: Python uses indentation instead of { } brackets like other languages!</p><hr id="224243e5-2cd7-80aa-b9bb-fe962c4658be"/><h2 id="224243e5-2cd7-8027-810b-c8de8c836e6d" class="">💬 Part 2: Python Comments</h2><h3 id="224243e5-2cd7-801c-ad85-cca9372f911d" class="">Why Comments?</h3><p id="224243e5-2cd7-8069-8882-c8b32c682aa8" class="">Comments are like <strong>sticky notes</strong> for your code - they explain what&#x27;s happening!</p><h3 id="224243e5-2cd7-8032-b6b9-fc8e8579f82e" class="">Single-Line Comments:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-800f-93f5-e0e783f2d51e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># This is a comment - computer ignores this line
+print(&quot;Hello World!&quot;)  # Comment at end of line
+
+# You can comment out code to disable it
+# print(&quot;This won&#x27;t run&quot;)
+print(&quot;This will run&quot;)
+</code></pre><h3 id="224243e5-2cd7-8061-a0a5-ed0e3cff9a3c" class="">Multi-Line Comments:</h3><p id="224243e5-2cd7-80e5-a979-d7bdf9c53164" class=""><strong>Method 1: Multiple # symbols</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-8055-a40e-fbaaa2d01002" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># This is line 1 of comment
+# This is line 2 of comment
+# This is line 3 of comment
+print(&quot;Code after comments&quot;)
+</code></pre><p id="224243e5-2cd7-80c2-a786-cdf74ec5a0a8" class=""><strong>Method 2: Triple quotes</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-8057-968e-d76439c8761b" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+This is a multi-line comment
+It can span multiple lines
+Very useful for long explanations
+&quot;&quot;&quot;
+print(&quot;Code after multi-line comment&quot;)
+</code></pre><hr id="224243e5-2cd7-80ac-bcad-e94e4ae3695e"/><h2 id="224243e5-2cd7-80a5-809d-f8e5cf83303b" class="">📦 Part 3: Python Variables</h2><h3 id="224243e5-2cd7-80cb-a280-d747b182d9f1" class="">What are Variables?</h3><p id="224243e5-2cd7-80e7-8773-db61a33d4995" class="">Variables are <strong>labeled boxes</strong> that store information for later use.</p><h3 id="224243e5-2cd7-8017-8b48-eecb41047fef" class="">Creating Variables:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-8088-ab3d-cb49d6c2755f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># No need to declare type - Python figures it out!
+name = &quot;Alice&quot;      # String (text)
+age = 25           # Integer (whole number)
+height = 5.6       # Float (decimal number)
+is_student = True  # Boolean (True/False)
+</code></pre><h3 id="224243e5-2cd7-808f-be1a-dd5a0968b47e" class="">Variable Naming Rules:</h3><p id="224243e5-2cd7-8083-8163-f76fd5821ac0" class="">✅ <strong>GOOD Names:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-806c-919f-e7b47c33e212" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">student_name = &quot;John&quot;
+age_in_years = 20
+_private_var = &quot;secret&quot;
+myVariable = &quot;camelCase&quot;
+</code></pre><p id="224243e5-2cd7-80b6-8286-eeb26f82087a" class="">❌ <strong>BAD Names:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80d9-a795-ef10efc00ba0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">2names = &quot;error&quot;     # Can&#x27;t start with number
+my-var = &quot;error&quot;     # Can&#x27;t use hyphens
+class = &quot;error&quot;      # Can&#x27;t use Python keywords
+</code></pre><h3 id="224243e5-2cd7-8065-9975-e52c11da21cc" class="">Naming Conventions:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80ce-aeca-df0ff126b5e4" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Snake Case (Recommended for Python)
+student_name = &quot;Python&quot;
+total_marks = 95
+
+# Camel Case
+studentName = &quot;Python&quot;
+totalMarks = 95
+
+# Pascal Case
+StudentName = &quot;Python&quot;
+TotalMarks = 95
+</code></pre><hr id="224243e5-2cd7-808c-ab24-e1406c389497"/><h2 id="224243e5-2cd7-8057-ba5a-db17026e35f4" class="">🌍 Part 4: Variable Scope</h2><h3 id="224243e5-2cd7-80d4-8aaa-cfd77d11675b" class="">Local Variables:</h3><p id="224243e5-2cd7-80f2-b193-f85195c13db6" class="">Variables created <strong>inside</strong> functions - only work inside that function.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80f1-9f5e-d5665ba5d56e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def my_function():
+    local_var = &quot;I&#x27;m local!&quot;  # Only exists inside function
+    print(local_var)
+
+my_function()
+# print(local_var)  # ERROR! Can&#x27;t access outside function
+</code></pre><h3 id="224243e5-2cd7-8057-9cb8-c434ce4b48e4" class="">Global Variables:</h3><p id="224243e5-2cd7-80f5-bdc1-f078a2a5f928" class="">Variables created in <strong>main code</strong> - work everywhere.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80a8-9bd9-eee5d4a69e70" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">global_var = &quot;I&#x27;m global!&quot;  # Available everywhere
+
+def my_function():
+    local_var = &quot;I&#x27;m local!&quot;
+    print(global_var)   # Can access global variable
+    print(local_var)    # Can access local variable
+
+my_function()
+print(global_var)       # Can access global variable
+# print(local_var)      # ERROR! Can&#x27;t access local variable
+</code></pre><hr id="224243e5-2cd7-8061-8f4e-e0024173762c"/><h2 id="224243e5-2cd7-808f-b993-df25e4bac878" class="">🚀 Fun Expedition: &quot;Code Detective Agency&quot;</h2><p id="224243e5-2cd7-804d-b9f5-c3a0be28f0c1" class=""><strong>Mission</strong>: Create a detective profile using variables and comments!</p><p id="224243e5-2cd7-80c6-8e36-f6fd72923505" class=""><strong>Your Task</strong>: Create <code>day2_detective_profile.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80f7-b22a-eb86533beed0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+Detective Profile System
+Created by: [Your Name]
+Date: [Today&#x27;s Date]
+&quot;&quot;&quot;
+
+# Detective Information (Global Variables)
+detective_name = &quot;Sherlock Holmes&quot;
+badge_number = 221
+years_experience = 15
+is_active = True
+
+def show_profile():
+    # Local variables for case info
+    current_case = &quot;The Missing Data&quot;
+    case_priority = &quot;High&quot;
+
+    print(&quot;=== DETECTIVE PROFILE ===&quot;)
+    print(f&quot;Name: {detective_name}&quot;)
+    print(f&quot;Badge: {badge_number}&quot;)
+    print(f&quot;Experience: {years_experience} years&quot;)
+    print(f&quot;Status: {&#x27;Active&#x27; if is_active else &#x27;Inactive&#x27;}&quot;)
+    print(f&quot;Current Case: {current_case}&quot;)
+    print(f&quot;Priority: {case_priority}&quot;)
+
+# Call the function
+show_profile()
+</code></pre><hr id="224243e5-2cd7-8055-960a-dce353f4e5fe"/><h2 id="224243e5-2cd7-8043-9c39-d95e544cfa99" class="">🛠️ Hands-on Practice</h2><h3 id="224243e5-2cd7-808f-952c-fbf7ff170529" class="">Exercise 1: Comment Practice</h3><p id="224243e5-2cd7-803a-8e5d-ddf14ce5261c" class="">Create <code>day2_comments.py</code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80a6-918d-e31eb3215c7d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Write a single-line comment explaining what this program does
+
+&quot;&quot;&quot;
+Write a multi-line comment explaining:
+- Your name
+- What you&#x27;re learning today
+- Why comments are important
+&quot;&quot;&quot;
+
+print(&quot;Learning Python comments!&quot;)
+print(&quot;Comments make code readable&quot;)  # Add inline comment here
+</code></pre><h3 id="224243e5-2cd7-801a-a933-f5986ed3a8a8" class="">Exercise 2: Variable Creation</h3><p id="224243e5-2cd7-804b-b334-ca628e69fb88" class="">Create <code>day2_variables.py</code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-8081-a970-dfb26ae69998" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create variables for a student profile
+student_name = &quot;[Your Name]&quot;
+student_age = [Your Age]
+favorite_subject = &quot;[Your Favorite Subject]&quot;
+is_python_fun = True
+
+# Print all variables
+print(&quot;Student Profile:&quot;)
+print(&quot;Name:&quot;, student_name)
+print(&quot;Age:&quot;, student_age)
+print(&quot;Favorite Subject:&quot;, favorite_subject)
+print(&quot;Enjoys Python:&quot;, is_python_fun)
+</code></pre><h3 id="224243e5-2cd7-8033-a97b-d1ec7f70ab47" class="">Exercise 3: Naming Convention Practice</h3><p id="224243e5-2cd7-80de-b661-e8eab74d225e" class="">Create <code>day2_naming.py</code> with variables using different naming styles:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80da-9894-f5303dba1204" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Snake case variables
+first_name = &quot;John&quot;
+last_name = &quot;Doe&quot;
+phone_number = &quot;123-456-7890&quot;
+
+# Print using proper variable names
+print(&quot;Full Name:&quot;, first_name, last_name)
+print(&quot;Contact:&quot;, phone_number)
+</code></pre><h3 id="224243e5-2cd7-806a-b0e9-cdcb249d1d7c" class="">Exercise 4: Scope Practice</h3><p id="224243e5-2cd7-80a9-b3f0-e46eaae698ba" class="">Create <code>day2_scope.py</code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80f8-83ff-d564714d39b0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Global variable
+school_name = &quot;STS Academy&quot;
+
+def student_info():
+    # Local variables
+    student_grade = &quot;A+&quot;
+    student_subject = &quot;Python&quot;
+
+    print(&quot;School:&quot;, school_name)      # Global variable
+    print(&quot;Grade:&quot;, student_grade)     # Local variable
+    print(&quot;Subject:&quot;, student_subject) # Local variable
+
+student_info()
+print(&quot;School Name:&quot;, school_name)  # This works
+# print(student_grade)  # This would cause an error - try it!
+</code></pre><h3 id="224243e5-2cd7-8017-8a96-d514d355c6da" class="">Exercise 5: Mixed Practice</h3><p id="224243e5-2cd7-804c-90ef-cdd78060bd94" class="">Create <code>day2_practice.py</code> combining all concepts:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-808f-be99-dd5e07442758" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+Mixed Practice Exercise
+Topics: Comments, Variables, Scope
+&quot;&quot;&quot;
+
+# Global variables for a simple calculator
+number1 = 10
+number2 = 5
+
+def calculator():
+    # Local variables for operations
+    addition = number1 + number2
+    subtraction = number1 - number2
+
+    print(&quot;=== Simple Calculator ===&quot;)
+    print(f&quot;{number1} + {number2} = {addition}&quot;)
+    print(f&quot;{number1} - {number2} = {subtraction}&quot;)
+
+calculator()
+</code></pre><hr id="224243e5-2cd7-80e3-92b3-d8a2c1146a08"/><h2 id="224243e5-2cd7-806b-9878-d9abf2bca3b9" class="">🧠 Quiz Time</h2><h3 id="224243e5-2cd7-80f9-ad75-e808f5bbc0c0" class="">Syntax &amp; Comments (5 Questions):</h3><p id="224243e5-2cd7-8061-8fdc-c4fc87fb8aaa" class=""><strong>Q1</strong>: What symbol is used for single-line comments in Python?<br/>a) //  b) #  c) /*  d) --<br/></p><p id="224243e5-2cd7-80d7-b6b8-f4f84abe1412" class=""><strong>Q2</strong>: True/False: Python uses curly braces {} to define code blocks.</p><p id="224243e5-2cd7-80ac-869b-d79a0d8a84c0" class=""><strong>Q3</strong>: Which is the correct way to write a multi-line comment?<br/>a) /* comment */<br/>b) // comment<br/>c) &quot;&quot;&quot; comment &quot;&quot;&quot;<br/>d) # comment #<br/></p><p id="224243e5-2cd7-8012-ab66-f43655b31b25" class=""><strong>Q4</strong>: What happens when Python encounters a comment?<br/>a) Executes it  b) Ignores it  c) Shows error  d) Saves it<br/></p><p id="224243e5-2cd7-80fb-b5ee-c3da42572213" class=""><strong>Q5</strong>: True/False: Indentation is mandatory in Python.</p><h3 id="224243e5-2cd7-802c-be0a-ec0403d2e85d" class="">Variables &amp; Scope (5 Questions):</h3><p id="224243e5-2cd7-8098-bb54-c7e076f24b09" class=""><strong>Q6</strong>: Which variable name is INVALID?<br/>a) _name  b) name2  c) 2name  d) my_name<br/></p><p id="224243e5-2cd7-8057-a447-cb5b8dadd832" class=""><strong>Q7</strong>: What naming convention uses underscores?<br/>a) Camel Case  b) Pascal Case  c) Snake Case  d) Kebab Case<br/></p><p id="224243e5-2cd7-800f-9f12-d8e5cbee8c65" class=""><strong>Q8</strong>: True/False: Variable names in Python are case-sensitive.</p><p id="224243e5-2cd7-802d-b6e2-d930032be95e" class=""><strong>Q9</strong>: Where can you access a global variable?<br/>a) Only in functions  b) Only in main code  c) Anywhere in the program  d) Only once<br/></p><p id="224243e5-2cd7-809b-abe8-cccdc1fd48f8" class=""><strong>Q10</strong>: What happens if you try to access a local variable outside its function?<br/>a) Returns None  b) Returns empty string  c) Causes an error  d) Works normally<br/></p><p id="224243e5-2cd7-8063-a763-c9278306adc3" class=""><em>📝 Answers will be provided at the start of Day 3 class!</em></p><hr id="224243e5-2cd7-80d4-85de-ee3bb2cb2795"/><h2 id="224243e5-2cd7-80cf-bdd3-f9b174fa802b" class="">📚 Assignment for Next Class</h2><h3 id="224243e5-2cd7-805e-befd-c07db7f38b8d" class=""><strong>Project: &quot;Personal Information System&quot;</strong></h3><p id="224243e5-2cd7-8082-b603-f4fea03a4d59" class=""><strong>Create the following files in your </strong><code><strong>Day_2/exercises/</strong></code><strong> folder</strong>:</p><ol type="1" id="224243e5-2cd7-80cc-94c6-cacf9b583b1d" class="numbered-list" start="1"><li><code><strong>personal_profile.py</strong></code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-801a-8af8-fdd922fc63e2" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+Personal Profile System
+Created by: [Your Name]
+Purpose: Practice variables and comments
+&quot;&quot;&quot;
+
+# Personal Information (Global Variables)
+full_name = &quot;[Your Full Name]&quot;
+birth_year = [Your Birth Year]
+favorite_color = &quot;[Your Favorite Color]&quot;
+hobby = &quot;[Your Hobby]&quot;
+is_student = True
+dream_job = &quot;[Your Dream Job]&quot;
+
+def display_profile():
+    # Calculate age (Local Variable)
+    current_year = 2024
+    age = current_year - birth_year
+
+    # Display information
+    print(&quot;=&quot; * 30)
+    print(&quot;PERSONAL PROFILE&quot;)
+    print(&quot;=&quot; * 30)
+    print(f&quot;Name: {full_name}&quot;)
+    print(f&quot;Age: {age} years old&quot;)
+    print(f&quot;Favorite Color: {favorite_color}&quot;)
+    print(f&quot;Hobby: {hobby}&quot;)
+    print(f&quot;Student Status: {&#x27;Yes&#x27; if is_student else &#x27;No&#x27;}&quot;)
+    print(f&quot;Dream Job: {dream_job}&quot;)
+    print(&quot;=&quot; * 30)
+
+# Call the function
+display_profile()
+</code></pre><ol type="1" id="224243e5-2cd7-808e-9635-cd61bc3d1f00" class="numbered-list" start="1"><li><code><strong>comment_practice.py</strong></code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-800b-b598-dae766dbbefb" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Single-line comment: Explain what this program does
+
+&quot;&quot;&quot;
+Multi-line comment:
+Write about your learning experience so far
+- What you found easy
+- What was challenging
+- What you&#x27;re excited to learn next
+&quot;&quot;&quot;
+
+# Create variables for your learning journey
+days_completed = 2
+topics_learned = [&quot;Installation&quot;, &quot;Setup&quot;, &quot;Syntax&quot;, &quot;Comments&quot;, &quot;Variables&quot;]
+confidence_level = &quot;[Rate 1-10]&quot;
+
+# Print your progress (add inline comments)
+print(&quot;Learning Progress Report&quot;)  # Title
+print(f&quot;Days Completed: {days_completed}&quot;)  # Progress tracker
+print(f&quot;Topics Mastered: {len(topics_learned)}&quot;)  # Count topics
+print(f&quot;Confidence Level: {confidence_level}/10&quot;)  # Self assessment
+</code></pre><ol type="1" id="224243e5-2cd7-805c-8fa5-ee98be933615" class="numbered-list" start="1"><li><code><strong>variable_experiments.py</strong></code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-8090-a1ba-d79a9eda61bc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Experiment with different variable types and operations
+
+# String variables
+first_word = &quot;Python&quot;
+second_word = &quot;Programming&quot;
+combined = first_word + &quot; &quot; + second_word
+
+# Number variables
+num1 = 15
+num2 = 7
+sum_result = num1 + num2
+difference = num1 - num2
+
+# Boolean variables
+is_fun = True
+is_difficult = False
+
+# Print all experiments
+print(&quot;String Experiment:&quot;, combined)
+print(&quot;Math Experiment:&quot;, sum_result, &quot;and&quot;, difference)
+print(&quot;Boolean Experiment:&quot;, is_fun, &quot;vs&quot;, is_difficult)
+</code></pre><ol type="1" id="224243e5-2cd7-80c6-95c5-f328578212d9" class="numbered-list" start="1"><li><code><strong>scope_challenge.py</strong></code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80fd-a947-e409f93ca91e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Challenge: Create a program demonstrating variable scope
+
+# Global variables
+company_name = &quot;STS Tech Solutions&quot;
+founded_year = 2020
+
+def employee_details():
+    # Local variables
+    employee_name = &quot;[Create an employee name]&quot;
+    employee_id = &quot;[Create an ID number]&quot;
+    department = &quot;[Choose a department]&quot;
+
+    print(&quot;Company:&quot;, company_name)  # Global
+    print(&quot;Founded:&quot;, founded_year)  # Global
+    print(&quot;Employee:&quot;, employee_name)  # Local
+    print(&quot;ID:&quot;, employee_id)  # Local
+    print(&quot;Department:&quot;, department)  # Local
+
+def company_info():
+    # Different local variables
+    total_employees = 50
+    locations = &quot;Multiple Cities&quot;
+
+    print(&quot;Company Name:&quot;, company_name)  # Global
+    print(&quot;Total Staff:&quot;, total_employees)  # Local
+    print(&quot;Locations:&quot;, locations)  # Local
+
+# Call both functions
+employee_details()
+print(&quot;-&quot; * 25)
+company_info()
+</code></pre><ol type="1" id="224243e5-2cd7-809c-afa3-e0e852a2755a" class="numbered-list" start="1"><li><strong>Bonus Challenge - </strong><code><strong>mini_calculator.py</strong></code>:</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="224243e5-2cd7-80f8-91fd-cbdc7bb8a1de" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&quot;&quot;&quot;
+Mini Calculator Project
+Combine all Day 2 concepts
+&quot;&quot;&quot;
+
+# Global variables for calculator
+calculator_name = &quot;STS Calculator v1.0&quot;
+version = 1.0
+
+def basic_operations():
+    # Local variables for calculations
+    a = 20
+    b = 8
+
+    addition = a + b
+    subtraction = a - b
+    multiplication = a * b
+    division = a / b
+
+    print(f&quot;Calculator: {calculator_name}&quot;)
+    print(f&quot;Version: {version}&quot;)
+    print(&quot;-&quot; * 25)
+    print(f&quot;{a} + {b} = {addition}&quot;)
+    print(f&quot;{a} - {b} = {subtraction}&quot;)
+    print(f&quot;{a} × {b} = {multiplication}&quot;)
+    print(f&quot;{a} ÷ {b} = {division}&quot;)
+
+basic_operations()
+</code></pre><p id="224243e5-2cd7-8078-95ff-c4a5f726b365" class=""><strong>📝 Note</strong>: Assignment solutions will be discussed at the start of Day 3!</p><hr id="224243e5-2cd7-80e9-9e7d-d865c52976fc"/><h2 id="224243e5-2cd7-80f4-b37c-cb049ecf6ab8" class="">🎥 Recommended Videos for Visual Learning</h2><p id="224243e5-2cd7-80ee-93e3-ef6b91f771c2" class=""><strong>Python Syntax &amp; Indentation</strong>:</p><ul id="224243e5-2cd7-80ec-b09e-c2b6f75f4d8f" class="bulleted-list"><li style="list-style-type:disc">&quot;Python Indentation Explained&quot; - Programming with Mosh</li></ul><p id="224243e5-2cd7-8006-aa2d-faa3b11bfb6a" class=""><strong>Comments Best Practices</strong>:</p><ul id="224243e5-2cd7-80c4-88a9-c3e37f1119e5" class="bulleted-list"><li style="list-style-type:disc">&quot;Writing Good Comments in Python&quot; - Corey Schafer</li></ul><p id="224243e5-2cd7-8017-9ad5-f807d1c01538" class=""><strong>Variables and Naming</strong>:</p><ul id="224243e5-2cd7-80aa-9360-cb53ef48654c" class="bulleted-list"><li style="list-style-type:disc">&quot;Python Variables for Beginners&quot; - FreeCodeCamp</li></ul><hr id="224243e5-2cd7-8015-9ef5-f10cd4ab5c25"/><h2 id="224243e5-2cd7-80cc-9f31-eebccd30eb43" class="">💡 Interesting Facts</h2><ul id="224243e5-2cd7-80a0-b353-ec8ce3fe9f89" class="bulleted-list"><li style="list-style-type:disc"><strong>Comments</strong> can make up to 30% of professional code!</li></ul><ul id="224243e5-2cd7-80c7-9288-f8a36e4baf84" class="bulleted-list"><li style="list-style-type:disc"><strong>Variable naming</strong> follows PEP 8 - Python&#x27;s style guide</li></ul><ul id="224243e5-2cd7-80c7-a6b4-d5f8a7b00d40" class="bulleted-list"><li style="list-style-type:disc"><strong>Indentation</strong> in Python prevents many common programming errors</li></ul><ul id="224243e5-2cd7-80a2-9de4-cf58b743b5d2" class="bulleted-list"><li style="list-style-type:disc"><strong>Global variables</strong> should be used sparingly in real projects</li></ul><ul id="224243e5-2cd7-8071-8734-c554f142fbbd" class="bulleted-list"><li style="list-style-type:disc"><strong>Snake_case</strong> is preferred in Python, while <strong>camelCase</strong> is common in JavaScript</li></ul><hr id="224243e5-2cd7-807e-8203-fb7b2a7dffa1"/><p id="224243e5-2cd7-8019-8c48-c7fae61fdd35" class=""><em>🎊 Great job completing Day 2! You now understand Python&#x27;s basic structure and can create meaningful programs!</em></p><p id="224243e5-2cd7-80b3-af40-cc7d0abb89c3" class=""><strong>Next Class Preview</strong>: Data Types, Input/Output, and String Operations! 🔤</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

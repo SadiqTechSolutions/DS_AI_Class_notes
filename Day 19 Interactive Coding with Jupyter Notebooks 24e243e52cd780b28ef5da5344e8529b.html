@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 19: Interactive Coding with Jupyter Notebooks</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24e243e5-2cd7-80b2-8ef5-da5344e8529b" class="page sans"><header><h1 class="page-title"><strong>Day 19: Interactive Coding with Jupyter Notebooks</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><div data-testid="/icons/burst_gray.svg" style="width:14px;height:14px;flex-shrink:0;transform:scale(1.2);mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;-webkit-mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;background-color:rgba(71, 70, 68, 0.6);fill:rgba(71, 70, 68, 0.6)"></div></span>Status</th><td><span class="status-value"><div class="status-dot"></div>Not started</span></td></tr></tbody></table></header><div class="page-body"><p id="24e243e5-2cd7-80a1-b709-f2cd53ffe953" class=""><em>Discovering the ultimate tool for data exploration, analysis, and storytelling. This is your interactive lab! 🔬</em></p><h2 id="24e243e5-2cd7-80bd-8a65-f45722986330" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="24e243e5-2cd7-8032-8aef-fb89ad82df81" class="bulleted-list"><li style="list-style-type:disc">Understand what a Jupyter Notebook is and its importance in data science.</li></ul><ul id="24e243e5-2cd7-80cd-80e6-dc4d9ab175c3" class="bulleted-list"><li style="list-style-type:disc">Learn the key components of the notebook interface: cells, kernels, and modes.</li></ul><ul id="24e243e5-2cd7-8018-8d1c-d85c03bb727b" class="bulleted-list"><li style="list-style-type:disc">Install Jupyter Notebook and JupyterLab into a Conda environment.</li></ul><ul id="24e243e5-2cd7-8080-b0ac-fa6cfa36b5aa" class="bulleted-list"><li style="list-style-type:disc">Differentiate between Jupyter Notebook and JupyterLab.</li></ul><ul id="24e243e5-2cd7-8086-b7e9-e6a88b1c709d" class="bulleted-list"><li style="list-style-type:disc">Launch a notebook server and create your first notebook.</li></ul><ul id="24e243e5-2cd7-801e-861f-fb78a8a92b8f" class="bulleted-list"><li style="list-style-type:disc">Master essential keyboard shortcuts for efficient workflow.</li></ul><h2 id="24e243e5-2cd7-80d4-933a-d079f9271c14" class=""><strong>notebooks Part 1: What is a Jupyter Notebook?</strong></h2><p id="24e243e5-2cd7-8089-b12b-c827649028fc" class="">A <strong>Jupyter Notebook</strong> is an interactive web-based application that allows you to create and share documents containing live code, equations, visualizations, and narrative text.</p><p id="24e243e5-2cd7-8081-a995-c844557d3076" class=""><strong>Analogy</strong>: Think of a Jupyter Notebook as a <strong>digital lab notebook or a scrapbook for your code</strong>. It&#x27;s not just a plain script. You can write a piece of code in one &quot;cell,&quot; run it, and see the output (like a table or a chart) immediately below it. Then, in the next cell, you can write notes and explanations about what you just did. It&#x27;s a perfect blend of code, output, and storytelling.</p><h3 id="24e243e5-2cd7-80d2-9493-d2801c7fb428" class=""><strong>Why is it essential for Data Science?</strong></h3><ul id="24e243e5-2cd7-806f-b584-ed62c91c3e02" class="bulleted-list"><li style="list-style-type:disc"><strong>Interactive Exploration</strong>: Run small chunks of code and see results instantly, which is perfect for exploring data.</li></ul><ul id="24e243e5-2cd7-80fc-bdf9-f2e123a921bc" class="bulleted-list"><li style="list-style-type:disc"><strong>Inline Visualizations</strong>: Display charts and graphs directly within your notebook.</li></ul><ul id="24e243e5-2cd7-8017-88d2-fcfc006bae97" class="bulleted-list"><li style="list-style-type:disc"><strong>Documentation</strong>: Combine your code with detailed explanations, making your analysis easy to understand and share.</li></ul><ul id="24e243e5-2cd7-80ec-9ddb-d0d7617335fd" class="bulleted-list"><li style="list-style-type:disc"><strong>Reproducibility</strong>: A single notebook file (<code>.ipynb</code>) contains everything needed to reproduce your analysis.</li></ul><h2 id="24e243e5-2cd7-80b3-9990-ef00552dfd06" class=""><strong>💻 Part 2: Installation and Launch</strong></h2><p id="24e243e5-2cd7-803d-93b6-dc4072802885" class="">Jupyter is a package that needs to be installed into a Conda environment. It&#x27;s a best practice to install it in each new environment where you need it.</p><h3 id="24e243e5-2cd7-8054-af0a-c6fe5e5f4761" class=""><strong>Installing Jupyter</strong></h3><p id="24e243e5-2cd7-802d-a25a-ee24e1327cc9" class="">Let&#x27;s use the <code>data-analysis</code> environment we created yesterday.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80cb-b57e-e6d4122d03bb" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># 1. Activate the environment you want to work in
+conda activate data-analysis
+
+# 2. Install the jupyter package
+conda install jupyter</code></pre><h3 id="24e243e5-2cd7-8096-8664-d213397f5146" class=""><strong>Jupyter Notebook vs. JupyterLab</strong></h3><p id="24e243e5-2cd7-80c5-8079-ffc15cfda4a1" class="">When you install Jupyter, you get two interfaces:</p><ul id="24e243e5-2cd7-80c4-a30f-ce8e13dfa53e" class="bulleted-list"><li style="list-style-type:disc"><strong>Jupyter Notebook</strong>: The classic, original interface. It&#x27;s simple and focuses on one document at a time.</li></ul><ul id="24e243e5-2cd7-806a-a627-e8b79255e57e" class="bulleted-list"><li style="list-style-type:disc"><strong>JupyterLab</strong>: The next-generation interface. It&#x27;s more like an IDE (like VS Code) and allows you to work with multiple notebooks, files, and terminals in a tabbed, flexible layout. <strong>JupyterLab is recommended for most modern workflows.</strong></li></ul><h3 id="24e243e5-2cd7-80fd-86c0-f623a216b5a6" class=""><strong>Launching JupyterLab</strong></h3><p id="24e243e5-2cd7-80eb-a4ca-d0fef5f91c33" class="">Once installed, you can start the JupyterLab server from your terminal.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8005-b98a-db5bfbcf539b" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Make sure your &#x27;data-analysis&#x27; environment is active
+# This command starts the server and opens a new tab in your web browser
+jupyter lab
+
+</code></pre><p id="24e243e5-2cd7-80b6-a492-ca28c2fb17ee" class="">Your terminal will show some logs, and a new browser tab will open, showing you a file browser. This is the JupyterLab interface. <strong>Keep the terminal window open; closing it will shut down the server.</strong></p><h2 id="24e243e5-2cd7-80dd-81a1-cbeb3796e5a1" class=""><strong>界面 Part 3: The Jupyter Interface</strong></h2><h3 id="24e243e5-2cd7-80b6-89ab-c745a850e432" class=""><strong>Cells</strong></h3><p id="24e243e5-2cd7-80c1-80d5-fcde2faef593" class="">The notebook is made up of <strong>cells</strong>. A cell is a container for either code or text.</p><ul id="24e243e5-2cd7-803e-8cfc-c930ca5e4e10" class="bulleted-list"><li style="list-style-type:disc"><strong>Code Cells</strong>: These are where you write and execute your Python code.</li></ul><ul id="24e243e5-2cd7-8005-a5fe-dbb965b513f0" class="bulleted-list"><li style="list-style-type:disc"><strong>Markdown Cells</strong>: These are where you write text, headings, lists, and links using Markdown syntax.</li></ul><h3 id="24e243e5-2cd7-809d-8922-fd789caefa39" class=""><strong>The Kernel</strong></h3><p id="24e243e5-2cd7-80c9-b2e0-e9b21c2d9ef9" class="">The <strong>kernel</strong> is the &quot;computational engine&quot; that runs your code. When you run a code cell, the notebook sends the code to the kernel, the kernel executes it, and it sends the output back to the notebook. Each notebook has its own kernel.</p><h3 id="24e243e5-2cd7-802c-8eea-ca225c64142f" class=""><strong>Command Mode vs. Edit Mode</strong></h3><p id="24e243e5-2cd7-8011-b693-e1af837587d6" class="">Your keyboard interacts with a cell in two different modes:</p><ul id="24e243e5-2cd7-8049-bc8f-f8e183f9fbbf" class="bulleted-list"><li style="list-style-type:disc"><strong>Edit Mode (Green border)</strong>: You are typing <em>inside</em> the cell. Press <code>Enter</code> to enter this mode.</li></ul><ul id="24e243e5-2cd7-801c-b164-ffbe8cc01382" class="bulleted-list"><li style="list-style-type:disc"><strong>Command Mode (Blue border)</strong>: You are issuing commands that affect the <em>cell itself</em> (like creating new cells, deleting them, etc.). Press <code>Esc</code> to enter this mode.</li></ul><h2 id="24e243e5-2cd7-809f-85b4-f13e798fa770" class=""><strong>⌨️ Part 4: Essential Keyboard Shortcuts</strong></h2><p id="24e243e5-2cd7-8005-b83f-d03607bbacce" class="">Working efficiently in Jupyter means using keyboard shortcuts. Make sure you are in <strong>Command Mode (blue border)</strong> to use these.</p><table id="24e243e5-2cd7-809d-aaa3-ee5da8a66a9c" class="simple-table"><tbody><tr id="24e243e5-2cd7-8098-bcaa-f75daf2fcb02"><td id="z{d{" class=""><strong>Shortcut</strong></td><td id="GI\p" class=""><strong>Action</strong></td></tr><tr id="24e243e5-2cd7-8020-8c94-ff472e907bc1"><td id="z{d{" class=""><code>a</code></td><td id="GI\p" class="">Insert a new cell <strong>a</strong>bove the current cell.</td></tr><tr id="24e243e5-2cd7-8004-88c4-df2957c09cd0"><td id="z{d{" class=""><code>b</code></td><td id="GI\p" class="">Insert a new cell <strong>b</strong>elow the current cell.</td></tr><tr id="24e243e5-2cd7-808b-a5c9-d0efe97ce955"><td id="z{d{" class=""><code>dd</code> (press twice)</td><td id="GI\p" class=""><strong>D</strong>elete the current cell.</td></tr><tr id="24e243e5-2cd7-80bd-918a-e3e8801ad7ff"><td id="z{d{" class=""><code>m</code></td><td id="GI\p" class="">Change the current cell to <strong>M</strong>arkdown.</td></tr><tr id="24e243e5-2cd7-8033-8704-eaee070543b5"><td id="z{d{" class=""><code>y</code></td><td id="GI\p" class="">Change the current cell to code (<strong>Y</strong> is near C<strong>o</strong>de).</td></tr><tr id="24e243e5-2cd7-80a4-afa8-ead7a4f0d9f4"><td id="z{d{" class=""><code>z</code></td><td id="GI\p" class="">Undo cell deletion.</td></tr><tr id="24e243e5-2cd7-8065-af78-e251ab04687f"><td id="z{d{" class=""><code>Shift + Enter</code></td><td id="GI\p" class="">Run the current cell and select the cell below.</td></tr><tr id="24e243e5-2cd7-800c-8fd1-fce758ae55f2"><td id="z{d{" class=""><code>Ctrl + Enter</code></td><td id="GI\p" class="">Run the current cell and stay on the same cell.</td></tr></tbody></table><h2 id="24e243e5-2cd7-8003-b0bb-d27c29a22fe0" class=""><strong>🚀 Fun Expedition: &quot;My First Notebook&quot;</strong></h2><p id="24e243e5-2cd7-8095-a877-c24bc8ade842" class=""><strong>Mission</strong>: Create a simple notebook that demonstrates the use of both code and markdown cells.</p><p id="24e243e5-2cd7-803a-a50b-ed3977390c86" class=""><strong>Your Task</strong>:</p><ol type="1" id="24e243e5-2cd7-80bc-a718-d282cc3eb3e9" class="numbered-list" start="1"><li>Launch JupyterLab from your terminal (<code>jupyter lab</code>).</li></ol><ol type="1" id="24e243e5-2cd7-80e8-8cb9-ced5cbcfea72" class="numbered-list" start="2"><li>In the JupyterLab file browser, click the &quot;Python 3 (ipykernel)&quot; icon under &quot;Notebook&quot; to create a new notebook.</li></ol><ol type="1" id="24e243e5-2cd7-80d6-8d54-f787fae332ad" class="numbered-list" start="3"><li>Rename the file to <code>MyFirstNotebook.ipynb</code>.</li></ol><ol type="1" id="24e243e5-2cd7-8072-a469-d52cc695ed0e" class="numbered-list" start="4"><li><strong>In the first cell (which is a code cell by default):</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-803f-89ac-f9b19d74a5e4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">message = &quot;Hello, Jupyter!&quot;
+print(message)
+
+</code></pre><p id="24e243e5-2cd7-80f9-80e9-d12835a82f89" class="">Press <code>Shift + Enter</code> to run it.</p></li></ol><ol type="1" id="24e243e5-2cd7-800d-a5f7-eba9a8500fef" class="numbered-list" start="5"><li><strong>In the second cell:</strong><ul id="24e243e5-2cd7-8098-a290-ec5282e44adf" class="bulleted-list"><li style="list-style-type:disc">Press <code>Esc</code> to enter Command Mode (blue border).</li></ul><ul id="24e243e5-2cd7-80c0-9d08-f19d3b58cf8e" class="bulleted-list"><li style="list-style-type:disc">Press <code>m</code> to change it to a Markdown cell.</li></ul><ul id="24e243e5-2cd7-80c9-adb1-f6d669b92b87" class="bulleted-list"><li style="list-style-type:disc">Type the following:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80ea-a64b-caae3ca512e3" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># This is a Markdown Heading
+
+The code cell above demonstrates how to:
+- Create a variable
+- Use the `print()` function
+
+</code></pre></li></ul><p id="24e243e5-2cd7-8096-bbd7-c23087952ee1" class="">Press <code>Shift + Enter</code> to render the Markdown.</p></li></ol><ol type="1" id="24e243e5-2cd7-80a0-b219-f344f93f241e" class="numbered-list" start="6"><li>You have now created a basic notebook!</li></ol><p id="24e243e5-2cd7-80f1-81d4-d390535341e1" class="">&lt;br&gt;</p><h2 id="24e243e5-2cd7-80eb-9973-c57946b63cea" class=""><strong>🎯 Day 2: Review &amp; Solutions</strong></h2><h3 id="24e243e5-2cd7-80d9-b5a1-d918171cd333" class=""><strong>🛠️ Hands-on Practice</strong></h3><h3 id="24e243e5-2cd7-8048-9ab5-da4a1ecf6ee6" class=""><strong>Exercise 1: Launch JupyterLab</strong></h3><p id="24e243e5-2cd7-8060-a8ec-dac5ad079afe" class="">Activate your <code>data-analysis</code> Conda environment and launch the JupyterLab server.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8033-9dfa-d5a0bdccfdcc" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">conda activate data-analysis
+jupyter lab
+
+</code></pre><h3 id="24e243e5-2cd7-8099-b2e6-d79d47438800" class=""><strong>Exercise 2: Create a New Notebook</strong></h3><p id="24e243e5-2cd7-80cd-b769-d87d703ab7e7" class="">Inside the JupyterLab interface, create a new notebook and rename it to <code>day2_practice.ipynb</code>.</p><h3 id="24e243e5-2cd7-8069-a850-c09afece638d" class=""><strong>Exercise 3: Markdown Practice</strong></h3><p id="24e243e5-2cd7-800b-b954-f78f935a6d71" class="">In the first cell of your new notebook, change it to a Markdown cell and add a main heading (<code>#</code>), a subheading (<code>##</code>), and a bulleted list of three of your favorite hobbies. Render the cell.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8092-8905-f4175ccb6eb0" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># My Hobbies
+
+## Things I enjoy doing:
+- Reading
+- Hiking
+- Coding
+
+</code></pre><h3 id="24e243e5-2cd7-806c-b132-fd8ec1d14d0d" class=""><strong>Exercise 4: Code Cell Practice</strong></h3><p id="24e243e5-2cd7-80f2-820f-e87aac5224d7" class="">In the cell below your Markdown, create a code cell that defines a list of numbers and then prints the sum of the list. Run the cell.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8085-93f9-ea51d9252b30" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">numbers = [10, 20, 30, 40]
+total = sum(numbers)
+print(f&quot;The sum of the list is: {total}&quot;)
+
+</code></pre><h3 id="24e243e5-2cd7-8044-ade6-e5296cf121c6" class=""><strong>Exercise 5: Using Shortcuts</strong></h3><p id="24e243e5-2cd7-8005-aac6-f83331884fe1" class="">Practice the keyboard shortcuts.</p><ul id="24e243e5-2cd7-80d8-b9b0-d0618f86f1a8" class="bulleted-list"><li style="list-style-type:disc">Click on the last cell and press <code>b</code> to create a new cell below.</li></ul><ul id="24e243e5-2cd7-8032-b2a8-f8d76b5ecdb0" class="bulleted-list"><li style="list-style-type:disc">In the new cell, type <code>print(&quot;New cell&quot;)</code>.</li></ul><ul id="24e243e5-2cd7-80b4-837d-d5e21ef6850d" class="bulleted-list"><li style="list-style-type:disc">Press <code>Esc</code> to enter Command Mode, then press <code>a</code> to create a cell above.</li></ul><ul id="24e243e5-2cd7-809d-970c-ee2f45cedeb4" class="bulleted-list"><li style="list-style-type:disc">Press <code>Esc</code> again on the empty cell and press <code>dd</code> to delete it.</li></ul><h3 id="24e243e5-2cd7-801a-9a4c-c04194aa61b0" class=""><strong>🧠 Quiz Time</strong></h3><p id="24e243e5-2cd7-802c-af05-c19cfe194639" class="">Q1: What is a Jupyter Notebook?</p><p id="24e243e5-2cd7-806c-b9a9-dbea16e45044" class="">a) A text editor like VS Code  b) A Python package for math  c) An interactive web application for code, text, and visualizations  d) A type of Conda environment</p><p id="24e243e5-2cd7-807f-8c7b-cb3a1fbd1778" class="">Q2: What is a &quot;kernel&quot; in the context of Jupyter?</p><p id="24e243e5-2cd7-80cd-a40a-d1eef4060329" class="">a) The user interface  b) The part of the notebook that stores text  c) The computational engine that executes the code  d) The file format (.ipynb)</p><p id="24e243e5-2cd7-8048-9809-d1a1e6167107" class="">Q3: You are in a cell with a blue border. What mode are you in?</p><p id="24e243e5-2cd7-804a-a94b-f08ca49c5ef8" class="">a) Edit Mode  b) Command Mode  c) Run Mode  d) Safe Mode</p><p id="24e243e5-2cd7-8007-b884-d6c64f5d3f96" class="">Q4: What is the keyboard shortcut in Command Mode to change a cell to Markdown?</p><p id="24e243e5-2cd7-8038-b24f-cdb8a6e7f11f" class="">a) c  b) y  c) m  d) t</p><p id="24e243e5-2cd7-805a-80c4-d61037ee474b" class="">Q5: What is the primary advantage of JupyterLab over the classic Jupyter Notebook?</p><p id="24e243e5-2cd7-8062-ac83-ffaa84f52a62" class="">a) It runs code faster  b) It has a more flexible, multi-tabbed interface like an IDE  c) It uses less memory  d) It is older and more stable</p><p id="24e243e5-2cd7-8042-866d-ed481647def9" class="">Q6: Which command do you type in your terminal to start the JupyterLab server?</p><p id="24e243e5-2cd7-809a-9625-f067ba146f86" class="">a) start jupyter  b) jupyter start lab  c) run jupyterlab  d) jupyter lab</p><p id="24e243e5-2cd7-8017-98cc-c03c7e1398de" class="">Q7: What does Shift + Enter do in a notebook cell?</p><p id="24e243e5-2cd7-800d-9df8-da37fa98b738" class="">a) Runs the cell and selects the cell below  b) Runs the cell and stays on the current cell  c) Creates a new cell below  d) Deletes the current cell</p><p id="24e243e5-2cd7-8056-9a8d-e8973a63a3b1" class="">Q8: How do you add a new cell above the currently selected cell in Command Mode?</p><p id="24e243e5-2cd7-80e6-a836-c87b586b408d" class="">a) Press b  b) Press a  c) Press u for &quot;up&quot;  d) Press Ctrl + Up Arrow</p><p id="24e243e5-2cd7-80ba-a5b0-ebb275832324" class="">Q9: What happens to your Jupyter server if you close the terminal window you launched it from?</p><p id="24e243e5-2cd7-803c-9ee4-c3b2d61ad83d" class="">a) It continues running in the background  b) It shuts down, and you will lose connection to your notebooks  c) It pauses and can be resumed later  d) It asks if you want to save your work</p><p id="24e243e5-2cd7-80bf-89ca-ebab1eff07af" class=""><strong>Q10</strong>: True or False: A single Jupyter Notebook can only contain code cells.</p><h3 id="24e243e5-2cd7-80ab-b242-c0ff702a6e5a" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="24e243e5-2cd7-8044-a7b4-eceba366bc67" class=""><strong>Project: &quot;Personal Profile Notebook&quot;</strong></h3><p id="24e243e5-2cd7-8090-ad7e-e3652c1972e2" class=""><strong>Goal</strong>: Create a simple but well-structured Jupyter Notebook that acts as a personal profile, combining Markdown for text and code cells for dynamic information.</p><p id="24e243e5-2cd7-8046-b416-f50371620cdd" class=""><strong>Instructions:</strong></p><ol type="1" id="24e243e5-2cd7-8087-beda-e1b3e4097838" class="numbered-list" start="1"><li>Launch JupyterLab from your <code>data-analysis</code> environment.</li></ol><ol type="1" id="24e243e5-2cd7-80a5-ac72-e36287b1f8b6" class="numbered-list" start="2"><li>Create a new notebook and name it <code>Profile.ipynb</code>.</li></ol><ol type="1" id="24e243e5-2cd7-801d-a0b5-e90d86bb3f93" class="numbered-list" start="3"><li><strong>Cell 1 (Markdown):</strong> Create a main heading with your name (e.g., <code># Jane Doe</code>).</li></ol><ol type="1" id="24e243e5-2cd7-808f-a9b4-c22a4b79f36e" class="numbered-list" start="4"><li><strong>Cell 2 (Markdown):</strong> Create a subheading <code>## About Me</code> and write a short, one-paragraph biography.</li></ol><ol type="1" id="24e243e5-2cd7-801d-850a-c04932bdc9e5" class="numbered-list" start="5"><li><strong>Cell 3 (Code):</strong> Create a Python dictionary to store some of your skills.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-801c-bb19-da1fa6f27012" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">skills = {
+    &quot;Languages&quot;: [&quot;Python&quot;, &quot;SQL&quot;],
+    &quot;Tools&quot;: [&quot;Jupyter&quot;, &quot;Git&quot;, &quot;VS Code&quot;],
+    &quot;Concepts&quot;: [&quot;Data Analysis&quot;, &quot;Machine Learning&quot;]
+}
+
+</code></pre></li></ol><ol type="1" id="24e243e5-2cd7-80dd-936e-f7e88e29f4c5" class="numbered-list" start="6"><li><strong>Cell 4 (Markdown):</strong> Create a subheading <code>## My Skills</code>.</li></ol><ol type="1" id="24e243e5-2cd7-80f3-8f1f-e5186fe4cb22" class="numbered-list" start="7"><li><strong>Cell 5 (Code):</strong> Write Python code that accesses the <code>skills</code> dictionary from Cell 3 and prints each skill category and its list of skills in a readable format.</li></ol><ol type="1" id="24e243e5-2cd7-8019-879e-d363af08f842" class="numbered-list" start="8"><li><strong>Cell 6 (Code):</strong> Define a variable for your birth year and another for the current year. Calculate your current age and print it in a full sentence.</li></ol><ol type="1" id="24e243e5-2cd7-80c1-9c5c-c401b2de49f8" class="numbered-list" start="9"><li>Save your notebook. You should have a clean, organized document that mixes text and code execution.</li></ol><h3 id="24e243e5-2cd7-80c9-b1e2-ec294ec93bc3" class=""><strong>✅ Solutions</strong></h3><h3 id="24e243e5-2cd7-8037-85dc-ce8f70d35f18" class=""><strong>Quiz Answers</strong></h3><p id="24e243e5-2cd7-801c-a458-efec17bd4f75" class=""><strong>Q1</strong>: c) An interactive web application for code, text, and visualizations.</p><p id="24e243e5-2cd7-8047-87a2-ecf9a98d549a" class=""><strong>Q2</strong>: c) The computational engine that executes the code.</p><p id="24e243e5-2cd7-801d-afa9-ee2008eeb1b8" class=""><strong>Q3</strong>: b) Command Mode.</p><p id="24e243e5-2cd7-800e-a467-c705692fe1e9" class=""><strong>Q4</strong>: c) <code>m</code>.</p><p id="24e243e5-2cd7-80cb-9827-dd09e3613853" class=""><strong>Q5</strong>: b) It has a more flexible, multi-tabbed interface like an IDE.</p><p id="24e243e5-2cd7-808d-b7a1-ddd447920115" class=""><strong>Q6</strong>: d) <code>jupyter lab</code>.</p><p id="24e243e5-2cd7-805e-ad87-d7cbae91a104" class=""><strong>Q7</strong>: a) Runs the cell and selects the cell below.</p><p id="24e243e5-2cd7-80f4-97fe-e32fbf4ae832" class=""><strong>Q8</strong>: b) Press <code>a</code>.</p><p id="24e243e5-2cd7-80e8-b6bf-dbfc6b0950fe" class=""><strong>Q9</strong>: b) It shuts down, and you will lose connection to your notebooks.</p><p id="24e243e5-2cd7-8076-b1a3-c9a75106d147" class=""><strong>Q10</strong>: False. Notebooks are powerful because they can contain both code and Markdown text cells.</p><h3 id="24e243e5-2cd7-80dd-8431-c5dfd6639e2a" class=""><strong>Assignment Solution (&quot;Personal Profile Notebook&quot; structure)</strong></h3><p id="24e243e5-2cd7-80b5-b03f-cb8c90ecedcf" class="">Your final <code>Profile.ipynb</code> would look like this:</p><p id="24e243e5-2cd7-80fb-8274-fb02eb7ceab2" class=""><strong>Cell 1 (Markdown):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-809f-afb6-c4fbc05314ab" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Jane Doe
+
+</code></pre><p id="24e243e5-2cd7-80ec-a942-f7d19c77b979" class=""><strong>Cell 2 (Markdown):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-800d-b5ba-ff70c9f76255" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">## About Me
+I am a passionate learner in the field of data science. I am currently enrolled in the &quot;Data Science with AI&quot; course and am excited to build my skills in Python, machine learning, and data visualization.
+
+</code></pre><p id="24e243e5-2cd7-806d-8a30-e1449d52dc00" class=""><strong>Cell 3 (Code):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8023-9697-fe75dc42f1f4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">skills = {
+    &quot;Languages&quot;: [&quot;Python&quot;, &quot;SQL&quot;],
+    &quot;Tools&quot;: [&quot;Jupyter&quot;, &quot;Git&quot;, &quot;VS Code&quot;],
+    &quot;Concepts&quot;: [&quot;Data Analysis&quot;, &quot;Machine Learning&quot;]
+}
+
+</code></pre><p id="24e243e5-2cd7-80ac-ac9a-faad7eaeec69" class=""><strong>Cell 4 (Markdown):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8070-9d49-c561a9566928" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">## My Skills
+
+</code></pre><p id="24e243e5-2cd7-80e6-9eb4-ed4319689473" class=""><strong>Cell 5 (Code):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80be-b978-fa1aebcd3749" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># This cell can access the &#x27;skills&#x27; variable from Cell 3
+print(&quot;--- Skill Set ---&quot;)
+for category, skill_list in skills.items():
+    print(f&quot;{category}: {&#x27;, &#x27;.join(skill_list)}&quot;)
+
+</code></pre><p id="24e243e5-2cd7-80ca-83af-f99873d69013" class=""><strong>Cell 6 (Code):</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-804c-bbb0-f7ba11eb69c8" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">from datetime import datetime
+
+birth_year = 1995
+current_year = datetime.now().year
+age = current_year - birth_year
+
+print(f&quot;I am currently {age} years old.&quot;)
+
+</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

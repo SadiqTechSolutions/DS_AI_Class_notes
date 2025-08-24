@@ -1,0 +1,916 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 21: Data Manipulation with Pandas</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24e243e5-2cd7-8063-bde1-f2d9ba69c510" class="page sans"><header><h1 class="page-title"><strong>Day 21: Data Manipulation with Pandas</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><div data-testid="/icons/burst_gray.svg" style="width:14px;height:14px;flex-shrink:0;transform:scale(1.2);mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;-webkit-mask:url(/icons/burst_gray.svg?mode=light) no-repeat center;background-color:rgba(71, 70, 68, 0.6);fill:rgba(71, 70, 68, 0.6)"></div></span>Status</th><td><span class="status-value"><div class="status-dot"></div>Not started</span></td></tr></tbody></table></header><div class="page-body"><p id="24e243e5-2cd7-80bf-8cb3-e50e2c2da1fd" class=""><em>Learning to work with tabular data like a pro. This is your digital spreadsheet, supercharged with Python! 📈</em></p><h2 id="24e243e5-2cd7-803e-8301-f5d35d26f02a" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="24e243e5-2cd7-80e6-912d-c17f6cc98120" class="bulleted-list"><li style="list-style-type:disc">Understand what Pandas is and its role in the data science ecosystem.</li></ul><ul id="24e243e5-2cd7-80e2-85b2-f64fb93b54b8" class="bulleted-list"><li style="list-style-type:disc">Differentiate between the two core Pandas data structures: <code>Series</code> and <code>DataFrame</code>.</li></ul><ul id="24e243e5-2cd7-8020-a3e9-f9f745bf5cf1" class="bulleted-list"><li style="list-style-type:disc">Create <code>Series</code> and <code>DataFrames</code> from scratch.</li></ul><ul id="24e243e5-2cd7-8087-9d1f-f49fa94670ac" class="bulleted-list"><li style="list-style-type:disc">Read data from external files (like CSVs) into a DataFrame.</li></ul><ul id="24e243e5-2cd7-80b9-a18a-fc46b527d5d7" class="bulleted-list"><li style="list-style-type:disc">Master the basics of indexing and selecting data using <code>.loc[]</code> and <code>.iloc[]</code>.</li></ul><ul id="24e243e5-2cd7-8058-8886-fe90e49a9a05" class="bulleted-list"><li style="list-style-type:disc">Perform basic data manipulation, including filtering rows and selecting columns.</li></ul><h2 id="24e243e5-2cd7-8087-b1fb-e70761da6717" class=""><strong>📦 Part 1: What is Pandas?</strong></h2><p id="24e243e5-2cd7-8077-a318-e4e947f336e2" class=""><strong>Pandas</strong> is a powerful and popular Python library for data manipulation and analysis. It provides fast, flexible, and expressive data structures designed to make working with &quot;relational&quot; or &quot;labeled&quot; data both easy and intuitive.</p><p id="24e243e5-2cd7-8039-aa74-d6aa6d87c9a8" class=""><strong>Analogy</strong>: If NumPy is the superhighway for numbers, Pandas is the <strong>ultimate smart spreadsheet (like Excel or Google Sheets) for Python</strong>. It&#x27;s built on top of NumPy, but it gives us the ability to work with complex, tabular data (with rows and columns), use descriptive labels, and handle missing data gracefully.</p><h3 id="24e243e5-2cd7-80b3-8513-e7c639919eba" class=""><strong>Importing Pandas</strong></h3><p id="24e243e5-2cd7-8025-a215-d9318e1c1219" class="">By universal convention, Pandas is always imported with the alias <code>pd</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-805c-b1cc-dd2143fc214f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">import pandas as pd
+import numpy as np # Pandas often works alongside NumPy
+
+</code></pre><h2 id="24e243e5-2cd7-8072-a944-f09f8124b41b" class=""><strong>📊 Part 2: Core Pandas Data Structures</strong></h2><p id="24e243e5-2cd7-803d-9424-c477bef5e784" class="">Pandas has two fundamental data structures: the <code>Series</code> and the <code>DataFrame</code>.</p><h3 id="24e243e5-2cd7-80d1-9ee3-d388a8e4ba3e" class=""><strong>The </strong><code><strong>Series</strong></code></h3><p id="24e243e5-2cd7-807e-9165-faa160c4721c" class="">A <strong>Series</strong> is a one-dimensional, labeled array. It&#x27;s like a single column in a spreadsheet.</p><ul id="24e243e5-2cd7-80c4-a917-c8b10f814b22" class="bulleted-list"><li style="list-style-type:disc"><strong>Data</strong>: The actual values (a NumPy array).</li></ul><ul id="24e243e5-2cd7-80a6-9a2e-ca8029d7e489" class="bulleted-list"><li style="list-style-type:disc"><strong>Index</strong>: A sequence of labels for the data. If not specified, it defaults to integers <code>0, 1, 2, ...</code>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80f4-99d8-de7846e6f6ce" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_series.py
+import pandas as pd
+
+# A simple Series with a default index
+s = pd.Series([1, 2, 5, 6])
+print(&quot;Simple Series:&quot;)
+print(s)
+
+# A Series with a custom index
+populations = pd.Series([38, 26, 19], index=[&#x27;California&#x27;, &#x27;Texas&#x27;, &#x27;New York&#x27;])
+print(&quot;\nSeries with custom index:&quot;)
+print(populations)
+
+# Accessing data using the index
+print(f&quot;\nPopulation of Texas: {populations[&#x27;Texas&#x27;]}&quot;)
+
+</code></pre><h3 id="24e243e5-2cd7-80fb-80e8-ef513dee518c" class=""><strong>The </strong><code><strong>DataFrame</strong></code></h3><p id="24e243e5-2cd7-804e-afa4-cca2d42f1587" class="">A <strong>DataFrame</strong> is a two-dimensional, labeled data structure with columns of potentially different types. It is the most commonly used Pandas object. It&#x27;s like a full spreadsheet or an SQL table.</p><ul id="24e243e5-2cd7-80ae-8a07-e223625e5041" class="bulleted-list"><li style="list-style-type:disc">You can think of a DataFrame as a <strong>dictionary of Series</strong>, where the keys are the column names and the values are the Series (the columns).</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-802f-a028-c0b27b921d37" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_dataframe.py
+import pandas as pd
+
+# Creating a DataFrame from a dictionary of lists
+data = {
+    &#x27;State&#x27;: [&#x27;California&#x27;, &#x27;Texas&#x27;, &#x27;New York&#x27;, &#x27;Florida&#x27;],
+    &#x27;Population&#x27;: [38, 26, 19, 19],
+    &#x27;Capital&#x27;: [&#x27;Sacramento&#x27;, &#x27;Austin&#x27;, &#x27;Albany&#x27;, &#x27;Tallahassee&#x27;]
+}
+
+df = pd.DataFrame(data)
+print(df)
+
+</code></pre><h2 id="24e243e5-2cd7-80b6-ac1f-e4294ae9783a" class=""><strong>💾 Part 3: Reading Data from Files</strong></h2><p id="24e243e5-2cd7-8007-8bb6-e9de2035086e" class="">While creating DataFrames manually is useful, you&#x27;ll usually load data from an external source, most commonly a CSV (Comma-Separated Values) file.</p><p id="24e243e5-2cd7-80cd-b692-ee6142a6f5ad" class="">The <code>pd.read_csv()</code> function is incredibly powerful for this.</p><p id="24e243e5-2cd7-8037-b4cc-c2e443720d86" class="">First, create a file named <code>countries.csv</code> in the same directory as your script with the following content:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-807b-8c59-e95e99c3c220" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Country,Capital,Population
+Canada,Ottawa,38
+Germany,Berlin,83
+Japan,Tokyo,126</code></pre><p id="24e243e5-2cd7-80c4-acfb-cbda645d5b6e" class="">Now, let&#x27;s read it with Pandas:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8020-b27c-cd52954f2d54" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_reading_data.py
+import pandas as pd
+
+# Read the CSV file into a DataFrame
+countries_df = pd.read_csv(&quot;countries.csv&quot;)
+
+# Display the first few rows of the DataFrame
+print(&quot;--- First 5 rows (.head()) ---&quot;)
+print(countries_df.head())
+
+# Get some basic info about the DataFrame
+print(&quot;\n--- DataFrame Info (.info()) ---&quot;)
+countries_df.info()
+
+</code></pre><h2 id="24e243e5-2cd7-800e-b8ce-f0a8944a939d" class=""><strong>🎯 Part 4: Selecting and Filtering Data</strong></h2><p id="24e243e5-2cd7-80c1-924c-c533879f4ae2" class="">Selecting subsets of your data is a core task in data analysis. Pandas provides two main methods for this: <code>.loc[]</code> and <code>.iloc[]</code>.</p><ul id="24e243e5-2cd7-8063-9506-f1e3b2cf5233" class="bulleted-list"><li style="list-style-type:disc"><code>.loc[]</code>: Selects data by <strong>label</strong> (the index name and column name).</li></ul><ul id="24e243e5-2cd7-80e2-b95f-c24a51819ac4" class="bulleted-list"><li style="list-style-type:disc"><code>.iloc[]</code>: Selects data by <strong>integer location</strong> (the row and column number, starting from 0).</li></ul><h3 id="24e243e5-2cd7-80b7-9341-f3bceea58cbf" class=""><strong>Selecting Columns</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8028-9d7c-c0c16d63b009" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_selecting.py
+import pandas as pd
+
+data = {
+    &#x27;State&#x27;: [&#x27;California&#x27;, &#x27;Texas&#x27;, &#x27;New York&#x27;, &#x27;Florida&#x27;],
+    &#x27;Population&#x27;: [38, 26, 19, 19],
+    &#x27;Capital&#x27;: [&#x27;Sacramento&#x27;, &#x27;Austin&#x27;, &#x27;Albany&#x27;, &#x27;Tallahassee&#x27;]
+}
+df = pd.DataFrame(data)
+
+# Select a single column (returns a Series)
+population_series = df[&#x27;Population&#x27;]
+print(&quot;Population Series:&quot;)
+print(population_series)
+
+# Select multiple columns (returns a DataFrame)
+state_capital_df = df[[&#x27;State&#x27;, &#x27;Capital&#x27;]]
+print(&quot;\nState and Capital DataFrame:&quot;)
+print(state_capital_df)
+
+</code></pre><h3 id="24e243e5-2cd7-8045-ab05-e4fee50a7314" class=""><strong>Selecting Rows with </strong><code><strong>.loc</strong></code><strong> and </strong><code><strong>.iloc</strong></code></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8022-8012-e54daa932136" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># In day4_selecting.py
+
+# Set the &#x27;State&#x27; column as the index for better label-based access
+df = df.set_index(&#x27;State&#x27;)
+
+# Select a single row by its index label using .loc
+texas_data = df.loc[&#x27;Texas&#x27;]
+print(&quot;\nData for Texas (.loc):&quot;)
+print(texas_data)
+
+# Select a single row by its integer position using .iloc
+first_row = df.iloc[0]
+print(&quot;\nData for the first row (.iloc):&quot;)
+print(first_row)</code></pre><h3 id="24e243e5-2cd7-8071-9aaf-d5c688e7e285" class=""><strong>Filtering with Boolean Indexing</strong></h3><p id="24e243e5-2cd7-80b3-90d0-f62f3a89008f" class="">This is the most common way to select rows that meet a certain condition. It works just like with NumPy arrays.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-806f-b284-dc069ff9937b" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># In day4_selecting.py
+
+# Find all states with a population greater than 20 million
+high_population_states = df[df[&#x27;Population&#x27;] &gt; 20]
+print(&quot;\nStates with population &gt; 20M:&quot;)
+print(high_population_states)</code></pre><h2 id="24e243e5-2cd7-801d-9ad5-c96802891d80" class=""><strong>🚀 Fun Expedition: &quot;Data Detective&quot;</strong></h2><p id="24e243e5-2cd7-8064-bbbb-db6e151c299e" class=""><strong>Mission</strong>: You are given a small dataset of student grades. Your task is to load it into a Pandas DataFrame and perform a quick analysis to find the top-performing students.</p><p id="24e243e5-2cd7-8085-a43c-ce180560642d" class=""><strong>Your Task</strong>:</p><ol type="1" id="24e243e5-2cd7-80b9-ba20-e9798d3fc4e0" class="numbered-list" start="1"><li>Create a file named <code>grades.csv</code> with this content:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-802c-a266-c40c5ec37d95" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Name,Subject,Score
+Alice,Math,92
+Bob,Science,88
+Charlie,Math,95
+Alice,Science,85
+Bob,Math,78
+Charlie,Science,90</code></pre></li></ol><ol type="1" id="24e243e5-2cd7-8001-bfec-f5be8f198ffe" class="numbered-list" start="2"><li>Create a Python script <code>day4_detective.py</code> to:<ul id="24e243e5-2cd7-8078-9c13-cccc70aff5bc" class="bulleted-list"><li style="list-style-type:disc">Read <code>grades.csv</code> into a DataFrame.</li></ul><ul id="24e243e5-2cd7-807a-8057-c2476f3d365d" class="bulleted-list"><li style="list-style-type:disc">Find all the test scores that were 90 or above.</li></ul><ul id="24e243e5-2cd7-805e-a75a-f5d4062cf263" class="bulleted-list"><li style="list-style-type:disc">Find all of Alice&#x27;s test scores.</li></ul></li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8029-83b2-f81845405a02" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_detective.py
+import pandas as pd
+
+# Read the data
+grades_df = pd.read_csv(&quot;grades.csv&quot;)
+print(&quot;--- Original Grades ---&quot;)
+print(grades_df)
+
+# Find all scores of 90 or above
+top_scores = grades_df[grades_df[&#x27;Score&#x27;] &gt;= 90]
+print(&quot;\n--- Top Scores (&gt;= 90) ---&quot;)
+print(top_scores)
+
+# Find all of Alice&#x27;s scores
+alice_scores = grades_df[grades_df[&#x27;Name&#x27;] == &#x27;Alice&#x27;]
+print(&quot;\n--- All of Alice&#x27;s Scores ---&quot;)
+print(alice_scores)
+
+</code></pre><p id="24e243e5-2cd7-8093-9425-c2d6d501c526" class="">&lt;br&gt;</p><h2 id="24e243e5-2cd7-8041-b174-de59b7098382" class=""><strong>🎯 Day 4: Review &amp; Solutions</strong></h2><h3 id="24e243e5-2cd7-804e-adc4-d1b1c32dc9a3" class=""><strong>🛠️ Hands-on Practice</strong></h3><h3 id="24e243e5-2cd7-80ef-afd8-d4cc611d1a8d" class=""><strong>Exercise 1: Create a Series</strong></h3><p id="24e243e5-2cd7-8009-9f46-e3fabd464772" class="">Create <code>day4_ex1.py</code>. Make a Pandas Series containing the populations (in millions) of three cities: Tokyo (37), Delhi (32), and Shanghai (28). Use the city names as the index.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80c3-a126-d5252ec8d6b8" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_ex1.py
+import pandas as pd
+
+city_populations = pd.Series([37, 32, 28], index=[&quot;Tokyo&quot;, &quot;Delhi&quot;, &quot;Shanghai&quot;])
+print(city_populations)
+
+</code></pre><h3 id="24e243e5-2cd7-806d-ac53-f43a44f16106" class=""><strong>Exercise 2: Create a DataFrame</strong></h3><p id="24e243e5-2cd7-809d-b3bf-f9dda7633fe6" class="">Create <code>day4_ex2.py</code>. Create a DataFrame from the following dictionary, which contains data about planets.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-802f-b3b2-cb9eb00d4a9b" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_ex2.py
+import pandas as pd
+
+planet_data = {
+    &quot;Planet&quot;: [&quot;Mercury&quot;, &quot;Venus&quot;, &quot;Earth&quot;, &quot;Mars&quot;],
+    &quot;Type&quot;: [&quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;],
+    &quot;Moons&quot;: [0, 0, 1, 2]
+}
+planets_df = pd.DataFrame(planet_data)
+print(planets_df)
+
+</code></pre><h3 id="24e243e5-2cd7-8033-a6ba-f334929867f3" class=""><strong>Exercise 3: Selecting a Column</strong></h3><p id="24e243e5-2cd7-8058-b4b9-ec97333b6f10" class="">Create <code>day4_ex3.py</code>. Using the <code>planets_df</code> from Exercise 2, select and print only the &quot;Planet&quot; column.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80b1-9d36-f3ee680f964f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_ex3.py
+import pandas as pd
+
+planet_data = {
+    &quot;Planet&quot;: [&quot;Mercury&quot;, &quot;Venus&quot;, &quot;Earth&quot;, &quot;Mars&quot;],
+    &quot;Type&quot;: [&quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;],
+    &quot;Moons&quot;: [0, 0, 1, 2]
+}
+planets_df = pd.DataFrame(planet_data)
+
+# Select and print the &#x27;Planet&#x27; column
+planet_names = planets_df[&#x27;Planet&#x27;]
+print(planet_names)
+
+</code></pre><h3 id="24e243e5-2cd7-8067-bd73-f18e72723b1c" class=""><strong>Exercise 4: Selecting a Row with </strong><code><strong>.loc</strong></code></h3><p id="24e243e5-2cd7-8027-9084-cb6a4b791c2c" class="">Create <code>day4_ex4.py</code>. First, set the &quot;Planet&quot; column of your DataFrame as the index. Then, use <code>.loc[]</code> to select and print all the data for &quot;Earth&quot;.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80e6-beab-d0cfaae0ee9f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_ex4.py
+import pandas as pd
+
+planet_data = {
+    &quot;Planet&quot;: [&quot;Mercury&quot;, &quot;Venus&quot;, &quot;Earth&quot;, &quot;Mars&quot;],
+    &quot;Type&quot;: [&quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;],
+    &quot;Moons&quot;: [0, 0, 1, 2]
+}
+planets_df = pd.DataFrame(planet_data)
+
+# Set &#x27;Planet&#x27; as the index
+planets_df = planets_df.set_index(&quot;Planet&quot;)
+
+# Select the row for &#x27;Earth&#x27;
+earth_data = planets_df.loc[&quot;Earth&quot;]
+print(earth_data)
+
+</code></pre><h3 id="24e243e5-2cd7-8008-ad74-fdc389a699c0" class=""><strong>Exercise 5: Filtering with a Condition</strong></h3><p id="24e243e5-2cd7-8069-88d1-c1fe37fa2f74" class="">Create <code>day4_ex5.py</code>. Using the original <code>planets_df</code> (without &quot;Planet&quot; as the index), filter and print all planets that have one or more moons.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80b6-8b6f-d5b7cc6c285c" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># day4_ex5.py
+import pandas as pd
+
+planet_data = {
+    &quot;Planet&quot;: [&quot;Mercury&quot;, &quot;Venus&quot;, &quot;Earth&quot;, &quot;Mars&quot;],
+    &quot;Type&quot;: [&quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;, &quot;Terrestrial&quot;],
+    &quot;Moons&quot;: [0, 0, 1, 2]
+}
+planets_df = pd.DataFrame(planet_data)
+
+# Filter for planets where &#x27;Moons&#x27; &gt; 0
+planets_with_moons = planets_df[planets_df[&#x27;Moons&#x27;] &gt; 0]
+print(planets_with_moons)
+
+</code></pre><h3 id="24e243e5-2cd7-8064-8eac-d51c37176821" class=""><strong>🧠 Quiz Time</strong></h3><p id="24e243e5-2cd7-80de-881d-f93883041f5f" class="">Q1: What are the two primary data structures in Pandas?</p><p id="24e243e5-2cd7-8031-a603-d132833b1b9c" class="">a) ndarray and list  b) Series and DataFrame  c) dict and tuple  d) matrix and vector</p><p id="24e243e5-2cd7-802f-8419-f06ac5213818" class="">Q2: By convention, what alias is used when importing Pandas?</p><p id="24e243e5-2cd7-8000-b2fe-c297c79e5c34" class="">a) pa  b) pn  c) pd  d) pds</p><p id="24e243e5-2cd7-80f5-8986-c52d9aa08356" class="">Q3: A Pandas Series is most analogous to...</p><p id="24e243e5-2cd7-80df-9173-f79249b6a95e" class="">a) A single column in a spreadsheet  b) An entire spreadsheet  c) A single row in a spreadsheet  d) A single cell in a spreadsheet</p><p id="24e243e5-2cd7-8029-adf4-e84769519391" class="">Q4: Which function is used to read a CSV file into a DataFrame?</p><p id="24e243e5-2cd7-804c-8920-ef517f261435" class="">a) pd.open_csv()  b) pd.load_csv()  c) pd.read_csv()  d) pd.get_csv()</p><p id="24e243e5-2cd7-8040-bf85-fba2448fcfe3" class="">Q5: If df is a DataFrame, how do you select the column named &quot;age&quot;?</p><p id="24e243e5-2cd7-80da-adc2-e597152ac4d1" class="">a) df.age()  b) df[&#x27;age&#x27;]  c) df.get(&#x27;age&#x27;)  d) df(age)</p><p id="24e243e5-2cd7-80ed-8e4e-f4179a0ed638" class="">Q6: What is the main difference between .loc[] and .iloc[]?</p><p id="24e243e5-2cd7-8008-b062-de083b175f47" class="">a) .loc is for rows, .iloc is for columns  b) .loc is faster  c) .loc selects by label, .iloc selects by integer position  d) .iloc is safer</p><p id="24e243e5-2cd7-8033-906e-c0ebae1467aa" class="">Q7: What does the .head() method do on a DataFrame?</p><p id="24e243e5-2cd7-80f6-bc2f-d136dd35a6c5" class="">a) It returns the column headers  b) It returns the first 5 rows by default  c) It calculates the mean of the first column  d) It returns the last 5 rows</p><p id="24e243e5-2cd7-8030-8aea-dd1f8141912e" class="">Q8: The expression df[df[&#x27;Score&#x27;] &gt; 80] is an example of...</p><p id="24e243e5-2cd7-809b-a9b7-c2199389a2bd" class="">a) Slicing  b) Boolean Indexing  c) Integer Location  d) Label Location</p><p id="24e243e5-2cd7-8040-a811-f66b5679e7ec" class="">Q9: What is the &quot;index&quot; of a DataFrame?</p><p id="24e243e5-2cd7-80a1-96b5-f16a7359d52b" class="">a) The name of the first column  b) A set of labels for the rows  c) The number of rows in the DataFrame  d) A special type of column for numbers only</p><p id="24e243e5-2cd7-80fa-bab9-fd311b21b392" class=""><strong>Q10</strong>: True or False: A single Pandas DataFrame can contain columns with different data types (e.g., integers, strings, booleans).</p><h3 id="24e243e5-2cd7-80f9-bc05-e7d1c7f66d3a" class=""><strong>📝 Assignment for Today</strong></h3><h3 id="24e243e5-2cd7-80b5-a918-f47ebd4af136" class=""><strong>Project: &quot;Basic Sales Data Analysis&quot;</strong></h3><p id="24e243e5-2cd7-80f3-9910-f77cf423886b" class=""><strong>Goal</strong>: You are given a small dataset of sales records in a CSV file. Your task is to load this data into a Pandas DataFrame and perform some basic filtering and selection to answer a few business questions.</p><p id="24e243e5-2cd7-8052-b1e6-d572d58bf176" class=""><strong>Part 1: Create the Data File</strong></p><p id="24e243e5-2cd7-80de-85b4-c5a052081e94" class="">Create a file named <code>sales_data.csv</code> in your <code>Day_4/exercises/</code> folder with the following content:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-802e-9348-eca4bfb451f4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Date,Region,Product,Quantity,Price
+2023-01-15,North,Apples,100,1.2
+2023-01-15,South,Oranges,150,0.8
+2023-01-16,North,Bananas,200,0.5
+2023-01-16,South,Apples,120,1.25
+2023-01-17,West,Oranges,80,0.85
+
+</code></pre><p id="24e243e5-2cd7-80ff-b485-cc19f4282026" class=""><strong>Part 2: Create the Python Script</strong></p><p id="24e243e5-2cd7-8000-8307-c955f3dfe06a" class="">Create a file named <code>sales_analyzer.py</code> in your <code>Day_4/exercises/</code> folder that does the following:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-80b2-95a9-fd3dda1075c2" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">import pandas as pd
+
+# Instructions:
+#
+# 1. Read the `sales_data.csv` file into a DataFrame called `sales_df`.
+#
+# 2. Print the entire DataFrame to see the initial data.
+#
+# 3. Select and print only the &#x27;Product&#x27; and &#x27;Quantity&#x27; columns.
+#
+# 4. Filter the DataFrame to find all sales that occurred in the &#x27;North&#x27; region.
+#    Print the resulting filtered DataFrame.
+#
+# 5. Filter the DataFrame to find all sales where the &#x27;Quantity&#x27; was greater than 100.
+#    Print the resulting filtered DataFrame.
+#
+# 6. Filter the DataFrame to find all sales of &#x27;Apples&#x27; that had a &#x27;Price&#x27; greater than 1.2.
+#    (Hint: You can combine two conditions with the `&amp;` operator).
+#    Print the resulting filtered DataFrame.
+
+</code></pre><h3 id="24e243e5-2cd7-80cf-b3b0-eb8985abe5e3" class=""><strong>✅ Solutions</strong></h3><h3 id="24e243e5-2cd7-8014-b981-eb286a9d9ce1" class=""><strong>Quiz Answers</strong></h3><p id="24e243e5-2cd7-80b3-a79b-c3e631d58ae3" class=""><strong>Q1</strong>: b) <code>Series</code> and <code>DataFrame</code>.</p><p id="24e243e5-2cd7-80fc-a50f-c88e57634507" class=""><strong>Q2</strong>: c) <code>pd</code>.</p><p id="24e243e5-2cd7-804e-86d3-d5b22a49ff8e" class=""><strong>Q3</strong>: a) A single column in a spreadsheet.</p><p id="24e243e5-2cd7-80f7-9e35-eac41022a736" class=""><strong>Q4</strong>: c) <code>pd.read_csv()</code>.</p><p id="24e243e5-2cd7-80d7-a8cd-d281654919d4" class=""><strong>Q5</strong>: b) <code>df[&#x27;age&#x27;]</code>.</p><p id="24e243e5-2cd7-8056-9c04-e65e5e9980e2" class=""><strong>Q6</strong>: c) <code>.loc</code> selects by label, <code>.iloc</code> selects by integer position.</p><p id="24e243e5-2cd7-8090-86b4-d2dcfeb7f5ef" class=""><strong>Q7</strong>: b) It returns the first 5 rows by default.</p><p id="24e243e5-2cd7-80a3-a3f0-e73372620906" class=""><strong>Q8</strong>: b) Boolean Indexing.</p><p id="24e243e5-2cd7-80d2-be80-ced865e7db4d" class=""><strong>Q9</strong>: b) A set of labels for the rows.</p><p id="24e243e5-2cd7-8087-8b06-f14bb1d0e9bc" class=""><strong>Q10</strong>: True. This is a key feature and advantage of DataFrames.</p><h3 id="24e243e5-2cd7-8033-a252-cc5bf7ad9e28" class=""><strong>Assignment Solution (</strong><code><strong>sales_analyzer.py</strong></code><strong>)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24e243e5-2cd7-8083-b987-d38857ca0e8c" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Day_4_sol.py
+# Solution for the Day 4 &quot;Basic Sales Data Analysis&quot; assignment.
+
+import pandas as pd
+
+# 1. Read the CSV file.
+try:
+    sales_df = pd.read_csv(&quot;sales_data.csv&quot;)
+
+    # 2. Print the entire DataFrame.
+    print(&quot;--- Full Sales Data ---&quot;)
+    print(sales_df)
+
+    # 3. Select and print &#x27;Product&#x27; and &#x27;Quantity&#x27; columns.
+    print(&quot;\n--- Product and Quantity ---&quot;)
+    product_quantity = sales_df[[&#x27;Product&#x27;, &#x27;Quantity&#x27;]]
+    print(product_quantity)
+
+    # 4. Filter for the &#x27;North&#x27; region.
+    print(&quot;\n--- Sales in the North Region ---&quot;)
+    north_sales = sales_df[sales_df[&#x27;Region&#x27;] == &#x27;North&#x27;]
+    print(north_sales)
+
+    # 5. Filter for quantity &gt; 100.
+    print(&quot;\n--- Sales with Quantity &gt; 100 ---&quot;)
+    large_sales = sales_df[sales_df[&#x27;Quantity&#x27;] &gt; 100]
+    print(large_sales)
+
+    # 6. Filter for Apples with Price &gt; 1.2.
+    print(&quot;\n--- Expensive Apple Sales ---&quot;)
+    expensive_apples = sales_df[(sales_df[&#x27;Product&#x27;] == &#x27;Apples&#x27;) &amp; (sales_df[&#x27;Price&#x27;] &gt; 1.2)]
+    print(expensive_apples)
+
+except FileNotFoundError:
+    print(&quot;Error: &#x27;sales_data.csv&#x27; not found. Please create it first.&quot;)
+
+</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

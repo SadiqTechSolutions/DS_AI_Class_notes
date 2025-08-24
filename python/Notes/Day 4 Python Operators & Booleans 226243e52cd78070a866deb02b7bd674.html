@@ -1,0 +1,825 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Day 4: Python Operators &amp; Booleans</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="226243e5-2cd7-8070-a866-deb02b7bd674" class="page sans"><header><h1 class="page-title"><strong>Day 4: Python Operators &amp; Booleans</strong></h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value"><div class="status-dot"></div>Not started</span></td></tr></tbody></table></header><div class="page-body"><p id="226243e5-2cd7-8050-8834-df047056c88b" class=""><em>Making decisions and performing calculations, the core of programming! ⚙️</em></p><h2 id="226243e5-2cd7-800b-bb1a-c39684cec962" class=""><strong>🎯 Today&#x27;s Learning Goals</strong></h2><ul id="226243e5-2cd7-803c-a9b2-d30f7920cf16" class="bulleted-list"><li style="list-style-type:disc">Understand and use Arithmetic operators to perform math.</li></ul><ul id="226243e5-2cd7-80b1-981b-f59d92a0c8c9" class="bulleted-list"><li style="list-style-type:disc">Use Assignment operators as shortcuts for updating variables.</li></ul><ul id="226243e5-2cd7-806e-ad6d-eee8a9992a07" class="bulleted-list"><li style="list-style-type:disc">Use Comparison operators to compare values.</li></ul><ul id="226243e5-2cd7-800f-bbcf-dc00879ece82" class="bulleted-list"><li style="list-style-type:disc">Combine conditions using Logical operators (<code>and</code>, <code>or</code>, <code>not</code>).</li></ul><ul id="226243e5-2cd7-8040-b80e-cb815e1857e5" class="bulleted-list"><li style="list-style-type:disc">Understand Boolean values (<code>True</code>, <code>False</code>) and the concept of &quot;Truthiness&quot;.</li></ul><h2 id="226243e5-2cd7-8075-bbc9-d1fa2c9a634c" class=""><strong>🧮 Part 1: Python Operators</strong></h2><h3 id="226243e5-2cd7-8005-9728-f413f9c6f6e8" class=""><strong>What are Operators?</strong></h3><p id="226243e5-2cd7-801d-8667-c93dc36e4362" class=""><strong>Operators</strong> are special symbols in Python that carry out arithmetic or logical computation.</p><p id="226243e5-2cd7-80ba-adab-c4f138c83253" class=""><strong>Analogy</strong>: Think of operators as the verbs of programming. They are the action words that let you do things with your variables (the nouns).</p><h3 id="226243e5-2cd7-80a8-8e0e-f47936a1ab48" class=""><strong>Arithmetic Operators</strong></h3><p id="226243e5-2cd7-8078-853b-ecc10912fd69" class="">Used to perform mathematical operations.</p><table id="226243e5-2cd7-80d1-bde8-ec87a7d18cfc" class="simple-table"><tbody><tr id="226243e5-2cd7-8009-81e9-d4aa600d57d7"><td id="ZNkv" class=""><strong>Operator</strong></td><td id="n`|C" class=""><strong>Name</strong></td><td id="IYF\" class=""><strong>Example</strong></td><td id="@}RY" class=""><strong>Result</strong></td></tr><tr id="226243e5-2cd7-80fd-babc-dd1ae227abe4"><td id="ZNkv" class=""><code>+</code></td><td id="n`|C" class="">Addition</td><td id="IYF\" class=""><code>10 + 5</code></td><td id="@}RY" class=""><code>15</code></td></tr><tr id="226243e5-2cd7-8040-aeb9-ea1bd35abc43"><td id="ZNkv" class=""><code>-</code></td><td id="n`|C" class="">Subtraction</td><td id="IYF\" class=""><code>10 - 5</code></td><td id="@}RY" class=""><code>5</code></td></tr><tr id="226243e5-2cd7-80d6-8679-e8f5125edf6c"><td id="ZNkv" class=""><code>*</code></td><td id="n`|C" class="">Multiplication</td><td id="IYF\" class=""><code>10 * 5</code></td><td id="@}RY" class=""><code>50</code></td></tr><tr id="226243e5-2cd7-80ba-b47b-f0a774bbec8e"><td id="ZNkv" class=""><code>/</code></td><td id="n`|C" class="">Division</td><td id="IYF\" class=""><code>10 / 3</code></td><td id="@}RY" class=""><code>3.333</code></td></tr><tr id="226243e5-2cd7-803a-8585-d557d4a1d9c5"><td id="ZNkv" class=""><code>//</code></td><td id="n`|C" class="">Floor Division</td><td id="IYF\" class=""><code>10 // 3</code></td><td id="@}RY" class=""><code>3</code></td></tr><tr id="226243e5-2cd7-803d-8705-ce38ea95a163"><td id="ZNkv" class=""><code>%</code></td><td id="n`|C" class="">Modulus</td><td id="IYF\" class=""><code>10 % 3</code></td><td id="@}RY" class=""><code>1</code></td></tr><tr id="226243e5-2cd7-805f-9a1c-e34e26ee40a8"><td id="ZNkv" class=""><code>**</code></td><td id="n`|C" class="">Exponent</td><td id="IYF\" class=""><code>10 ** 2</code></td><td id="@}RY" class=""><code>100</code></td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80b5-9272-c2e5305fd2f3" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_arithmetic.py
+a = 15
+b = 4
+
+print(f&quot;{a} + {b} = {a + b}&quot;)
+print(f&quot;{a} / {b} = {a / b}&quot;)      # Classic division
+print(f&quot;{a} // {b} = {a // b}&quot;)    # How many full times does 4 go into 15?
+print(f&quot;{a} % {b} = {a % b}&quot;)      # What is the remainder?</code></pre><h3 id="226243e5-2cd7-80ca-8d87-dc81b9d02843" class=""><strong>Assignment Operators</strong></h3><p id="226243e5-2cd7-80be-a59f-d583ea708b6b" class="">Used to assign values to variables, often as a shortcut.</p><table id="226243e5-2cd7-80f9-b9d2-e4889afa8a0d" class="simple-table"><tbody><tr id="226243e5-2cd7-8003-958a-d6ba6691ff7f"><td id="aEIi" class=""><strong>Operator</strong></td><td id="YXZa" class=""><strong>Example</strong></td><td id="COw=" class=""><strong>Equivalent To</strong></td></tr><tr id="226243e5-2cd7-8021-8f9e-f5d7b7ce02d6"><td id="aEIi" class=""><code>+=</code></td><td id="YXZa" class=""><code>x += 5</code></td><td id="COw=" class=""><code>x = x + 5</code></td></tr><tr id="226243e5-2cd7-80a0-852d-e40e84cecc6b"><td id="aEIi" class=""><code>-=</code></td><td id="YXZa" class=""><code>x -= 5</code></td><td id="COw=" class=""><code>x = x - 5</code></td></tr><tr id="226243e5-2cd7-8007-a229-cf749d3efb41"><td id="aEIi" class=""><code>*=</code></td><td id="YXZa" class=""><code>x *= 5</code></td><td id="COw=" class=""><code>x = x * 5</code></td></tr><tr id="226243e5-2cd7-8016-a17e-c3d7efc06b4e"><td id="aEIi" class=""><code>/=</code></td><td id="YXZa" class=""><code>x /= 5</code></td><td id="COw=" class=""><code>x = x / 5</code></td></tr></tbody></table><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8071-be9c-d77cb7cbd424" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_assignment.py
+wallet = 50
+print(f&quot;Initial amount: ${wallet}&quot;)
+
+# You earn $20
+wallet += 20
+print(f&quot;After earning: ${wallet}&quot;)
+
+# You spend $10
+wallet -= 10
+print(f&quot;After spending: ${wallet}&quot;)</code></pre><h3 id="226243e5-2cd7-807d-a86e-cce641484eac" class=""><strong>Comparison Operators</strong></h3><p id="226243e5-2cd7-8055-b59c-c0e77e646872" class="">Used to compare two values. They always result in a Boolean (<code>True</code> or <code>False</code>).</p><table id="226243e5-2cd7-80a1-a77f-e8c220828500" class="simple-table"><tbody><tr id="226243e5-2cd7-80f9-a4e4-fac4048c5dad"><td id="HnH`" class=""><strong>Operator</strong></td><td id="{_xn" class=""><strong>Name</strong></td><td id="Rtpu" class=""><strong>Example</strong></td></tr><tr id="226243e5-2cd7-8048-95d5-eadcb57c253b"><td id="HnH`" class=""><code>==</code></td><td id="{_xn" class="">Equal</td><td id="Rtpu" class=""><code>a == b</code></td></tr><tr id="226243e5-2cd7-80a2-9178-c0f489a847f5"><td id="HnH`" class=""><code>!=</code></td><td id="{_xn" class="">Not equal</td><td id="Rtpu" class=""><code>a != b</code></td></tr><tr id="226243e5-2cd7-8075-bcd2-ca822ba88707"><td id="HnH`" class=""><code>&gt;</code></td><td id="{_xn" class="">Greater than</td><td id="Rtpu" class=""><code>a &gt; b</code></td></tr><tr id="226243e5-2cd7-80be-a012-d77c11e6bdec"><td id="HnH`" class=""><code>&lt;</code></td><td id="{_xn" class="">Less than</td><td id="Rtpu" class=""><code>a &lt; b</code></td></tr><tr id="226243e5-2cd7-8084-b12a-dfa9565ff646"><td id="HnH`" class=""><code>&gt;=</code></td><td id="{_xn" class="">Greater than or equal to</td><td id="Rtpu" class=""><code>a &gt;= b</code></td></tr><tr id="226243e5-2cd7-8047-b60e-fa4ea9ae9af4"><td id="HnH`" class=""><code>&lt;=</code></td><td id="{_xn" class="">Less than or equal to</td><td id="Rtpu" class=""><code>a &lt;= b</code></td></tr></tbody></table><h3 id="226243e5-2cd7-8020-9099-d94aed442b03" class=""><strong>Logical Operators</strong></h3><p id="226243e5-2cd7-80c1-a393-eba89538c26c" class="">Used to combine conditional statements.</p><table id="226243e5-2cd7-8098-947e-ca13bd7b67fd" class="simple-table"><tbody><tr id="226243e5-2cd7-8040-a8cb-d7349af4d111"><td id="odxV" class=""><strong>Operator</strong></td><td id="NbmF" class=""><strong>Description</strong></td><td id="l?{;" class=""><strong>Example</strong></td></tr><tr id="226243e5-2cd7-80d3-b5ec-c800fa797b46"><td id="odxV" class=""><code>and</code></td><td id="NbmF" class="">Returns <code>True</code> if both statements are true</td><td id="l?{;" class=""><code>x &gt; 5 and x &lt; 15</code></td></tr><tr id="226243e5-2cd7-8014-81ad-f53ad58f92f0"><td id="odxV" class=""><code>or</code></td><td id="NbmF" class="">Returns <code>True</code> if one of the statements is true</td><td id="l?{;" class=""><code>y &lt; 10 or y &gt; 20</code></td></tr><tr id="226243e5-2cd7-80c5-a6e6-d0ace96aa3a1"><td id="odxV" class=""><code>not</code></td><td id="NbmF" class="">Reverses the result, returns <code>False</code> if the result is true</td><td id="l?{;" class=""><code>not(x == y)</code></td></tr></tbody></table><p id="226243e5-2cd7-80db-a388-f2b17e70f709" class=""><strong>💡 Fun Fact</strong>: The <code>%</code> (modulus) operator is extremely useful for checking if a number is even or odd. <code>number % 2 == 0</code> will be <code>True</code> for any even number!</p><h2 id="226243e5-2cd7-8073-b6cd-c3a8f863d994" class=""><strong>✅ Part 2: Booleans and &quot;Truthiness&quot;</strong></h2><h3 id="226243e5-2cd7-80f2-a0ec-de990abffc89" class=""><strong>What are Booleans?</strong></h3><p id="226243e5-2cd7-80a5-95f0-f77798c152b6" class="">A Boolean is a data type that can only have one of two values: <code>True</code> or <code>False</code>. They are the foundation of decision-making in code.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80ec-a92d-d33be0ae0535" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Create a file named day4_booleans.py
+can_vote = False
+age = 20
+
+if age &gt;= 18:
+    can_vote = True
+
+print(f&quot;Is the user eligible to vote? {can_vote}&quot;)</code></pre><h3 id="226243e5-2cd7-80dd-9cfb-eb59575750f1" class=""><strong>The Concept of &quot;Truthiness&quot;</strong></h3><p id="226243e5-2cd7-800d-a56a-caa1e31317ab" class="">In Python, every value can be evaluated as either &quot;truthy&quot; or &quot;falsy&quot; in a boolean context.</p><ul id="226243e5-2cd7-806c-a985-c3ee021159fb" class="bulleted-list"><li style="list-style-type:disc"><strong>Falsy</strong>: Values that evaluate to <code>False</code>.</li></ul><ul id="226243e5-2cd7-8025-a154-f24960907fa1" class="bulleted-list"><li style="list-style-type:disc"><strong>Truthy</strong>: Values that evaluate to <code>True</code>.</li></ul><p id="226243e5-2cd7-80d2-88e8-dc003a525ea4" class=""><strong>The only &quot;Falsy&quot; values in Python are:</strong></p><ul id="226243e5-2cd7-8006-a3a9-dcf721a2a5f0" class="bulleted-list"><li style="list-style-type:disc">The number <code>0</code> (and <code>0.0</code>)</li></ul><ul id="226243e5-2cd7-8037-83e4-ea41c2ae72dc" class="bulleted-list"><li style="list-style-type:disc">An empty string <code>&quot;&quot;</code></li></ul><ul id="226243e5-2cd7-80d8-bb80-e52e49afa2e4" class="bulleted-list"><li style="list-style-type:disc">An empty list <code>[]</code>, tuple <code>()</code>, dictionary <code>{}</code>, or set</li></ul><ul id="226243e5-2cd7-80cd-a7f8-ee6f066df842" class="bulleted-list"><li style="list-style-type:disc">The special value <code>None</code></li></ul><p id="226243e5-2cd7-806b-af3c-c85e8df331bf" class=""><strong>Everything else is &quot;Truthy&quot;!</strong></p><p id="226243e5-2cd7-80c4-aeea-cd3f616dc334" class="">We can check a value&#x27;s truthiness with the <code>bool()</code> function.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80ce-8f55-d30952946ace" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># In day4_booleans.py
+print(f&quot;Is 0 True or False? {bool(0)}&quot;)          # False
+print(f&quot;Is &#x27;hello&#x27; True or False? {bool(&#x27;hello&#x27;)}&quot;) # True
+print(f&quot;Is [] True or False? {bool([])}&quot;)        # False
+print(f&quot;Is [1, 2] True or False? {bool([1, 2])}&quot;)  # True</code></pre><h2 id="226243e5-2cd7-8050-8424-ebe3fd50dbd6" class=""><strong>🚀 Fun Expedition: &quot;The Discount Calculator&quot;</strong></h2><p id="226243e5-2cd7-8058-b691-f23c9450acd5" class=""><strong>Mission</strong>: Create a program that determines if a customer gets a discount based on two conditions: they are a member AND their total purchase is over $50.</p><p id="226243e5-2cd7-80de-9553-d2b445146489" class=""><strong>Your Task</strong>: Create <code>day4_discount.py</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80c1-80bd-eaf0551e2b00" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Customer details
+is_member = True
+purchase_total = 60
+
+# Use logical operators to decide if a discount is applied
+gets_discount = is_member and purchase_total &gt; 50
+
+print(f&quot;Is customer a member? {is_member}&quot;)
+print(f&quot;Purchase total: ${purchase_total}&quot;)
+print(f&quot;Does customer get a discount? {gets_discount}&quot;)</code></pre><h2 id="226243e5-2cd7-804c-b374-c3b3ac118148" class=""><strong>🛠️ Hands-on Practice</strong></h2><h3 id="226243e5-2cd7-8015-9b25-d2d2149e3503" class=""><strong>Exercise 1: Simple Calculator</strong></h3><p id="226243e5-2cd7-80eb-bccc-d8df89734659" class="">Create <code>day4_ex1.py</code>. Define two integer variables, <code>a = 20</code> and <code>b = 5</code>. Print the results of adding, subtracting, multiplying, and dividing them.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80a6-b02c-d10d13df3b2b" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day4_ex1.py
+a = 20
+b = 5
+
+print(f&quot;{a} + {b} = {a + b}&quot;)
+print(f&quot;{a} - {b} = {a - b}&quot;)
+print(f&quot;{a} * {b} = {a * b}&quot;)
+print(f&quot;{a} / {b} = {a / b}&quot;)</code></pre><h3 id="226243e5-2cd7-8084-be57-e739802dfc97" class=""><strong>Exercise 2: Remainder and Exponent</strong></h3><p id="226243e5-2cd7-8084-ac44-c6536b4d38d7" class="">Create <code>day4_ex2.py</code>. Calculate the remainder when 25 is divided by 4. Also, calculate 2 to the power of 8. Print both results with descriptive text.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8064-82b7-cf4955d085aa" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day4_ex2.py
+remainder = 25 % 4
+power_result = 2 ** 8
+
+print(f&quot;The remainder of 25 divided by 4 is: {remainder}&quot;)
+print(f&quot;2 to the power of 8 is: {power_result}&quot;)</code></pre><h3 id="226243e5-2cd7-8082-9125-fdcbae0191a5" class=""><strong>Exercise 3: Comparison Checks</strong></h3><p id="226243e5-2cd7-80d6-822e-d290ca66c5ff" class="">Create <code>day4_ex3.py</code>. Define <code>my_age = 30</code> and <code>voting_age = 18</code>. Use comparison operators to check if <code>my_age</code> is greater than or equal to <code>voting_age</code>. Print the boolean result.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-806c-9734-d14b9699fc54" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day4_ex3.py
+my_age = 30
+voting_age = 18
+
+is_eligible = my_age &gt;= voting_age
+print(f&quot;Am I old enough to vote? {is_eligible}&quot;)</code></pre><h3 id="226243e5-2cd7-8008-b7d5-c56bd8494d8f" class=""><strong>Exercise 4: Logical </strong><code><strong>or</strong></code></h3><p id="226243e5-2cd7-802c-b7ac-de12f2fed180" class="">Create <code>day4_ex4.py</code>. A user gets free shipping if their order is over $75 OR if they have a special coupon. Create variables <code>order_total = 80</code> and <code>has_coupon = False</code>. Use the <code>or</code> operator to determine if they get free shipping.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8069-9cb1-e99b7d0bb1ea" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day4_ex4.py
+order_total = 80
+has_coupon = False
+
+gets_free_shipping = order_total &gt; 75 or has_coupon
+print(f&quot;Does the user get free shipping? {gets_free_shipping}&quot;)</code></pre><h3 id="226243e5-2cd7-8079-9e30-fd31964a088b" class=""><strong>Exercise 5: Truthiness Check</strong></h3><p id="226243e5-2cd7-80d0-acbb-e14791222a90" class="">Create <code>day4_ex5.py</code>. Create an empty list <code>my_list = []</code> and a non-empty list <code>my_other_list = [&quot;apple&quot;]</code>. Use the <code>bool()</code> function to check the &quot;truthiness&quot; of both lists and print the results.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-8048-ae8f-d62d424ce37c" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># day4_ex5.py
+my_list = []
+my_other_list = [&quot;apple&quot;]
+
+print(f&quot;The truthiness of an empty list is: {bool(my_list)}&quot;)
+print(f&quot;The truthiness of a non-empty list is: {bool(my_other_list)}&quot;)</code></pre><h2 id="226243e5-2cd7-8099-8e66-e7c00d9d3e56" class=""><strong>🧠 Quiz Time</strong></h2><h3 id="226243e5-2cd7-8048-8bcd-ded7e9a21a7c" class=""><strong>Operators (5 Questions):</strong></h3><p id="226243e5-2cd7-80ee-8156-d282120fb9f8" class="">Q1: What is the result of 13 % 5?</p><p id="226243e5-2cd7-80ba-9f67-d0ba923cf331" class="">a) 2.6  b) 2  c) 3  d) 8</p><p id="226243e5-2cd7-80f3-aa23-efd191c9ca6c" class="">Q2: Which operator checks if two values are exactly equal?</p><p id="226243e5-2cd7-80aa-8670-dd8f43e2e602" class="">a) =  b) ==  c) is  d) !=</p><p id="226243e5-2cd7-80fe-acac-ff2377aa9019" class="">Q3: If x = 10, what is the value of x after x += 5?</p><p id="226243e5-2cd7-80f5-ad9b-cc189186b66a" class="">a) 5  b) 10  c) 15  d) An error</p><p id="226243e5-2cd7-8096-b9e0-ee533d5d328a" class="">Q4: What is the result of 10 // 4 (floor division)?</p><p id="226243e5-2cd7-8063-8d69-d0a15111555b" class="">a) 2.5  b) 2  c) 3  d) 6</p><p id="226243e5-2cd7-80b3-8b90-da62c73f2573" class="">Q5: Which operator has the highest precedence (is calculated first)?</p><p id="226243e5-2cd7-8008-ab84-ff9e359f3bdb" class="">a) +  b) *  c) **  d) /</p><h3 id="226243e5-2cd7-80b5-98cb-d21cf708c973" class=""><strong>Booleans &amp; Logic (5 Questions):</strong></h3><p id="226243e5-2cd7-80a9-a0ec-cc6e6ea6b079" class="">Q6: Which of the following values is &quot;falsy&quot;?</p><p id="226243e5-2cd7-804c-be9c-c3fb9393ebe2" class="">a) &quot;False&quot;  b) 1  c) [ ]  d) (0)</p><p id="226243e5-2cd7-8029-83e5-cdefb6ae7e25" class="">Q7: What is the result of True and False?</p><p id="226243e5-2cd7-80a4-a9ae-fa1f5772da98" class="">a) True  b) False  c) None  d) An error</p><p id="226243e5-2cd7-802e-8aff-e522d7914391" class="">Q8: What is the result of not(5 &gt; 10)?</p><p id="226243e5-2cd7-80cf-8440-c5b4348db079" class="">a) True  b) False  c) 5  d) 10</p><p id="226243e5-2cd7-8089-b393-cf494c5bef0e" class="">Q9: Which operator would you use to check if a user is either under 18 OR over 65?</p><p id="226243e5-2cd7-8077-961a-c3a9bf89249b" class="">a) and  b) or  c) not  d) ==</p><p id="226243e5-2cd7-8082-b2f5-f0848b20d43b" class=""><strong>Q10</strong>: True/False: The expression <code>bool(&quot;0&quot;)</code> evaluates to <code>False</code>.</p><p id="226243e5-2cd7-80d9-9eb3-ff0e34962bd5" class=""><em>📝 Answers will be provided at the start of Day 5 class!</em></p><h2 id="226243e5-2cd7-80bc-a3a5-c04f3fe541ec" class=""><strong>📚 Assignment for Next Class</strong></h2><h3 id="226243e5-2cd7-80a3-9912-ce9c829c9c88" class=""><strong>Project: &quot;Simple Store Checkout Calculator&quot;</strong></h3><p id="226243e5-2cd7-8058-a4c0-d572acfefe95" class=""><strong>Goal</strong>: Create a script that calculates the final price of a shopping cart, applying a discount if certain conditions are met. This assignment will combine arithmetic, comparison, and logical operators.</p><p id="226243e5-2cd7-8079-b0da-d0d585fd97a1" class=""><strong>Create the following file in your </strong><code><strong>Day_4/exercises/</strong></code><strong> folder</strong>:</p><p id="226243e5-2cd7-80ff-933c-d11c5a118137" class=""><code><strong>checkout_calculator.py</strong></code>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-805e-a8e3-e90a61c0a96a" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all"># Instructions:
+# 1. Define variables for the prices of three items.
+#    item1_price = 10.50  (a float)
+#    item2_price = 20.00  (a float)
+#    item3_price = 5.25   (a float)
+#
+# 2. Calculate the subtotal of the items.
+#
+# 3. Define a boolean variable to represent if the customer has a membership card.
+#    has_membership = True
+#
+# 4. Determine if the customer is eligible for a discount. The discount rules are:
+#    - The subtotal must be $30.00 or more, AND
+#    - The customer must have a membership card.
+#    Store the result (True or False) in a variable called &#x27;is_eligible_for_discount&#x27;.
+#
+# 5. Calculate the final total.
+#    - If the customer is eligible for a discount, apply a 10% discount (subtotal * 0.9).
+#    - Otherwise, the final total is the same as the subtotal.
+#    (Hint: You can use an if/else statement, which we&#x27;ll cover soon, or a clever trick with
+#     multiplication. For now, it&#x27;s okay to calculate it as if you know the eligibility.)
+#     For a challenge, try to calculate the final price without an if-statement!
+#
+# 6. Print all the results in a user-friendly receipt format:
+#    - The price of each item.
+#    - The subtotal.
+#    - A message indicating if the discount was applied (e.g., &quot;Discount Applied: True&quot;).
+#    - The final total.
+
+</code></pre><p id="226243e5-2cd7-80f7-86bb-d2879b8ef469" class=""><strong>📝 Note</strong>: A complete solution file (<code>Day_4_sol.py</code>) is also provided in the main <code>Day_4</code> folder for you to compare your work.</p><h2 id="226243e5-2cd7-80cd-b7df-d8f8e68c7ca5" class=""><strong>🎥 Recommended Videos for Visual Learning</strong></h2><p id="226243e5-2cd7-806a-a6b2-fc8cccaf48a1" class=""><strong>Python Operators</strong>:</p><ul id="226243e5-2cd7-8057-9258-de565b1466b5" class="bulleted-list"><li style="list-style-type:disc">&quot;Python Operators in 10 minutes&quot; - Programming with Mosh</li></ul><ul id="226243e5-2cd7-8006-9ddc-e83e148cb5fa" class="bulleted-list"><li style="list-style-type:disc">&quot;Arithmetic &amp; Comparison Operators&quot; - Telusko</li></ul><p id="226243e5-2cd7-80d3-b246-d22398b8f3f9" class=""><strong>Booleans</strong>:</p><ul id="226243e5-2cd7-8066-8e11-fff68dabfdba" class="bulleted-list"><li style="list-style-type:disc">&quot;Python Booleans and Boolean Logic&quot; - CS Dojo</li></ul><h2 id="226243e5-2cd7-807a-b2b6-dde99c9bc222" class=""><strong>💡 Interesting Facts</strong></h2><ul id="226243e5-2cd7-806e-b06d-c0f5eabce463" class="bulleted-list"><li style="list-style-type:disc">Logical operators <code>and</code> and <code>or</code> use &quot;short-circuiting&quot;. If the result can be determined from the first operand (e.g., <code>False and ...</code>), Python won&#x27;t even evaluate the second one!</li></ul><ul id="226243e5-2cd7-8055-9ee1-df063c4af704" class="bulleted-list"><li style="list-style-type:disc">The <code>is</code> operator checks if two variables point to the exact same object in memory, while <code>==</code> checks if their values are equal. For beginners, <code>==</code> is almost always what you want.</li></ul><ul id="226243e5-2cd7-80c2-bf7c-d1b054ac30d1" class="bulleted-list"><li style="list-style-type:disc">Operator precedence is why <code>2 + 3 * 4</code> equals <code>14</code>, not <code>20</code>. Python follows the standard order of operations (PEMDAS/BODMAS).</li></ul><ul id="226243e5-2cd7-806e-b6ec-d5b3336a06b7" class="bulleted-list"><li style="list-style-type:disc">In Python, <code>True</code> is internally represented as the integer <code>1</code>, and <code>False</code> as <code>0</code>. You can even do math with them: <code>True + True</code> equals <code>2</code>!</li></ul><p id="226243e5-2cd7-8016-9362-d37cadfd0c24" class=""><em>🎊 Excellent job on Day 4! You can now perform calculations and make logical decisions, two of the most powerful skills in programming!</em></p><p id="226243e5-2cd7-80fa-9939-e887c3704cc7" class=""><strong>Next Class Preview</strong>: Getting User Input, String Manipulation, and an Introduction to <code>if</code> Statements! 🎛️</p><p id="226243e5-2cd7-8001-ac7d-eebebe98dc42" class="">
+</p><p id="226243e5-2cd7-8059-bf6a-e2d331288873" class="">
+</p><p id="226243e5-2cd7-8080-93db-c390a97b5cd5" class="">
+</p><p id="226243e5-2cd7-8039-b9c8-cd64570a55bf" class="">
+</p><p id="226243e5-2cd7-8056-9438-ce1c49a4c4d3" class="">
+</p><p id="226243e5-2cd7-80f6-b1ce-f836b2782577" class="">
+</p><p id="226243e5-2cd7-80e2-9484-d3d7c2b6e08c" class="">
+</p><p id="226243e5-2cd7-807c-8879-c824bc6c5981" class="">
+</p><hr id="226243e5-2cd7-80bd-8b6a-d328da74a9a9"/><h2 id="226243e5-2cd7-8006-8f52-c4e5b57a1946" class="">📝 Day 4 Assignment Solution</h2><h3 id="226243e5-2cd7-8044-87b2-c29c096ab26e" class="">Assignment Solution:</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="226243e5-2cd7-80d1-8860-ebcad6582cd7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># Day_4_sol.py
+# Solution for the Day 4 &quot;Simple Store Checkout Calculator&quot; assignment.
+
+# 1. Define variables for item prices.
+item1_price = 10.50
+item2_price = 20.00
+item3_price = 5.25
+
+# 2. Calculate the subtotal.
+subtotal = item1_price + item2_price + item3_price
+
+# 3. Define membership status.
+has_membership = True
+
+# 4. Determine discount eligibility using logical &#x27;and&#x27;.
+is_eligible_for_discount = subtotal &gt;= 30.00 and has_membership
+
+# 5. Calculate the final total.
+# This is a simple way to handle it before learning if-statements.
+# We assume we know the eligibility and apply the discount manually.
+# In a real program, an if-statement would be used here.
+discount_rate = 0.10 # 10% discount
+
+# For the solution, we&#x27;ll demonstrate the logic as if we&#x27;re using an if-statement.
+if is_eligible_for_discount:
+    discount_amount = subtotal * discount_rate
+    final_total = subtotal - discount_amount
+else:
+    final_total = subtotal
+
+# 6. Print the results in a receipt format.
+print(&quot;--- STS Store Receipt ---&quot;)
+print(f&quot;Item 1 Price: ${item1_price:.2f}&quot;)
+print(f&quot;Item 2 Price: ${item2_price:.2f}&quot;)
+print(f&quot;Item 3 Price: ${item3_price:.2f}&quot;)
+print(&quot;-------------------------&quot;)
+print(f&quot;Subtotal:     ${subtotal:.2f}&quot;)
+print(&quot;-------------------------&quot;)
+print(f&quot;Discount Applied: {is_eligible_for_discount}&quot;)
+if is_eligible_for_discount:
+    print(f&quot;Discount (10%): -${discount_amount:.2f}&quot;)
+print(&quot;-------------------------&quot;)
+print(f&quot;Final Total:  ${final_total:.2f}&quot;)
+print(&quot;-------------------------&quot;)
+print(&quot;Thank you for shopping!&quot;)</code></pre><hr id="226243e5-2cd7-8046-9ffb-d58dcddd0ede"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
